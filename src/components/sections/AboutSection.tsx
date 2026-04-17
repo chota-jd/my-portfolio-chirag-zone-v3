@@ -101,7 +101,7 @@ export default function AboutSection() {
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 0.8, delay: 0.7 }}
                   >
-                    25+
+                    30+
                   </motion.div>
                   <div className="text-gray-400 text-sm">Projects Completed</div>
                 </div>

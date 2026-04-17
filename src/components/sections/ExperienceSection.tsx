@@ -13,7 +13,7 @@ const experiences = [
     location: 'Ahmedabad, India',
     description: 'Developer experienced in building scalable web applications. Joined as an early-stage team member to develop core products from scratch, working closely with founders to translate business requirements into effective solutions. Skilled in mentoring junior developers, implementing best practices, and optimizing performance. Started with diverse client projects, gaining hands-on experience and a strong foundation in professional software development.',
     achievements: [
-      'Built 25+ responsive web applications',
+      'Built 30+ responsive web applications',
       'Designed and implemented scalable solutions, improving system reliability and user experience.',
       'Mentored junior developers, enhancing team productivity and code quality.',
       'Contributed to end-to-end product development from concept to launch.'
@@ -68,7 +68,7 @@ export default function ExperienceSection() {
           </h2>
           <div className="w-24 h-1 bg-[#4fc1c6] mx-auto rounded-full" />
           <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
-            My professional journey through various roles and companies, 
+            My professional journey through various roles and companies,
             building expertise and delivering impactful solutions.
           </p>
         </motion.div>
@@ -101,7 +101,7 @@ export default function ExperienceSection() {
                 <div className="ml-20 w-full">
                   <motion.div
                     className="glass p-6 rounded-lg border border-gray-700 hover:border-[#4fc1c6] transition-all duration-300"
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.02,
                       boxShadow: '0 0 30px rgba(79, 193, 198, 0.2)'
                     }}

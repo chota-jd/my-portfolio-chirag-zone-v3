@@ -57,7 +57,7 @@ export default function ContactSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [messageSuccess, isMessageSuccess] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
 
 const onFinish = async (values: ContactForm) => {
   setIsSubmitting(true);
@@ -98,7 +98,7 @@ const onFinish = async (values: ContactForm) => {
 
     if (result.success) {
       console.log('Form submitted to Firebase:', values);
-      messageSuccess.success('Message sent successfully! I\'ll get back to you soon.');
+      messageApi.success('Message sent successfully! I\'ll get back to you soon.');
       setIsSubmitted(true);
       form.resetFields();
 
@@ -108,7 +108,7 @@ const onFinish = async (values: ContactForm) => {
     }
   } catch (error) {
     console.error('Error saving message:', error);
-    messageSuccess.error('Failed to send message. Please try again.');
+    messageApi.error('Failed to send message. Please try again.');
   } finally {
     setIsSubmitting(false);
   }
@@ -116,11 +116,12 @@ const onFinish = async (values: ContactForm) => {
 
   const onFinishFailed = (errorInfo: unknown) => {
     console.log('Failed:', errorInfo);
-    message.error('Please fill in all required fields correctly.');
+    messageApi.error('Please fill in all required fields correctly.');
   };
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 relative">
+      {contextHolder}
       <motion.div
         ref={ref}
         className="max-w-7xl mx-auto"
@@ -139,10 +140,10 @@ const onFinish = async (values: ContactForm) => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 sm:gap-12">
-          <motion.div variants={itemVariants}>
-            <h3 className="text-xl sm:text-2xl font-bold gradient-text mb-6 sm:mb-8">
-              Let&apos;s Connect
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
+          <motion.div variants={itemVariants} className="flex flex-col">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#4fc1c6] mb-6 sm:mb-8">
+              Let's Connect
             </h3>
 
             <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
@@ -152,18 +153,18 @@ const onFinish = async (values: ContactForm) => {
                   href={info.link}
                   target={info.link.startsWith('http') ? '_blank' : undefined}
                   rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 glass rounded-lg border border-gray-700 hover:border-[#4fc1c6] transition-all duration-300 group w-full"
-                  whileHover={{ scale: 1.01 }} // Reduced scale for mobile
-                  initial={{ opacity: 0, x: -10 }} // Reduced translation
+                  className="flex items-center space-x-4 p-4 sm:p-5 bg-[#0f1117] border border-[#1f222e] rounded-xl hover:border-[#4fc1c6]/40 transition-all duration-300 group w-full"
+                  whileHover={{ scale: 1.01 }}
+                  initial={{ opacity: 0, x: -10 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: index * 0.2 + 0.5 }}
                 >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#4fc1c6] bg-opacity-20 flex items-center justify-center group-hover:bg-opacity-30 transition-all flex-shrink-0">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#1a232c] flex items-center justify-center group-hover:bg-[#4fc1c6]/20 transition-all flex-shrink-0 border border-[#2a3441] group-hover:border-[#4fc1c6]/50">
                     <info.icon className="text-[#4fc1c6]" size={20} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-white font-semibold text-sm sm:text-base">{info.title}</h4>
-                    <p className="text-gray-400 group-hover:text-[#4fc1c6] transition-colors text-sm sm:text-base break-words">
+                    <h4 className="text-white font-semibold text-sm sm:text-base mb-0.5">{info.title}</h4>
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm sm:text-base break-words">
                       {info.value}
                     </p>
                   </div>
@@ -173,13 +174,13 @@ const onFinish = async (values: ContactForm) => {
 
             {/* Additional Info */}
             <motion.div
-              className="p-4 sm:p-6 glass rounded-lg border border-gray-700"
+              className="p-5 sm:p-6 bg-[#0f1117] rounded-xl border border-[#1f222e] mt-auto"
               variants={itemVariants}
             >
               <h4 className="text-base sm:text-lg font-semibold text-[#4fc1c6] mb-2 sm:mb-3">
                 Quick Response Promise
               </h4>
-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                 I typically respond to all inquiries within 24 hours. For urgent matters,
                 feel free to reach out via phone or connect with me on social media for
                 a faster response.
@@ -189,14 +190,11 @@ const onFinish = async (values: ContactForm) => {
 
           {/* Contact Form */}
           <motion.div variants={itemVariants}>
-            <Card
-              className="bg-gray-900 border-gray-700"
-              title={
-                <span className="text-white text-lg sm:text-xl font-bold">
-                  Send Me a Message
-                </span>
-              }
-            >
+            <div className="bg-[#0f1117] border border-[#1f222e] rounded-xl p-6 sm:p-8 shadow-2xl">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8">
+                Send Me a Message
+              </h3>
+
               {isSubmitted ? (
                 <motion.div
                   className="text-center py-8 sm:py-12"
@@ -205,7 +203,7 @@ const onFinish = async (values: ContactForm) => {
                   transition={{ duration: 0.5 }}
                 >
                   <motion.div
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-green-500 bg-opacity-20 flex items-center justify-center mx-auto mb-4"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4 border border-green-500/30"
                     animate={{
                       scale: [1, 1.1, 1],
                     }}
@@ -221,7 +219,7 @@ const onFinish = async (values: ContactForm) => {
                     Message Sent!
                   </h3>
                   <p className="text-gray-400 text-sm sm:text-base">
-                    Thank you for reaching out. I&apos;ll get back to you soon!
+                    Thank you for reaching out. I'll get back to you soon!
                   </p>
                 </motion.div>
               ) : (
@@ -230,90 +228,91 @@ const onFinish = async (values: ContactForm) => {
                   layout="vertical"
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
-                  className="space-y-4"
+                  requiredMark={(label, { required }) => (
+                    <span className="flex items-center gap-1">
+                      {required && <span className="text-red-500">*</span>}
+                      {label}
+                    </span>
+                  )}
+                  className="space-y-5"
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <Form.Item
                       name="name"
-                      label={<span className="text-white text-sm sm:text-base">Name</span>}
+                      label={<span className="text-gray-200 text-sm">Name</span>}
                       rules={[
                         { required: true, message: 'Please enter your name' },
                         { min: 2, message: 'Name must be at least 2 characters' }
                       ]}
+                      className="mb-0"
                     >
                       <Input
                         placeholder="Your full name"
                         size="large"
-                        className="bg-gray-800 border-gray-600 text-white"
+                        className="bg-[#0a0c10] border-[#1f222e] text-white hover:border-[#4fc1c6] focus:border-[#4fc1c6] rounded-lg py-2.5"
                       />
                     </Form.Item>
 
                     <Form.Item
                       name="email"
-                      label={<span className="text-white text-sm sm:text-base">Email</span>}
+                      label={<span className="text-gray-200 text-sm">Email</span>}
                       rules={[
                         { required: true, message: 'Please enter your email' },
                         { type: 'email', message: 'Please enter a valid email' }
                       ]}
+                      className="mb-0"
                     >
                       <Input
                         placeholder="your.email@example.com"
                         size="large"
-                        className="bg-gray-800 border-gray-600 text-white"
+                        className="bg-[#0a0c10] border-[#1f222e] text-white hover:border-[#4fc1c6] focus:border-[#4fc1c6] rounded-lg py-2.5"
                       />
                     </Form.Item>
                   </div>
 
                   <Form.Item
                     name="subject"
-                    label={<span className="text-white text-sm sm:text-base">Subject</span>}
+                    label={<span className="text-gray-200 text-sm">Subject</span>}
                     rules={[
                       { required: true, message: 'Please enter a subject' },
                       { min: 5, message: 'Subject must be at least 5 characters' }
                     ]}
+                    className="mb-0"
                   >
                     <Input
                       placeholder="What's this about?"
                       size="large"
-                      className="bg-gray-800 border-gray-600 text-white"
+                      className="bg-[#0a0c10] border-[#1f222e] text-white hover:border-[#4fc1c6] focus:border-[#4fc1c6] rounded-lg py-2.5"
                     />
                   </Form.Item>
 
                   <Form.Item
                     name="message"
-                    label={<span className="text-white text-sm sm:text-base">Message</span>}
+                    label={<span className="text-gray-200 text-sm">Message</span>}
                     rules={[
                       { required: true, message: 'Please enter your message' },
                       { min: 10, message: 'Message must be at least 10 characters' }
                     ]}
+                    className="mb-6"
                   >
                     <TextArea
                       placeholder="Tell me about your project or just say hello!"
                       rows={5}
-                      className="bg-gray-800 border-gray-600 text-white"
+                      className="bg-[#0a0c10] border-[#1f222e] text-white hover:border-[#4fc1c6] focus:border-[#4fc1c6] rounded-lg py-2.5"
                     />
                   </Form.Item>
 
-                  <Form.Item>
+                  <Form.Item className="mb-0 mt-8">
                     <motion.div
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       <motion.button
                         type="submit" 
                         disabled={isSubmitting}
-                        className={`group relative overflow-hidden px-6 py-2 rounded-full bg-gradient-to-r from-accent text-white font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-accent/50 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-900 w-full h-11 sm:h-12 text-base sm:text-lg ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-                          }`}
-                        whileHover={{
-                          boxShadow: '0 10px 30px rgba(79, 193, 198, 0.4)'
-                        }}
-                        whileTap={{ scale: 0.98 }}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
+                        className={`group relative overflow-hidden px-6 py-3 rounded-xl bg-gradient-to-r from-[#4fc1c6] to-[#15232d] text-white font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(79,193,198,0.2)] w-full h-12 text-base flex items-center justify-center space-x-2 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
                       >
-                        {/* Background glow effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-accent to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#4fc1c6] to-[#1b3140] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                         <div className="relative flex items-center justify-center space-x-2">
                           {isSubmitting ? (
@@ -323,20 +322,17 @@ const onFinish = async (values: ContactForm) => {
                             </>
                           ) : (
                             <>
-                              <MessageCircle size={20} />
+                              <MessageCircle size={18} />
                               <span>Send Message</span>
                             </>
                           )}
                         </div>
-
-                        {/* Shimmer effect */}
-                        <div className="absolute inset-0 -top-[2px] -bottom-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                       </motion.button>
                     </motion.div>
                   </Form.Item>
                 </Form>
               )}
-            </Card>
+            </div>
           </motion.div>
         </div>
       </motion.div>
