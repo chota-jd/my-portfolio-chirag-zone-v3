@@ -25,6 +25,7 @@ const ROLES = [
 ];
 
 const NAME = 'Chirag Prajapati';
+const PROFILE_PHOTO_SRC = '/profile-photo.png';
 
 /** Hero focal line — edit anytime */
 const HERO_QUOTE =
@@ -135,15 +136,15 @@ export default function HeroSection() {
 
             {/* Name with per-letter reveal */}
             <h1
-              className="font-bold leading-[0.95] mb-4 text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5.25rem] tracking-tight"
+              className="font-bold leading-[1.12] mb-6 text-5xl sm:text-6xl md:text-7xl lg:text-[4.1rem] xl:text-[4.8rem] tracking-tight"
               aria-label={NAME}
             >
               <span className="sr-only">{NAME}</span>
-              <span aria-hidden className="inline-block">
+              <span aria-hidden className="inline-block overflow-visible pb-[0.08em]">
                 {NAME.split('').map((ch, i) => (
                   <motion.span
                     key={`${ch}-${i}`}
-                    className="inline-block gradient-text"
+                    className="inline-block gradient-text leading-[1.12]"
                     initial={{ opacity: 0, y: '0.6em', rotateX: -45 }}
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     transition={{
@@ -151,7 +152,7 @@ export default function HeroSection() {
                       duration: 0.7,
                       ease: [0.2, 0.8, 0.2, 1],
                     }}
-                    style={{ transformOrigin: 'bottom' }}
+                    style={{ transformOrigin: 'center bottom' }}
                   >
                     {ch === ' ' ? '\u00A0' : ch}
                   </motion.span>
@@ -160,7 +161,7 @@ export default function HeroSection() {
             </h1>
 
             {/* Rotating role */}
-            <div className="h-9 sm:h-11 mb-6 overflow-hidden flex justify-center lg:justify-start">
+            <div className="-mt-6 h-9 sm:h-11 mb-6 overflow-hidden flex justify-center lg:justify-start">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={roleIndex}
@@ -323,6 +324,8 @@ function HeroQuoteVisual({
   tiltY: MotionValue<number>;
   quote: string;
 }) {
+  const [imageFailed, setImageFailed] = useState(false);
+
   return (
     <div className="[perspective:1200px] w-full max-w-lg sm:max-w-xl lg:max-w-none">
       <motion.div
@@ -368,40 +371,44 @@ function HeroQuoteVisual({
           transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
         />
 
-        <blockquote
-          className="relative z-[1] mx-auto max-w-[17rem] sm:max-w-md px-2 text-center"
-          style={{ fontFamily: 'var(--font-playfair-display), serif' }}
-        >
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -left-1 -top-6 sm:-left-3 sm:-top-8 select-none font-serif text-[clamp(4rem,14vw,7rem)] leading-none text-[#4fc1c6]/[0.22]"
+        <div className="relative z-[1] mx-auto max-w-[17rem] sm:max-w-md px-2 text-center">
+          <motion.div
+            className="mx-auto mb-6 h-56 w-56 overflow-hidden rounded-full bg-zinc-950 shadow-[0_0_35px_rgba(79,193,198,0.25)] sm:h-64 sm:w-64"
+            initial={{ opacity: 0, y: 14, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.35, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
           >
-            &ldquo;
-          </span>
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -bottom-10 -right-1 sm:-bottom-12 sm:-right-3 select-none font-serif text-[clamp(4rem,14vw,7rem)] leading-none text-[#4fc1c6]/[0.18]"
-          >
-            &rdquo;
-          </span>
+            {!imageFailed ? (
+              <img
+                src={PROFILE_PHOTO_SRC}
+                alt="Chirag Prajapati profile"
+                className="h-full w-full object-cover"
+                onError={() => setImageFailed(true)}
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-xl font-semibold tracking-[0.2em] text-[#4fc1c6] sm:text-2xl">
+                CP
+              </div>
+            )}
+          </motion.div>
 
-          <motion.p
-            className="relative z-[1] text-[1.05rem] leading-snug text-zinc-100 sm:text-xl sm:leading-snug md:text-2xl md:leading-snug"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
+          <blockquote
+            className="relative"
+            style={{ fontFamily: 'var(--font-playfair-display), serif' }}
           >
-            <span className="bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent">
-              {quote}
-            </span>
-          </motion.p>
+            <motion.p
+              className="relative z-[1] text-base leading-snug text-zinc-100 sm:text-lg sm:leading-snug md:text-xl md:leading-snug"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
+            >
+              <span className="bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent">
+                &ldquo;{quote}&rdquo;
+              </span>
+            </motion.p>
 
-          <footer className="relative z-[1] mt-7 border-t border-white/[0.08] pt-5">
-            <p className="font-sans text-[10px] sm:text-[11px] font-medium tracking-[0.35em] text-zinc-500">
-              CHIRAG PRAJAPATI
-            </p>
-          </footer>
-        </blockquote>
+          </blockquote>
+        </div>
 
         <motion.div
           aria-hidden
