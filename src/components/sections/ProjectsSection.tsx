@@ -5,81 +5,7 @@ import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { Github, ExternalLink, ArrowUpRight, Code2, Layers, Cpu, Globe, Smartphone, Sparkles, X } from 'lucide-react';
 
-const projects = [
-  {
-    id: 1,
-    title: 'Quantum Commerce',
-    description: 'A high-performance e-commerce engine with real-time inventory synchronization and AI-driven personalized recommendations.',
-    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=1600',
-    technologies: ['Next.js 14', 'TypeScript', 'Prisma', 'Stripe', 'Tailwind'],
-    githubUrl: 'https://github.com/chota-jd',
-    liveUrl: 'https://example.com',
-    category: 'Full Stack',
-    icon: <Globe className="w-5 h-5" />,
-    color: 'from-cyan-500 to-blue-500'
-  },
-  {
-    id: 2,
-    title: 'Nexus Analytics',
-    description: 'Real-time data visualization platform for enterprise-scale social metrics with predictive trend analysis using machine learning.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1600',
-    technologies: ['React', 'Python', 'FastAPI', 'D3.js', 'PostgreSQL'],
-    githubUrl: 'https://github.com/chota-jd',
-    liveUrl: 'https://example.com',
-    category: 'Data Science',
-    icon: <Cpu className="w-5 h-5" />,
-    color: 'from-purple-500 to-pink-500'
-  },
-  {
-    id: 3,
-    title: 'Future Projects',
-    description: 'A visionary collection of upcoming digital frontiers, exploring the intersection of human intuition and artificial intelligence.',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1600',
-    technologies: ['AI', 'Web3', 'Metaverse', 'Edge Computing'],
-    githubUrl: 'https://github.com/chota-jd',
-    liveUrl: '#stats',
-    category: 'Visionary',
-    icon: <Sparkles className="w-5 h-5" />,
-    color: 'from-teal-500 to-cyan-500',
-    isSpecial: true
-  },
-  {
-    id: 4,
-    title: 'Aura AI',
-    description: 'Advanced content generation suite powered by GPT-4, featuring custom fine-tuning and multi-modal asset creation.',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600',
-    technologies: ['OpenAI', 'Next.js', 'Node.js', 'Redis', 'Vercel'],
-    githubUrl: 'https://github.com/chota-jd',
-    liveUrl: 'https://example.com',
-    category: 'AI/ML',
-    icon: <Sparkles className="w-5 h-5" />,
-    color: 'from-emerald-500 to-teal-500'
-  },
-  {
-    id: 5,
-    title: 'Zenith Architect',
-    description: 'A cloud-native infrastructure management tool with automated scaling and intelligent resource optimization.',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1600',
-    technologies: ['AWS', 'Terraform', 'Go', 'Kubernetes', 'Docker'],
-    githubUrl: 'https://github.com/chota-jd',
-    liveUrl: 'https://example.com',
-    category: 'DevOps',
-    icon: <Layers className="w-5 h-5" />,
-    color: 'from-blue-500 to-indigo-500'
-  },
-  {
-    id: 6,
-    title: 'Vortex UI Kit',
-    description: 'A comprehensive, high-performance design system for building lightning-fast web interfaces with perfect accessibility.',
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1600',
-    technologies: ['React', 'Framer Motion', 'Vanilla Extract', 'Storybook'],
-    githubUrl: 'https://github.com/chota-jd',
-    liveUrl: 'https://example.com',
-    category: 'Design System',
-    icon: <Code2 className="w-5 h-5" />,
-    color: 'from-yellow-500 to-orange-500'
-  }
-];
+import { projects } from '@/data/projects';
 
 export default function ProjectsSection({ 
   showAllDefault = false, 
@@ -105,7 +31,7 @@ export default function ProjectsSection({
   const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 3);
 
   return (
-    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden">
       {/* Background Glows */}
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#4fc1c6]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
@@ -182,9 +108,10 @@ export default function ProjectsSection({
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative"
               >
-                <div className="relative h-[450px] rounded-3xl overflow-hidden border border-white/10 bg-zinc-900/50 backdrop-blur-sm transition-all duration-500 group-hover:border-[#4fc1c6]/50 group-hover:shadow-[0_0_40px_rgba(79,193,198,0.15)]">
+                <div className="relative h-full rounded-3xl overflow-hidden border border-white/10 bg-zinc-900/50 backdrop-blur-sm transition-all duration-500 group-hover:border-[#4fc1c6]/50 group-hover:shadow-[0_0_40px_rgba(79,193,198,0.15)]">
+                  <Link href={project.isSpecial ? '#' : `/projects/${project.slug}`} onClick={(e) => { if (project.isSpecial) { e.preventDefault(); setShowStats(true); } }} className="absolute inset-0 z-10" />
                   {/* Image Container */}
-                  <div className="h-1/2 overflow-hidden relative">
+                  <div className="aspect-video overflow-hidden relative">
                     <img 
                       src={project.image} 
                       alt={project.title}
@@ -220,7 +147,7 @@ export default function ProjectsSection({
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                    <div className="flex items-center justify-between pt-4 border-t border-white/5 relative z-20">
                       <div className="flex gap-4">
                         {!project.isSpecial && (
                           <a 
@@ -248,19 +175,24 @@ export default function ProjectsSection({
                         </a>
                       </div>
                       
-                      <button 
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (project.isSpecial) {
+                      {project.isSpecial ? (
+                        <button 
+                          onClick={(e) => {
+                            e.preventDefault();
                             setShowStats(true);
-                          } else {
-                            window.open(project.liveUrl, '_blank');
-                          }
-                        }}
-                        className="flex items-center gap-1 text-xs font-bold tracking-widest text-[#4fc1c6] uppercase hover:underline"
-                      >
-                        Details <ArrowUpRight size={14} />
-                      </button>
+                          }}
+                          className="flex items-center gap-1 text-xs font-bold tracking-widest text-[#4fc1c6] uppercase hover:underline"
+                        >
+                          Details <ArrowUpRight size={14} />
+                        </button>
+                      ) : (
+                        <Link 
+                          href={`/projects/${project.slug}`}
+                          className="flex items-center gap-1 text-xs font-bold tracking-widest text-[#4fc1c6] uppercase hover:underline"
+                        >
+                          Details <ArrowUpRight size={14} />
+                        </Link>
+                      )}
                     </div>
                   </div>
 
