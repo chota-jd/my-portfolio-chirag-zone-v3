@@ -14,7 +14,6 @@ import {
   Mail,
   MessageCircle,
   ArrowDown,
-  ChevronDown,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -34,7 +33,6 @@ const HERO_QUOTE =
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [roleIndex, setRoleIndex] = useState(0);
-  const [mounted, setMounted] = useState(false);
 
   // Mouse parallax (normalized -0.5..0.5)
   const mx = useMotionValue(0);
@@ -49,7 +47,6 @@ export default function HeroSection() {
   const parallaxY = useTransform(smoothMy, (v) => v * 18);
 
   useEffect(() => {
-    setMounted(true);
     const id = setInterval(() => {
       setRoleIndex((i) => (i + 1) % ROLES.length);
     }, 2600);
@@ -200,7 +197,7 @@ export default function HeroSection() {
             </motion.p>
 
             {/* Stats row */}
-            <motion.div
+            {/* <motion.div
               className="flex items-center gap-6 sm:gap-8 justify-center lg:justify-start mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -211,7 +208,7 @@ export default function HeroSection() {
               <Stat value="20+" label="Projects" />
               <Divider />
               <Stat value="∞" label="Curiosity" />
-            </motion.div>
+            </motion.div> */}
 
             {/* CTAs */}
             <motion.div
@@ -281,33 +278,7 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Scroll cue */}
-      {mounted && (
-        <motion.button
-          onClick={scrollToAbout}
-          aria-label="Scroll to About"
-          className="absolute bottom-10 sm:bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/50 hover:text-[#4fc1c6] transition-colors"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.2, duration: 0.6 }}
-        >
-          <motion.span
-            animate={{ y: [0, 4, 0] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <ChevronDown size={18} strokeWidth={2.5} className="text-[#4fc1c6]" />
-          </motion.span>
-          <span className="text-[10px] font-mono tracking-[0.35em] text-white/55">
-            SCROLL
-          </span>
-          <motion.div
-            className="w-px h-9 bg-gradient-to-b from-[#4fc1c6] via-[#4fc1c6]/50 to-transparent rounded-full"
-            animate={{ scaleY: [0.35, 1, 0.35], opacity: [0.5, 1, 0.5] }}
-            style={{ originY: 'top' }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </motion.button>
-      )}
+
     </section>
   );
 }
