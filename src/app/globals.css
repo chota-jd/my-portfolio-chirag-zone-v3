@@ -285,14 +285,7 @@ body::-webkit-scrollbar-thumb:hover {
   animation: gradient-shift 8s ease infinite reverse;
 }
 
-.gradient-text-purple {
-  background: linear-gradient(-45deg, #ffffff, #a855f7, #ffffff, #a855f7);
-  background-size: 400% 400%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-shift 8s ease infinite;
-}
+
 
 /* Additional mobile-specific utilities */
 @media (max-width: 480px) {

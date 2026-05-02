@@ -34,7 +34,7 @@ export default function ProjectsSection({
     <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden">
       {/* Background Glows */}
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#4fc1c6]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#4fc1c6]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10" ref={containerRef}>
         {/* Header */}
@@ -119,13 +119,7 @@ export default function ProjectsSection({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80" />
                     
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold tracking-widest text-white uppercase">
-                        {project.icon}
-                        {project.category}
-                      </div>
-                    </div>
+
                   </div>
 
                   {/* Content Container */}
@@ -138,43 +132,10 @@ export default function ProjectsSection({
                         {project.description}
                       </p>
                       
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.slice(0, 3).map(tech => (
-                          <span key={tech} className="text-[10px] font-mono text-zinc-500 bg-white/5 px-2 py-1 rounded border border-white/5">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
+
                     </div>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-white/5 relative z-20">
-                      <div className="flex gap-4">
-                        {!project.isSpecial && (
-                          <a 
-                            href={project.githubUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-zinc-500 hover:text-white transition-colors"
-                          >
-                            <Github size={20} />
-                          </a>
-                        )}
-                        <a 
-                          href={project.isSpecial ? '#' : project.liveUrl} 
-                          onClick={(e) => {
-                            if (project.isSpecial) {
-                              e.preventDefault();
-                              setShowStats(true);
-                            }
-                          }}
-                          target={project.isSpecial ? '_self' : '_blank'}
-                          rel="noopener noreferrer"
-                          className="text-zinc-500 hover:text-[#4fc1c6] transition-colors"
-                        >
-                          <ExternalLink size={20} />
-                        </a>
-                      </div>
-                      
+                    <div className="flex items-center justify-center pt-4 border-t border-white/5 relative z-20">
                       {project.isSpecial ? (
                         <button 
                           onClick={(e) => {
@@ -190,7 +151,7 @@ export default function ProjectsSection({
                           href={`/projects/${project.slug}`}
                           className="flex items-center gap-1 text-xs font-bold tracking-widest text-[#4fc1c6] uppercase hover:underline"
                         >
-                          Details <ArrowUpRight size={14} />
+                          Details
                         </Link>
                       )}
                     </div>
@@ -216,7 +177,7 @@ export default function ProjectsSection({
               className="group relative inline-block overflow-hidden px-8 py-3 rounded-full bg-white/5 border border-white/10 text-white font-bold tracking-widest text-xs uppercase hover:bg-[#4fc1c6] hover:text-black hover:border-[#4fc1c6] transition-all duration-500 shadow-xl"
             >
               <span className="relative z-10 flex items-center gap-2">
-                View All Projects <ArrowUpRight size={16} className="group-hover:rotate-45 transition-transform duration-500" />
+                View All Projects
               </span>
             </Link>
           </motion.div>

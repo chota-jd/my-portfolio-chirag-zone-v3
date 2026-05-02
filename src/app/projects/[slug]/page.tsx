@@ -34,7 +34,7 @@ export default function ProjectDetail() {
       {/* Background Glows */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#4fc1c6]/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#4fc1c6]/10 rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 lg:py-20">
@@ -60,10 +60,7 @@ export default function ProjectDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#4fc1c6]/30 bg-[#4fc1c6]/5 text-[11px] font-mono tracking-widest text-[#4fc1c6] mb-6 uppercase">
-                {project.icon}
-                {project.category}
-              </div>
+
               
               <h1 className="text-3xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
                 {project.title.split(' ').map((word, i) => (
@@ -154,20 +151,7 @@ export default function ProjectDetail() {
                 </div>
               </div>
 
-              {/* Technologies Card */}
-              <div className="p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5">
-                <h4 className="text-sm font-mono tracking-widest uppercase text-zinc-500 mb-6">Focus Areas</h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
-                    <span 
-                      key={tech} 
-                      className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-zinc-400 text-xs font-medium hover:border-[#4fc1c6]/30 transition-colors"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+
 
               {/* External CTA */}
               <a 

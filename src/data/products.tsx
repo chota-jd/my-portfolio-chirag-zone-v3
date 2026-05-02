@@ -96,7 +96,7 @@ export const products: Product[] = [
     technologies: ['LLM', 'Governance API', 'React', 'AWS'],
     category: 'Enterprise AI',
     icon: <Bot className="w-5 h-5" />,
-    color: 'from-purple-600 to-indigo-500',
+    color: 'from-cyan-600 to-blue-500',
     role: 'Full Stack Developer',
     pillars: [
       { title: 'Governed Deployment', desc: 'Centralized control over AI model access and usage patterns.' },

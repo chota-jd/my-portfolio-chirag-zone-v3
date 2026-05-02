@@ -20,7 +20,7 @@ export default function ProductsPage() {
           className="container-custom py-12"
         >
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-7xl font-bold gradient-text-purple mb-4 pb-4">
+            <h1 className="text-5xl md:text-7xl font-bold gradient-text mb-4 pb-4">
               Product Contributions
             </h1>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">

@@ -3,7 +3,7 @@
 import { products } from '@/data/products';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink, Package, Calendar, User, BarChart3, CheckCircle2, Target, Zap, ShieldCheck, Globe, Eye, Image as ImageIcon } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Package, Calendar, User, BarChart3, CheckCircle2, Target, Zap, ShieldCheck, Globe, Image as ImageIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import Navigation from '@/components/ui/Navigation';
@@ -19,7 +19,7 @@ export default function ProductDetail() {
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
-          <Link href="/products" className="text-purple-400 hover:underline flex items-center gap-2 justify-center">
+          <Link href="/products" className="text-[#4fc1c6] hover:underline flex items-center gap-2 justify-center">
             <ArrowLeft size={20} /> Back to Products
           </Link>
         </div>
@@ -33,7 +33,7 @@ export default function ProductDetail() {
 
       {/* Background Glows */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#4fc1c6]/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#4fc1c6]/10 rounded-full blur-[120px]" />
       </div>
 
@@ -60,24 +60,17 @@ export default function ProductDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/5 text-[11px] font-mono tracking-widest text-purple-400 mb-6 uppercase">
-                {product.icon}
-                {product.category}
-              </div>
+
 
               <h1 className="text-3xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
                 {product.title.split(' ').map((word, i) => (
-                  <span key={i} className={i === 0 ? '' : 'gradient-text-purple'}>
+                  <span key={i} className={i === 0 ? '' : 'gradient-text'}>
                     {word}{' '}
                   </span>
                 ))}
               </h1>
 
-              <div className="flex items-center gap-3 mb-8">
-                <div className="text-sm font-mono text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
-                  Role: {product.role}
-                </div>
-              </div>
+
 
               <p className="text-base lg:text-lg text-zinc-400 leading-relaxed mb-16 font-light">
                 {product.fullDescription || product.description}
@@ -93,8 +86,8 @@ export default function ProductDetail() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {product.pillars.map((pillar, i) => (
-                      <div key={i} className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-purple-500/30 transition-all group">
-                        <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+                      <div key={i} className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-[#4fc1c6]/30 transition-all group">
+                        <div className="w-10 h-10 rounded-xl bg-[#4fc1c6]/10 flex items-center justify-center text-[#4fc1c6] mb-6 group-hover:scale-110 transition-transform">
                           <CheckCircle2 size={20} />
                         </div>
                         <h3 className="text-lg font-bold text-white mb-2">{pillar.title}</h3>
@@ -123,21 +116,7 @@ export default function ProductDetail() {
                 </section>
               )}
 
-              {/* Technologies Section */}
-              <section className="mb-20">
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="h-px flex-1 bg-white/10" />
-                  <h2 className="text-sm font-mono tracking-[0.3em] uppercase text-zinc-500">Stack & Skills</h2>
-                  <div className="h-px flex-1 bg-white/10" />
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {product.technologies.map((tech) => (
-                    <div key={tech} className="px-6 py-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-purple-500/30 transition-all text-sm text-zinc-300">
-                      {tech}
-                    </div>
-                  ))}
-                </div>
-              </section>
+
             </motion.div>
           </div>
 
@@ -165,40 +144,18 @@ export default function ProductDetail() {
                     />
                   </a>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  
-                  {/* Hover Overlay with Links */}
-                  <div className="absolute inset-0 z-20 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-black/40 backdrop-blur-[2px] pointer-events-none">
-                    <a 
-                      href={product.productLink} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="p-4 rounded-full bg-purple-500 text-black hover:scale-110 transition-transform shadow-xl pointer-events-auto"
-                      title="View Product"
-                    >
-                      <ExternalLink size={24} />
-                    </a>
-                    <a 
-                      href={product.thumbnailImage} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="p-4 rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/20 hover:scale-110 transition-transform shadow-xl backdrop-blur-md pointer-events-auto"
-                      title="View Preview"
-                    >
-                      <Eye size={24} />
-                    </a>
-                  </div>
                 </div>
                 <div className="p-8">
                   <h3 className="text-xl font-bold mb-4">Product Overview</h3>
                   <p className="text-zinc-500 text-sm mb-6 leading-relaxed">
-                    A high-impact contribution focusing on {product.category.toLowerCase()} and modern digital transformation.
+                    A high-impact contribution focusing on modern digital transformation.
                   </p>
 
                   <a
                     href={product.productLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-4 rounded-full bg-purple-500 text-black font-bold tracking-widest text-[10px] uppercase hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(168,85,247,0.15)]"
+                    className="flex items-center justify-center gap-2 w-full py-4 rounded-full bg-[#4fc1c6] text-black font-bold tracking-widest text-[10px] uppercase hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(79,193,198,0.15)]"
                   >
                     View Live Product <ExternalLink size={14} />
                   </a>
@@ -225,7 +182,7 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      <Footer />
+
     </main>
   );
 }
