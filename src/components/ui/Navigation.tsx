@@ -3,13 +3,14 @@
 
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Menu, X, Home, User, Briefcase, FolderOpen, Mail } from 'lucide-react';
+import { Menu, X, Home, User, Briefcase, FolderOpen, Mail, Package } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import { usePathname, useRouter } from 'next/navigation';
 
 const navItems = [
   { name: 'Home', href: '#home', icon: Home },
   { name: 'About', href: '#about', icon: User },
+  { name: 'Product', href: '#products', icon: Package },
   { name: 'Projects', href: '#projects', icon: FolderOpen },
   { name: 'Experience', href: '#experience', icon: Briefcase },
   { name: 'Contact', href: '#contact', icon: Mail },
