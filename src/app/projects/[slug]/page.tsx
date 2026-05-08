@@ -3,7 +3,7 @@
 import { projects } from '@/data/projects';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink, Github, Globe, Sparkles, Smartphone, Calendar, User, BarChart3, CheckCircle2, Target, Zap, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Globe, Target, Zap, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
 import Navigation from '@/components/ui/Navigation';
@@ -74,6 +74,26 @@ export default function ProjectDetail() {
                 {project.fullDescription || project.description}
               </p>
 
+              {project.narrative && (
+                <section className="mb-20">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="h-px flex-1 bg-white/10" />
+                    <h2 className="text-sm font-mono tracking-[0.3em] uppercase text-zinc-500">Project Story</h2>
+                    <div className="h-px flex-1 bg-white/10" />
+                  </div>
+                  <div className="space-y-6 rounded-[2rem] bg-white/[0.02] border border-white/5 p-8">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-3">Overview</h3>
+                      <p className="text-sm lg:text-base text-zinc-300 leading-relaxed">{project.narrative.overview}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-3">Impact</h3>
+                      <p className="text-sm lg:text-base text-zinc-300 leading-relaxed">{project.narrative.impact}</p>
+                    </div>
+                  </div>
+                </section>
+              )}
+
               {/* Pillars Section */}
               {project.pillars && (
                 <section className="mb-20">
@@ -108,6 +128,25 @@ export default function ProjectDetail() {
                           <h4 className="text-base font-bold text-white mb-1">{step.title}</h4>
                           <p className="text-zinc-500 text-xs">{step.desc}</p>
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Platform insights from live project links */}
+              {project.platformInsights && (
+                <section className="mb-16">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="h-px flex-1 bg-white/10" />
+                    <h2 className="text-sm font-mono tracking-[0.3em] uppercase text-zinc-500">Platform Insights</h2>
+                    <div className="h-px flex-1 bg-white/10" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {project.platformInsights.map((insight, i) => (
+                      <div key={i} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5">
+                        <p className="text-[10px] font-mono tracking-widest uppercase text-zinc-500 mb-2">{insight.label}</p>
+                        <p className="text-sm text-zinc-200 leading-relaxed">{insight.value}</p>
                       </div>
                     ))}
                   </div>

@@ -20,6 +20,11 @@ export interface Project {
   detailedStats?: { label: string; value: string }[];
   pillars?: { title: string; desc: string }[];
   process?: { step: string; title: string; desc: string }[];
+  platformInsights?: { label: string; value: string }[];
+  narrative?: {
+    overview: string;
+    impact: string;
+  };
 }
 
 export const projects: Project[] = [
@@ -54,7 +59,17 @@ export const projects: Project[] = [
       { step: '02', title: 'Validate', desc: 'Complete a brief assessment on responsible AI ethics.' },
       { step: '03', title: 'Commit', desc: 'Take the formal digital pledge to use AI for good.' },
       { step: '04', title: 'Certify', desc: 'Download your official Government-recognized badge.' }
-    ]
+    ],
+    platformInsights: [
+      { label: 'Official Host', value: 'IndiaAI Mission (MeitY) with Intel India' },
+      { label: 'Core Flow', value: 'OTP Register -> Responsible AI Quiz -> Digital Pledge -> Badge' },
+      { label: 'User Effort', value: 'Approx. 5-7 minutes per completion' },
+      { label: 'Participation Moment', value: 'Guinness attempt window: 16-17 Feb 2026 (24h)' }
+    ],
+    narrative: {
+      overview: 'AI Impact Pledge is designed as a public-first civic platform where participation feels simple and trusted. The portal uses an OTP-based entry, a short responsible AI quiz, and an on-screen guided pledge so users can understand the intent before they commit. The flow is intentionally lightweight, making it easy for citizens, students, and professionals to complete the journey quickly from any device.',
+      impact: 'What makes this initiative meaningful is how policy goals are translated into repeatable digital behavior. Instead of only spreading awareness through campaigns, the platform converts awareness into measurable participation through pledges and badges. This creates a visible social layer around responsible AI adoption and helps build long-term momentum for ethical technology practices at national scale.'
+    }
   },
   {
     id: 2,
@@ -87,7 +102,17 @@ export const projects: Project[] = [
       { step: '02', title: 'Discover', desc: 'Explore AI-curated tracks tailored to your skills and needs.' },
       { step: '03', title: 'Engage', desc: 'Learn through interactive, gamified expert-led modules.' },
       { step: '04', title: 'Thrive', desc: 'Obtain global credentials recognized across G20 nations.' }
-    ]
+    ],
+    platformInsights: [
+      { label: 'Launch Context', value: 'Announced during India G20 Presidency 2023' },
+      { label: 'Coverage', value: 'Active users reported from 80+ countries' },
+      { label: 'Learning Inventory', value: '1000+ free courses by global partners' },
+      { label: 'Top Journeys', value: 'Explore Courses, Learning Hub, Events & Webinars' }
+    ],
+    narrative: {
+      overview: 'TechEquity operates as a discovery and growth ecosystem rather than a single-course website. Learners can browse curated pathways, compare course options, and move across categories like digital literacy, financial literacy, and technology skills. The platform experience is built to reduce friction for first-time learners while still giving advanced users enough depth to continue upskilling.',
+      impact: 'The strongest outcome of TechEquity is accessibility at scale: high-quality learning opportunities are aggregated in one place and made free to access. By combining global partners, multilingual access patterns, and career-focused course tracks, the project supports women in building practical digital confidence that can translate into better employability and stronger economic participation.'
+    }
   },
   {
     id: 3,
@@ -120,7 +145,17 @@ export const projects: Project[] = [
       { step: '02', title: 'Learn', desc: 'Complete the AI Aware and AI Appreciate core modules.' },
       { step: '03', title: 'Engage', desc: 'Participate in interactive activities and foundational quizzes.' },
       { step: '04', title: 'Verify', desc: 'Earn official digital badges for your professional record.' }
-    ]
+    ],
+    platformInsights: [
+      { label: 'Program Type', value: 'Free self-learning national AI literacy initiative' },
+      { label: 'Curriculum', value: 'Two modules: AI Aware + AI Appreciate (<4h combined)' },
+      { label: 'Language Reach', value: 'Bahasa Malaysia, English, Mandarin, Tamil' },
+      { label: 'Scale Milestone', value: '1M+ completions achieved in under 6 months' }
+    ],
+    narrative: {
+      overview: 'AI Untuk Rakyat is structured as a mass-adoption learning experience that introduces AI in a non-technical and approachable format. The two-module progression helps users first understand what AI is, and then move into practical understanding of ethics, use cases, and responsibility. This makes the platform relevant for broad demographics, not only for technical professionals.',
+      impact: 'The program demonstrates how national digital literacy initiatives can move fast when content is localized and the journey is clear. Multilingual support, badge-based recognition, and self-paced delivery create a model where citizens can participate on their own schedule while still feeling part of a coordinated national transformation effort.'
+    }
   },
   {
     id: 4,
@@ -139,6 +174,16 @@ export const projects: Project[] = [
     detailedStats: [
       { label: 'Prototypes', value: '12' },
       { label: 'Research Papers', value: '5' }
-    ]
+    ],
+    platformInsights: [
+      { label: 'Portfolio Link', value: 'Concept showcase placeholder (internal section link)' },
+      { label: 'Focus Areas', value: 'AI, Web3, Metaverse, Edge, Neural Interface' },
+      { label: 'Current State', value: 'R&D lab direction, not a public production portal' },
+      { label: 'Intended Outcome', value: 'Prototype and validate frontier interaction models' }
+    ],
+    narrative: {
+      overview: 'Future Frontier is presented as an innovation sandbox where speculative ideas are translated into tangible experiments. Instead of optimizing for immediate launch, the project focuses on hypothesis-driven prototyping across emerging domains such as ambient intelligence, spatial interaction, and decentralized systems.',
+      impact: 'The value of this lab is strategic: it creates optionality for future products by validating concepts early and identifying what is technically viable, human-centered, and scalable. This approach helps reduce future build risk and ensures the portfolio remains aligned with where digital interaction is heading next.'
+    }
   }
 ];
