@@ -64,7 +64,7 @@ export default function ProductsSection({
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-zinc-400 max-w-2xl mx-auto text-lg"
             >
-              Beyond personal projects, I collaborate on high-impact digital products that serve millions of users across various industries.
+              I collaborate on high-impact digital products that serve millions of users across various industries.
             </motion.p>
           </div>
         )}
