@@ -9,8 +9,8 @@ import AboutSection from '@/components/sections/AboutSection';
 import IndustriesSection from '@/components/sections/IndustriesSection';
 import TechStackSection from '@/components/sections/TechStackSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
-import ProductsSection from '@/components/sections/ProductsSection';
-import ProjectsSection from '@/components/sections/ProjectsSection';
+// import ProductsSection from '@/components/sections/ProductsSection';
+// import ProjectsSection from '@/components/sections/ProjectsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/ui/Footer';
 import CinematicIntro from '@/components/CinematicIntro';
@@ -50,8 +50,8 @@ export default function Home() {
           <IndustriesSection />
           <TechStackSection />
           <ExperienceSection />
-          <ProductsSection />
-          <ProjectsSection />
+          {/* <ProductsSection />
+          <ProjectsSection /> */}
           <ContactSection />
         </main>
 

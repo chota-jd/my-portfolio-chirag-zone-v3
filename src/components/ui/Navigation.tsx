@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Home, User, Briefcase, FolderOpen, Mail, Package } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import { usePathname, useRouter } from 'next/navigation';
@@ -9,11 +10,15 @@ import { usePathname, useRouter } from 'next/navigation';
 const navItems = [
   { name: 'Home', href: '#home', icon: Home },
   { name: 'About', href: '#about', icon: User },
-  { name: 'Product', href: '#products', icon: Package },
-  { name: 'Projects', href: '#projects', icon: FolderOpen },
+  { name: 'Product', href: '/products', icon: Package },
+  { name: 'Projects', href: '/projects', icon: FolderOpen },
   { name: 'Experience', href: '#experience', icon: Briefcase },
   { name: 'Contact', href: '#contact', icon: Mail },
 ];
+
+function isPageHref(href: string) {
+  return href.startsWith('/');
+}
 
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState('home');
@@ -22,10 +27,22 @@ export default function Navigation() {
   const router = useRouter();
 
   useEffect(() => {
+    if (pathname.startsWith('/products')) {
+      setActiveSection('products');
+    } else if (pathname.startsWith('/projects')) {
+      setActiveSection('projects');
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      const sections = navItems.map((item) => item.href.substring(1));
+      if (pathname !== '/') return;
+
+      const sections = navItems
+        .filter((item) => !isPageHref(item.href))
+        .map((item) => item.href.substring(1));
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -43,9 +60,14 @@ export default function Navigation() {
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   const scrollToSection = (href: string) => {
+    if (isPageHref(href)) {
+      router.push(href);
+      return;
+    }
+
     if (pathname !== '/') {
       router.push(`/${href}`);
       return;
@@ -55,6 +77,13 @@ export default function Navigation() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const isItemActive = (href: string) => {
+    if (isPageHref(href)) {
+      return pathname.startsWith(href);
+    }
+    return activeSection === href.substring(1);
   };
 
   return (
@@ -71,19 +100,37 @@ export default function Navigation() {
             <BrandLogo scrollToSection={scrollToSection} />
 
             <div className="hidden md:flex space-x-8">
-              {navItems.map((item) => (
-                <button
-                  key={item.name}
-                  type="button"
-                  onClick={() => scrollToSection(item.href)}
-                  className={`relative px-3 py-2 text-sm font-medium transition-colors hover:scale-105 active:scale-95 ${activeSection === item.href.substring(1) ? 'text-[#4fc1c6]' : 'text-gray-300 hover:text-white'}`}
-                >
-                  {item.name}
-                  {activeSection === item.href.substring(1) && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4fc1c6]" />
-                  )}
-                </button>
-              ))}
+              {navItems.map((item) => {
+                const active = isItemActive(item.href);
+                const linkClass = `relative px-3 py-2 text-sm font-medium transition-colors hover:scale-105 active:scale-95 ${
+                  active ? 'text-[#4fc1c6]' : 'text-gray-300 hover:text-white'
+                }`;
+
+                if (isPageHref(item.href)) {
+                  return (
+                    <Link key={item.name} href={item.href} className={linkClass}>
+                      {item.name}
+                      {active && (
+                        <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4fc1c6]" />
+                      )}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <button
+                    key={item.name}
+                    type="button"
+                    onClick={() => scrollToSection(item.href)}
+                    className={linkClass}
+                  >
+                    {item.name}
+                    {active && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4fc1c6]" />
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
