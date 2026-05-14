@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { Form, Input, Button, message, Card } from 'antd';
-import { Mail, Phone, MapPin, Send, CheckCircle, MessageCircle, Loader } from 'lucide-react';
+import { useState } from 'react';
+import { Form, Input, message } from 'antd';
+import { Mail, Phone, MapPin, CheckCircle, MessageCircle, Loader } from 'lucide-react';
 import { saveContactMessage, type ContactFormData } from '../../firebaseConfig';
 
 const { TextArea } = Input;
@@ -32,31 +31,10 @@ const contactInfo = [
   }
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-  },
-};
-
 export default function ContactSection() {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [messageApi, contextHolder] = message.useMessage();
 
 const onFinish = async (values: ContactForm) => {
@@ -122,14 +100,8 @@ const onFinish = async (values: ContactForm) => {
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 relative">
       {contextHolder}
-      <motion.div
-        ref={ref}
-        className="max-w-7xl mx-auto"
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
-        <motion.div className="text-center mb-16" variants={itemVariants}>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold gradient-text-reverse mb-4">
             Get In Touch
           </h2>
@@ -138,26 +110,22 @@ const onFinish = async (values: ContactForm) => {
             Have a project in mind or want to collaborate? I&apos;d love to hear from you.
             Let&apos;s create something amazing together!
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
-          <motion.div variants={itemVariants} className="flex flex-col">
+          <div className="flex flex-col">
             <h3 className="text-xl sm:text-2xl font-bold text-[#4fc1c6] mb-6 sm:mb-8">
-              Let's Connect
+              Let&apos;s Connect
             </h3>
 
             <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
-              {contactInfo.map((info, index) => (
-                <motion.a
+              {contactInfo.map((info) => (
+                <a
                   key={info.title}
                   href={info.link}
                   target={info.link.startsWith('http') ? '_blank' : undefined}
                   rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex items-center space-x-4 p-4 sm:p-5 bg-[#0f1117] border border-[#1f222e] rounded-xl hover:border-[#4fc1c6]/40 transition-all duration-300 group w-full"
-                  whileHover={{ scale: 1.01 }}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: index * 0.2 + 0.5 }}
+                  className="flex items-center space-x-4 p-4 sm:p-5 bg-[#0f1117] border border-[#1f222e] rounded-xl hover:border-[#4fc1c6]/40 hover:scale-[1.01] transition-all duration-300 group w-full"
                 >
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#1a232c] flex items-center justify-center group-hover:bg-[#4fc1c6]/20 transition-all flex-shrink-0 border border-[#2a3441] group-hover:border-[#4fc1c6]/50">
                     <info.icon className="text-[#4fc1c6]" size={20} />
@@ -168,15 +136,12 @@ const onFinish = async (values: ContactForm) => {
                       {info.value}
                     </p>
                   </div>
-                </motion.a>
+                </a>
               ))}
             </div>
 
             {/* Additional Info */}
-            <motion.div
-              className="p-5 sm:p-6 bg-[#0f1117] rounded-xl border border-[#1f222e] mt-auto"
-              variants={itemVariants}
-            >
+            <div className="p-5 sm:p-6 bg-[#0f1117] rounded-xl border border-[#1f222e] mt-auto">
               <h4 className="text-base sm:text-lg font-semibold text-[#4fc1c6] mb-2 sm:mb-3">
                 Quick Response Promise
               </h4>
@@ -185,43 +150,28 @@ const onFinish = async (values: ContactForm) => {
                 feel free to reach out via phone or connect with me on social media for
                 a faster response.
               </p>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Contact Form */}
-          <motion.div variants={itemVariants}>
+          <div>
             <div className="bg-[#0f1117] border border-[#1f222e] rounded-xl p-6 sm:p-8 shadow-2xl">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8">
                 Send Me a Message
               </h3>
 
               {isSubmitted ? (
-                <motion.div
-                  className="text-center py-8 sm:py-12"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <motion.div
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4 border border-green-500/30"
-                    animate={{
-                      scale: [1, 1.1, 1],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }}
-                  >
+                <div className="text-center py-8 sm:py-12">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4 border border-green-500/30 animate-pulse">
                     <CheckCircle className="text-green-500" size={32} />
-                  </motion.div>
+                  </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
                     Message Sent!
                   </h3>
                   <p className="text-gray-400 text-sm sm:text-base">
                     Thank you for reaching out. I'll get back to you soon!
                   </p>
-                </motion.div>
+                </div>
               ) : (
                 <Form
                   form={form}
@@ -303,15 +253,11 @@ const onFinish = async (values: ContactForm) => {
                   </Form.Item>
 
                   <Form.Item className="mb-0 mt-8">
-                    <motion.div
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.98 }}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className={`group relative overflow-hidden px-6 py-3 rounded-xl bg-gradient-to-r from-[#4fc1c6] to-[#15232d] text-white font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(79,193,198,0.2)] w-full h-12 text-base flex items-center justify-center space-x-2 hover:scale-[1.01] active:scale-[0.98] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                     >
-                      <motion.button
-                        type="submit" 
-                        disabled={isSubmitting}
-                        className={`group relative overflow-hidden px-6 py-3 rounded-xl bg-gradient-to-r from-[#4fc1c6] to-[#15232d] text-white font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(79,193,198,0.2)] w-full h-12 text-base flex items-center justify-center space-x-2 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
-                      >
                         <div className="absolute inset-0 bg-gradient-to-r from-[#4fc1c6] to-[#1b3140] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                         <div className="relative flex items-center justify-center space-x-2">
@@ -327,15 +273,14 @@ const onFinish = async (values: ContactForm) => {
                             </>
                           )}
                         </div>
-                      </motion.button>
-                    </motion.div>
+                    </button>
                   </Form.Item>
                 </Form>
               )}
             </div>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,8 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-// WorkTestimonialsSection.tsx
 'use client';
-
-import { motion } from 'framer-motion';
 
 const testimonials = [
   {
@@ -34,13 +31,7 @@ const testimonials = [
 export default function WorkTestimonialsSection() {
   return (
     <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-      <motion.div
-        className="max-w-6xl mx-auto"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8 }}
-      >
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold gradient-text mb-4">
             Work Testimonials
@@ -50,15 +41,8 @@ export default function WorkTestimonialsSection() {
         <div className="relative flex flex-col items-center">
           <div className="absolute left-0 right-0 top-1/2 h-1 bg-gradient-to-r from-[#4fc1c6] via-cyan-400 to-[#a259f7] opacity-30 z-0" style={{transform: 'translateY(-50%)'}} />
           <div className="flex flex-row flex-wrap justify-center gap-12 w-full z-10">
-            {testimonials.map((t, idx) => (
-              <motion.div
-                key={t.name}
-                className="flex flex-col items-center relative min-w-[260px] max-w-xs"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-              >
+            {testimonials.map((t) => (
+              <div key={t.name} className="flex flex-col items-center relative min-w-[260px] max-w-xs">
                 {/* Avatar with glow */}
                 <div className="relative mb-4">
                   <span className="absolute inset-0 rounded-full blur-xl bg-gradient-to-tr from-[#4fc1c6] via-cyan-400 to-[#a259f7] opacity-40 scale-110" />
@@ -72,11 +56,11 @@ export default function WorkTestimonialsSection() {
                 </div>
                 <div className="font-semibold text-white text-lg text-center drop-shadow-md">{t.name}</div>
                 <div className="text-sm text-cyan-300 text-center mb-2">{t.title}</div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -2,7 +2,6 @@
 
 import { projects } from '@/data/projects';
 import { useParams, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { ArrowLeft, Globe, Target, Zap, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
@@ -55,13 +54,7 @@ export default function ProjectDetail() {
           
           {/* Left Column: Main Content (8 cols) */}
           <div className="lg:col-span-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-
-              
+            <div>
               <h1 className="text-3xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
                 {project.title.split(' ').map((word, i) => (
                   <span key={i} className={i === 0 ? '' : 'gradient-text'}>
@@ -152,17 +145,12 @@ export default function ProjectDetail() {
                   </div>
                 </section>
               )}
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Column: Visuals & Stats (4 cols) */}
           <div className="lg:col-span-4 lg:sticky lg:top-24 h-fit">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-8"
-            >
+            <div className="space-y-8">
               {/* Smaller Image Card */}
               <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-zinc-900 group">
                 <div className="aspect-video relative overflow-hidden">
@@ -201,7 +189,7 @@ export default function ProjectDetail() {
               >
                 Visit Live Portal
               </a>
-            </motion.div>
+            </div>
           </div>
 
         </div>

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 const socialLinks = [
   {
@@ -33,34 +32,17 @@ export default function Footer() {
     <footer className="relative py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center space-y-6">
-          {/* Logo/Name */}
-          {/* <motion.div
-            className="text-2xl font-bold text-[#4fc1c6] cursor-pointer"
-            onClick={scrollToTop}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Chirag
-          </motion.div> */}
-
-          {/* Social Links */}
           <div className="flex space-x-6">
             {socialLinks.map((link) => (
-              <motion.a
+              <a
                 key={link.name}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border-2 border-gray-600 flex items-center justify-center text-gray-400 hover:border-[#4fc1c6] hover:text-[#4fc1c6] transition-all duration-300"
-                whileHover={{
-                  scale: 1.1,
-                  y: -2,
-                  boxShadow: '0 0 20px rgba(79, 193, 198, 0.4)'
-                }}
-                whileTap={{ scale: 0.95 }}
+                className="w-10 h-10 rounded-full border-2 border-gray-600 flex items-center justify-center text-gray-400 hover:border-[#4fc1c6] hover:text-[#4fc1c6] hover:scale-110 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(79,193,198,0.4)] active:scale-95 transition-all duration-300"
               >
                 <link.icon size={18} />
-              </motion.a>
+              </a>
             ))}
           </div>
 
@@ -68,25 +50,17 @@ export default function Footer() {
 
           <div className="flex items-center text-gray-400 text-sm gap-2">
             <span>© {currentYear} Chirag Prajapati </span>
-            <motion.span
-              className="ml-auto text-gray-500"
-              animate={{ x: [0, 5, 0] }}
-              transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
-            >
-              →
-            </motion.span>
+            <span className="ml-auto text-gray-500">→</span>
             <span>All rights reserved.</span>
-
           </div>
 
-          <motion.button
+          <button
+            type="button"
             onClick={scrollToTop}
-            className="text-xs text-gray-500 hover:text-[#4fc1c6] transition-colors cursor-pointer"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            className="text-xs text-gray-500 hover:text-[#4fc1c6] hover:-translate-y-0.5 active:scale-95 transition-all cursor-pointer"
           >
             ↑ Back to top
-          </motion.button>
+          </button>
         </div>
       </div>
 
