@@ -40,7 +40,7 @@ export default function ProjectsSection({
         {/* Header */}
         {!hideHeader && (
           <div className="text-center mb-20">
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
@@ -48,23 +48,33 @@ export default function ProjectsSection({
             >
               <Sparkles size={12} />
               SELECTED WORKS
-            </motion.div>
+            </motion.div> */}
             
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl sm:text-6xl font-bold mb-6 tracking-tight"
             >
-              Building <span className="gradient-text">digital futures</span>
+              Selected <span className="gradient-text">projects</span>
             </motion.h2>
 
-            <motion.div 
+            <motion.div
               initial={{ scaleX: 0 }}
               animate={isInView ? { scaleX: 1 } : {}}
               transition={{ duration: 1, delay: 0.3 }}
               className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#4fc1c6] to-transparent mx-auto mb-8"
             />
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed"
+            >
+              A curated portfolio of high-impact projects I&apos;ve contributed to with cross-functional
+              teams, spanning civic platforms, inclusive learning, and public AI literacy.
+            </motion.p>
           </div>
         )}
 

@@ -20,12 +20,12 @@ export default function ProjectsPage() {
           className="container-custom py-12"
         >
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-7xl font-bold gradient-text mb-4 pb-4">
-              Selected Projects
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white">
+              Selected <span className="gradient-text">projects</span>
             </h1>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-              Turning complex challenges into elegant, high-performance digital solutions. 
-              Explore a curated collection of my most impactful works and technical experiments.
+            <p className="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed">
+              A curated portfolio of high-impact projects I&apos;ve contributed to with cross-functional
+              teams, spanning civic platforms, inclusive learning, and public AI literacy.
             </p>
           </div>
 

@@ -32,7 +32,7 @@ export default function ProductsSection({
         {/* Header */}
         {!hideHeader && (
           <div className="text-center mb-20">
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
@@ -40,7 +40,7 @@ export default function ProductsSection({
             >
               <Package size={12} />
               PRODUCT CONTRIBUTIONS
-            </motion.div>
+            </motion.div> */}
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
