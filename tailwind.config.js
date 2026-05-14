@@ -27,6 +27,7 @@ module.exports = {
       animation: {
         'gradient-shift': 'gradient-shift 8s ease infinite',
         'float': 'float 6s ease-in-out infinite',
+        'tech-marquee': 'tech-marquee 48s linear infinite',
       },
       keyframes: {
         'gradient-shift': {
@@ -36,6 +37,10 @@ module.exports = {
         'float': {
           '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
           '50%': { transform: 'translateY(-10px) rotate(180deg)' },
+        },
+        'tech-marquee': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
         },
       },
       spacing: {
