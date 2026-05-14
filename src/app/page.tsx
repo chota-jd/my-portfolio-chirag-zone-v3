@@ -42,23 +42,19 @@ export default function Home() {
       }}
     >
       <div className="relative min-h-screen">
-        {/* Navigation */}
         <Navigation />
-         <AnimatedBackground />
-        {/* Main Content */}
+        <AnimatedBackground />
         <main className="relative z-10">
           <HeroSection />
           <AboutSection />
           <IndustriesSection />
           <TechStackSection />
           <ExperienceSection />
-          {/* <WorkTestimonialsSection /> */}
           <ProductsSection />
           <ProjectsSection />
           <ContactSection />
         </main>
-        
-        {/* Footer */}
+
         <Footer />
       </div>
     </ConfigProvider>
