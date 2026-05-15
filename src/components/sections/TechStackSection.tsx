@@ -95,9 +95,7 @@ export default function TechStackSection() {
 
   return (
     <section id="techstack" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="pointer-events-none absolute inset-x-0 top-1/3 -z-10 mx-auto h-[320px] max-w-3xl rounded-full bg-[#4fc1c6]/[0.06] blur-[100px]" aria-hidden />
-
-      <div className="relative z-10 mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl">
         <div className="mb-16 text-center">
           <h2 className="pb-4 text-4xl font-bold gradient-text sm:text-5xl">Technologies &amp; Skills</h2>
           <div className="mx-auto h-1 w-24 rounded-full bg-accent" />
@@ -114,15 +112,6 @@ export default function TechStackSection() {
         </div>
 
         <div className="relative">
-          <div
-            className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-10 bg-gradient-to-r from-black/80 to-transparent sm:w-14"
-            aria-hidden
-          />
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-10 bg-gradient-to-l from-black/80 to-transparent sm:w-14"
-            aria-hidden
-          />
-
           {reducedMotion ? (
             <div className="flex flex-wrap justify-center gap-3 py-2 sm:gap-4">
               {skills.map((skill) => (
