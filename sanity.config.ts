@@ -1,5 +1,6 @@
 'use client';
 
+import '@/sanity/ensure-react-effect-event';
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 

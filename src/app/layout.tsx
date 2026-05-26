@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Jost, Geist_Mono, Playfair_Display } from "next/font/google";
-import "@ant-design/v5-patch-for-react-19";
 import "./globals.css";
 // import AnimatedBackground from '@/components/ui/AnimatedBackground';
 

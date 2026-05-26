@@ -342,3 +342,21 @@ body::-webkit-scrollbar-thumb:hover {
     max-width: 1536px;
   }
 }
+
+/* Sanity Studio — full viewport + centered boot loaders */
+.studio-shell #sanity {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.studio-shell #sanity [data-ui='NextStudioLayout'] {
+  min-height: 100%;
+}
+
+/* Hide Sanity's bare spinner — we show our own labeled loader overlay */
+.studio-shell [data-ui='Spinner'],
+.studio-shell [data-ui='LoadingBlock'] {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

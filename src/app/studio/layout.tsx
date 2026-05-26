@@ -12,7 +12,7 @@ export const viewport: Viewport = {
 
 export default function StudioLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="fixed inset-0 z-[100] h-[100dvh] w-full overflow-hidden bg-[#101112]">
+    <div className="studio-shell fixed inset-0 z-[100] flex h-[100dvh] w-full flex-col overflow-hidden bg-[#101112]">
       {children}
     </div>
   );
