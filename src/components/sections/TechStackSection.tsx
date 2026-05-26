@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import type { IconType } from 'react-icons';
 import { FaJsSquare } from 'react-icons/fa';
@@ -16,6 +15,7 @@ import {
   SiNodedotjs,
   SiGit,
   SiGithub,
+  SiN8N,
   SiPhotopea,
   SiCanva,
   SiAffinityphoto,
@@ -37,152 +37,109 @@ function isIconComponent(icon: IconType | StaticImageData): icon is IconType {
   return typeof icon === 'function';
 }
 
-const techStack: Record<string, Skill[]> = {
-  'Code & Creativity': [
-    { name: 'React', icon: SiReact, color: '#61DAFB' },
-    { name: 'Next.js', icon: SiNextdotjs, color: '#e4e4e7' },
-    { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-    { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
-    { name: 'Angular', icon: SiAngular, color: '#DD0031' },
-    { name: 'HTML5', icon: SiHtml5, color: '#E34F26' },
-    { name: 'CSS3', icon: SiCss, color: '#1572B6' },
-    { name: 'JavaScript', icon: FaJsSquare, color: '#F7DF1E' },
-    { name: 'Firebase', icon: SiFirebase, color: '#FFCA28' },
-    { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
-    { name: 'Git', icon: SiGit, color: '#F05032' },
-    { name: 'Github', icon: SiGithub, color: '#e4e4e7' },
-    { name: 'Lightroom', icon: SiPhotopea, color: '#31A8FF' },
-    { name: 'Canva', icon: SiCanva, color: '#00C4CC' },
-    { name: 'Adobe', icon: SiAffinityphoto, color: '#FF0000' },
-    { name: 'VN Editor', icon: VN, color: '#e4e4e7' },
-  ],
-};
+const skills: Skill[] = [
+  { name: 'React', icon: SiReact, color: '#61DAFB' },
+  { name: 'Next.js', icon: SiNextdotjs, color: '#e4e4e7' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'Tailwind', icon: SiTailwindcss, color: '#06B6D4' },
+  { name: 'Angular', icon: SiAngular, color: '#DD0031' },
+  { name: 'HTML5', icon: SiHtml5, color: '#E34F26' },
+  { name: 'CSS3', icon: SiCss, color: '#1572B6' },
+  { name: 'JavaScript', icon: FaJsSquare, color: '#F7DF1E' },
+  { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
+  { name: 'Firebase', icon: SiFirebase, color: '#FFCA28' },
+  { name: 'Git', icon: SiGit, color: '#F05032' },
+  { name: 'GitHub', icon: SiGithub, color: '#e4e4e7' },
+  { name: 'n8n', icon: SiN8N, color: '#EA4B71' },
+  { name: 'Lightroom', icon: SiPhotopea, color: '#31A8FF' },
+  { name: 'Canva', icon: SiCanva, color: '#00C4CC' },
+  { name: 'Adobe', icon: SiAffinityphoto, color: '#FF0000' },
+  { name: 'VN Editor', icon: VN, color: '#e4e4e7' },
+];
 
-function SkillTile({ skill }: { skill: Skill }) {
+function SkillIcon({ skill }: { skill: Skill }) {
   return (
-    <div className="group flex h-full flex-col items-center justify-center gap-3.5 px-2 py-3 sm:gap-4 sm:py-4">
-      <div className="flex h-14 w-14 items-center justify-center transition-transform duration-300 group-hover:scale-110 sm:h-[3.75rem] sm:w-[3.75rem]">
+    <div className="group/tile relative flex justify-center" aria-label={skill.name} title={skill.name}>
+      <span
+        className="pointer-events-none absolute top-full left-1/2 z-20 mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-md bg-zinc-800 px-2 py-0.5 text-[10px] font-medium text-white opacity-0 shadow-lg ring-1 ring-white/10 transition-opacity duration-200 group-hover/tile:opacity-100 sm:text-xs"
+        role="tooltip"
+      >
+        {skill.name}
+      </span>
+      <div className="flex h-16 w-16 items-center justify-center transition-transform duration-200 group-hover/tile:scale-110 sm:h-20 sm:w-20 md:h-[5.5rem] md:w-[5.5rem]">
         {isStaticImage(skill.icon) ? (
           <Image
             src={skill.icon}
             alt=""
-            aria-hidden
-            className="h-11 w-11 object-contain opacity-90 invert transition-opacity duration-300 group-hover:opacity-100 sm:h-12 sm:w-12"
+            className="h-10 w-10 object-contain invert opacity-95 transition-transform sm:h-12 sm:w-12 md:h-14 md:w-14"
           />
         ) : isIconComponent(skill.icon) ? (
           <skill.icon
-            className="h-10 w-10 opacity-90 transition-opacity duration-300 group-hover:opacity-100 sm:h-12 sm:w-12"
+            className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14"
             style={{ color: skill.color }}
+            aria-hidden
           />
         ) : null}
       </div>
-      <span className="text-center text-base font-medium tracking-wide text-zinc-300 transition-colors duration-300 group-hover:text-white">
-        {skill.name}
-      </span>
     </div>
   );
 }
 
-const slideClass =
-  'w-[min(46vw,12.75rem)] shrink-0 sm:w-[11.75rem] md:w-[12.25rem]';
-
 export default function TechStackSection() {
-  const skills = techStack['Code & Creativity'];
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const sync = () => setReducedMotion(mq.matches);
-    sync();
-    mq.addEventListener('change', sync);
-    return () => mq.removeEventListener('change', sync);
-  }, []);
-
   return (
-    <section id="techstack" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <SectionHeading
-          titleClassName="gradient-text"
-          subtitle="A comprehensive overview of my technical expertise and the tools I use to build exceptional digital experiences."
-        >
+    <section id="techstack" className="relative overflow-x-hidden py-16 px-4 sm:px-6 lg:px-8">
+      <div className="pointer-events-none absolute top-1/3 -left-24 h-72 w-72 rounded-full bg-[#4fc1c6]/5 blur-[100px]" aria-hidden />
+      <div className="pointer-events-none absolute bottom-1/4 -right-24 h-72 w-72 rounded-full bg-[#a78bfa]/5 blur-[100px]" aria-hidden />
+
+      <div className="relative z-10 mx-auto max-w-5xl">
+        <SectionHeading titleClassName="gradient-text" subtitle="Tools and platforms I work with every day.">
           Technologies &amp; Skills
         </SectionHeading>
 
-        <div className="mb-10 flex items-center gap-4">
-          <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#4fc1c6]/25" />
-          <h3 className="shrink-0 text-lg font-semibold text-zinc-200 sm:text-xl">Code &amp; Creativity</h3>
-          <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#4fc1c6]/25" />
+        <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-6 md:gap-8">
+          {skills.map((skill) => (
+            <SkillIcon key={skill.name} skill={skill} />
+          ))}
         </div>
 
-        <div className="relative">
-          {reducedMotion ? (
-            <div className="flex flex-wrap justify-center gap-3 py-2 sm:gap-4">
-              {skills.map((skill) => (
-                <div key={skill.name} className={slideClass}>
-                  <SkillTile skill={skill} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="overflow-hidden py-2" role="presentation">
-              <div className="flex w-max gap-3 sm:gap-4 animate-tech-marquee hover:[animation-play-state:paused]">
-                {[...skills, ...skills].map((skill, i) => (
-                  <div key={`${skill.name}-${i}`} className={slideClass}>
-                    <SkillTile skill={skill} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* {!reducedMotion && (
-            <p className="mt-3 text-center text-xs text-zinc-600">Infinite scroll · hover to pause</p>
-          )} */}
-        </div>
-
-        <div className="relative mt-16 mb-16 flex w-full flex-col items-center justify-center md:mt-24 md:mb-20">
+        <div className="relative mt-12 mb-10 flex w-full flex-col items-center justify-center md:mt-16 md:mb-12">
           <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center" aria-hidden>
-            <div className="h-[140px] w-[130%] rounded-[100%] bg-[#4fc1c6] opacity-[0.12] mix-blend-screen blur-[100px] md:h-[280px] md:w-[70%] md:blur-[160px]" />
+            <div className="h-[120px] w-[130%] rounded-[100%] bg-[#4fc1c6] opacity-[0.12] mix-blend-screen blur-[100px] md:h-[220px] md:w-[70%] md:blur-[140px]" />
           </div>
 
-          <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-12 md:flex-row md:gap-24">
+          <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-10 md:flex-row md:gap-20">
             <div className="group flex cursor-default flex-col items-center">
-              <div className="relative">
-                <span className="text-7xl font-black leading-none tracking-tighter text-transparent bg-gradient-to-b from-white to-white/20 bg-clip-text drop-shadow-[0_0_28px_rgba(255,255,255,0.08)] transition-all duration-700 group-hover:drop-shadow-[0_0_44px_rgba(255,255,255,0.15)] md:text-[100px]">
-                  2
-                  <span className="text-[#4fc1c6] drop-shadow-[0_0_22px_rgba(79,193,198,0.35)] transition-all duration-300 group-hover:drop-shadow-[0_0_36px_rgba(79,193,198,0.5)]">
-                    +
-                  </span>
-                </span>
-              </div>
-              <div className="mt-4 flex flex-col items-center">
-                <span className="text-xs font-extrabold uppercase tracking-[0.45em] text-[#4fc1c6] drop-shadow-[0_0_12px_rgba(79,193,198,0.25)] md:text-sm">
+              <span className="bg-gradient-to-b from-white to-white/20 bg-clip-text text-6xl font-black leading-none tracking-tighter text-transparent md:text-[88px]">
+                2<span className="text-[#4fc1c6]">+</span>
+              </span>
+              <div className="mt-3 flex flex-col items-center">
+                <span className="text-xs font-extrabold uppercase tracking-[0.45em] text-[#4fc1c6] md:text-sm">
                   Years
                 </span>
-                <span className="mt-1.5 text-[9px] font-medium uppercase tracking-[0.35em] text-gray-500 transition-colors duration-300 group-hover:text-gray-400 md:text-xs">
+                <span className="mt-1 text-[9px] font-medium uppercase tracking-[0.35em] text-gray-500 md:text-xs">
                   Experience
                 </span>
               </div>
             </div>
 
-            <div className="hidden h-[140px] w-px bg-gradient-to-b from-transparent via-[#4fc1c6] to-transparent opacity-50 md:block" aria-hidden />
-
-            <div className="my-3 h-px w-[160px] bg-gradient-to-r from-transparent via-[#4fc1c6] to-transparent opacity-50 md:hidden" aria-hidden />
+            <div
+              className="hidden h-[120px] w-px bg-gradient-to-b from-transparent via-[#4fc1c6] to-transparent opacity-50 md:block"
+              aria-hidden
+            />
+            <div
+              className="my-2 h-px w-[140px] bg-gradient-to-r from-transparent via-[#4fc1c6] to-transparent opacity-50 md:hidden"
+              aria-hidden
+            />
 
             <div className="group flex cursor-default flex-col items-center">
-              <div className="relative">
-                <span className="text-7xl font-black leading-none tracking-tighter text-transparent bg-gradient-to-b from-white to-white/20 bg-clip-text drop-shadow-[0_0_28px_rgba(255,255,255,0.08)] transition-all duration-700 group-hover:drop-shadow-[0_0_44px_rgba(255,255,255,0.15)] md:text-[100px]">
-                  30
-                  <span className="text-[#4fc1c6] drop-shadow-[0_0_22px_rgba(79,193,198,0.35)] transition-all duration-300 group-hover:drop-shadow-[0_0_36px_rgba(79,193,198,0.5)]">
-                    +
-                  </span>
-                </span>
-              </div>
-              <div className="mt-4 flex flex-col items-center">
-                <span className="text-xs font-extrabold uppercase tracking-[0.45em] text-[#4fc1c6] drop-shadow-[0_0_12px_rgba(79,193,198,0.25)] md:text-sm">
+              <span className="bg-gradient-to-b from-white to-white/20 bg-clip-text text-6xl font-black leading-none tracking-tighter text-transparent md:text-[88px]">
+                30<span className="text-[#4fc1c6]">+</span>
+              </span>
+              <div className="mt-3 flex flex-col items-center">
+                <span className="text-xs font-extrabold uppercase tracking-[0.45em] text-[#4fc1c6] md:text-sm">
                   Projects
                 </span>
-                <span className="mt-1.5 text-[9px] font-medium uppercase tracking-[0.35em] text-gray-500 transition-colors duration-300 group-hover:text-gray-400 md:text-xs">
+                <span className="mt-1 text-[9px] font-medium uppercase tracking-[0.35em] text-gray-500 md:text-xs">
                   Delivered
                 </span>
               </div>
@@ -190,7 +147,7 @@ export default function TechStackSection() {
           </div>
         </div>
 
-        <div className="mt-10 text-center">
+        <div className="mt-8 text-center">
           <div className="group inline-flex cursor-pointer items-center space-x-2 font-medium text-accent transition-colors hover:text-white">
             <span>🚀</span>
             <span>Always learning, always growing</span>
