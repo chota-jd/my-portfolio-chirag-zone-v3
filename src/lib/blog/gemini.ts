@@ -23,6 +23,7 @@ export async function generateBlogWithGemini(
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 0.7,
+          maxOutputTokens: 8192,
           responseMimeType: 'application/json',
         },
       }),

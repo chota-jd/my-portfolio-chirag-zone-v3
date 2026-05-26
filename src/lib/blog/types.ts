@@ -1,5 +1,7 @@
 import type { BlogSection } from '@/lib/blog/portable-text';
 
+export type { BlogSection };
+
 export type GeneratedBlogSeo = {
   metaTitle: string;
   metaDescription: string;

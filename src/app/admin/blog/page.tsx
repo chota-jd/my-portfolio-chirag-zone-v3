@@ -4,7 +4,9 @@ import { Alert, Button, Card, Form, Input, Select, Space, Typography } from 'ant
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 
+import PortableTextContent from '@/components/blog/PortableTextContent';
 import { BLOG_CATEGORIES } from '@/lib/blog/categories';
+import { sectionsToPortableText } from '@/lib/blog/portable-text';
 import type { GeneratedBlogContent } from '@/lib/blog/types';
 
 const { Title, Paragraph, Text } = Typography;
@@ -224,39 +226,8 @@ export default function AdminBlogPage() {
                 </Card>
               )}
 
-              <div className="mt-4 space-y-4">
-                {generated.sections.map((section, index) => {
-                  const key = `${section.type}-${index}`;
-                  if (section.type === 'h2') {
-                    return (
-                      <Title key={key} level={4} className="!mb-0 !text-white">
-                        {section.content}
-                      </Title>
-                    );
-                  }
-                  if (section.type === 'h3') {
-                    return (
-                      <Title key={key} level={5} className="!mb-0 !text-gray-100">
-                        {section.content}
-                      </Title>
-                    );
-                  }
-                  if (section.type === 'blockquote') {
-                    return (
-                      <blockquote
-                        key={key}
-                        className="border-l-4 border-cyan-500/60 pl-4 italic text-gray-300"
-                      >
-                        {section.content}
-                      </blockquote>
-                    );
-                  }
-                  return (
-                    <Paragraph key={key} className="!mb-0 !text-gray-300">
-                      {section.content}
-                    </Paragraph>
-                  );
-                })}
+              <div className="mt-6 rounded-xl border border-white/10 bg-black/40 p-4 sm:p-6">
+                <PortableTextContent value={sectionsToPortableText(generated.sections)} />
               </div>
             </Card>
           )}

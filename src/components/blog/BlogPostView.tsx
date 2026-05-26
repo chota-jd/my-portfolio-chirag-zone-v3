@@ -19,18 +19,35 @@ function formatDate(date: string) {
   }).toUpperCase();
 }
 
-function estimateReadTime(body?: PortableTextBlock[]) {
-  if (!body?.length) return 1;
+function extractTextFromBody(body?: PortableTextBlock[]): string {
+  if (!body?.length) return '';
 
-  const text = body
-    .filter((block) => block._type === 'block' && 'children' in block)
-    .map((block) => {
+  const parts: string[] = [];
+
+  for (const block of body) {
+    if (block._type === 'block' && 'children' in block) {
       const children = (block as { children?: { text?: string }[] }).children ?? [];
-      return children.map((child) => child.text ?? '').join('');
-    })
-    .join(' ');
+      parts.push(children.map((child) => child.text ?? '').join(''));
+    }
+    if (block._type === 'blogCallout') {
+      const b = block as { title?: string; body?: string };
+      parts.push(b.title ?? '', b.body ?? '');
+    }
+    if (block._type === 'blogKeyPoints') {
+      const b = block as { title?: string; items?: { text?: string }[] };
+      parts.push(b.title ?? '', ...(b.items?.map((i) => i.text ?? '') ?? []));
+    }
+    if (block._type === 'blogStats') {
+      const b = block as { items?: { value?: string; label?: string }[] };
+      parts.push(...(b.items?.flatMap((i) => [i.value ?? '', i.label ?? '']) ?? []));
+    }
+  }
 
-  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return parts.join(' ');
+}
+
+function estimateReadTime(body?: PortableTextBlock[]) {
+  const words = extractTextFromBody(body).trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 200));
 }
 
@@ -179,15 +196,13 @@ export default function BlogPostView({
         {/* Article body below hero */}
         <article className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           {post.excerpt && (
-            <p className="mb-10 max-w-3xl text-lg leading-relaxed text-zinc-400 md:text-xl">
+            <p className="mb-10 w-full text-lg leading-relaxed text-zinc-400 md:text-xl">
               {post.excerpt}
             </p>
           )}
 
           {post.body && post.body.length > 0 && (
-            <div className="prose-invert max-w-none">
-              <PortableTextContent value={post.body} />
-            </div>
+            <PortableTextContent value={post.body} />
           )}
         </article>
       </main>

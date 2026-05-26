@@ -111,9 +111,11 @@ export const post = defineType({
       title: 'Body',
       type: 'array',
       of: [
-        {
-          type: 'block',
-        },
+        { type: 'block' },
+        { type: 'blogCallout' },
+        { type: 'blogKeyPoints' },
+        { type: 'blogStats' },
+        { type: 'blogDivider' },
         {
           type: 'image',
           options: { hotspot: true },
