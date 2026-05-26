@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Home, User, Briefcase, FolderOpen, Mail, Package } from 'lucide-react';
+import { Home, User, Briefcase, FolderOpen, Mail, Package, FileText } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -12,6 +12,7 @@ const navItems = [
   { name: 'About', href: '#about', icon: User },
   { name: 'Product', href: '/products', icon: Package },
   { name: 'Projects', href: '/projects', icon: FolderOpen },
+  { name: 'Blog', href: '/blog', icon: FileText },
   { name: 'Experience', href: '#experience', icon: Briefcase },
   { name: 'Contact', href: '#contact', icon: Mail },
 ];
@@ -31,6 +32,8 @@ export default function Navigation() {
       setActiveSection('products');
     } else if (pathname.startsWith('/projects')) {
       setActiveSection('projects');
+    } else if (pathname.startsWith('/blog')) {
+      setActiveSection('blog');
     }
   }, [pathname]);
 
