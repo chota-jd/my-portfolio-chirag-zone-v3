@@ -8,7 +8,7 @@ import { buildCoverImagePrompt } from '@/lib/blog/prompts/blog-generation';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, description, category } = body ?? {};
+    const { title, description, category, includeStats } = body ?? {};
 
     if (!title?.trim()) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
@@ -26,6 +26,7 @@ export async function POST(request: Request) {
       title: trimmedTitle,
       description: trimmedDescription,
       category: trimmedCategory,
+      includeStats: Boolean(includeStats),
     });
 
     const coverImagePrompt = buildCoverImagePrompt({

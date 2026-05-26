@@ -59,5 +59,9 @@ export async function generateBlogWithGemini(
     throw new Error('Gemini response missing required fields (content, seo, or coverImageSubject)');
   }
 
+  if (!input.includeStats) {
+    parsed.sections = parsed.sections.filter((section) => section.type !== 'stats');
+  }
+
   return parsed;
 }

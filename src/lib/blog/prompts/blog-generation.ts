@@ -4,6 +4,8 @@ export type BlogGenerationInput = {
   title: string;
   description?: string;
   category: BlogCategoryName | string;
+  /** When true, include one optional stats block with 3–4 metrics. Default: off. */
+  includeStats?: boolean;
 };
 
 /**
@@ -94,6 +96,8 @@ Return ONLY valid JSON matching this schema (no markdown fences):
     },
     { "type": "divider" }
   ]
+
+Note: "stats" sections are OPTIONAL — see stats rules below.
 }
 
 SEO rules:
@@ -104,16 +108,21 @@ SEO rules:
 Content rules (IMPORTANT — rich, scannable article):
 - Target 1,400–2,000 words total across all text fields
 - Use 18–28 sections with varied types — never only paragraphs
-- Structure: intro paragraphs → stats or keyPoints early → 4–6 h2 sections, each with h3, bullets, and at least one callout
+- Structure: intro paragraphs → keyPoints early (when useful) → 4–6 h2 sections, each with h3, bullets, and at least one callout
 - Include exactly 2–3 callout blocks (mix tip, insight, highlight)
-- Include 1 keyPoints block (4–5 items with icons) and 1 stats block (3–4 stats with icons)
+- Include 1 keyPoints block (4–5 items with icons) when it helps scanability
 - Include 3+ bulletList or numberedList sections
 - Include 2 blockquotes at meaningful moments
 - Use 1–2 divider sections between major parts
 - Use icons that match the topic (tech: Cpu, Code2; growth: TrendingUp; people: Users)
-- Add concrete examples, numbers, India/global context when category fits
+- Add concrete examples, India/global context when category fits
 - If author description is provided, use it as the thesis — do not ignore it
-- slug derived from title`;
+- slug derived from title
+
+Stats section rules (CRITICAL):
+- Do NOT include any "stats" sections unless explicitly instructed in the user request below.
+- Most posts (guides, travel, how-to, opinion) should have ZERO stats blocks.
+- When stats ARE requested: include exactly ONE stats block with 3–4 credible metrics (realistic numbers only), placed after the intro.`;
 
 export type CoverImagePromptInput = {
   title: string;
@@ -137,7 +146,11 @@ The image must feel premium and scroll-stopping for a developer portfolio blog.`
 }
 
 export function buildBlogGenerationPrompt(input: BlogGenerationInput): string {
-  const { title, description, category } = input;
+  const { title, description, category, includeStats } = input;
+
+  const statsInstruction = includeStats
+    ? `Include exactly ONE "stats" section (3–4 items with icons and credible metrics) after the introduction.`
+    : `Do NOT include any "stats" sections in this article.`;
 
   return `${BLOG_GENERATION_SYSTEM_PROMPT}
 
@@ -147,6 +160,8 @@ Generate a blog post with these inputs:
 Title: ${title}
 Category: ${category}
 ${description ? `Author notes / description: ${description}` : 'Author notes / description: (none — infer a strong angle from the title and category)'}
+
+Statistics block: ${statsInstruction}
 
 Return JSON only.`;
 }

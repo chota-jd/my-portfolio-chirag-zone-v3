@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, Button, Card, Form, Input, Select, Space, Typography } from 'antd';
+import { Alert, Button, Card, Checkbox, Form, Input, Select, Space, Typography } from 'antd';
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 
@@ -16,6 +16,7 @@ type FormValues = {
   title: string;
   description?: string;
   category: string;
+  includeStats?: boolean;
 };
 
 export default function AdminBlogPage() {
@@ -41,6 +42,7 @@ export default function AdminBlogPage() {
           title: values.title,
           description: form.getFieldValue('description'),
           category: values.category,
+          includeStats: form.getFieldValue('includeStats') === true,
         }),
       });
 
@@ -161,6 +163,12 @@ export default function AdminBlogPage() {
                   placeholder="Select category"
                   options={BLOG_CATEGORIES.map((c) => ({ label: c, value: c }))}
                 />
+              </Form.Item>
+
+              <Form.Item name="includeStats" valuePropName="checked" className="!mb-2">
+                <Checkbox className="text-gray-300">
+                  Include statistics section (760M+, growth %, etc.) — off by default
+                </Checkbox>
               </Form.Item>
 
               <Space wrap>
