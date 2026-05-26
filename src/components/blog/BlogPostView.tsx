@@ -101,8 +101,8 @@ export default function BlogPostView({
       <Navigation />
 
       <main className="relative z-10">
-        {/* Hero: cover as background, title + meta on top */}
-        <section className="relative min-h-[min(78vh,680px)] w-full overflow-hidden border-b border-white/10">
+        {/* Hero: full-bleed cover — bottom scrim only (no top/side dark bands) */}
+        <section className="relative min-h-[min(85vh,720px)] w-full overflow-hidden">
           {coverUrl ? (
             <img
               src={coverUrl}
@@ -118,30 +118,26 @@ export default function BlogPostView({
           )}
 
           <div
-            className="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-black/35"
-            aria-hidden
-          />
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.45)_38%,transparent_72%)]"
             aria-hidden
           />
 
-          <div className="relative z-10 mx-auto flex min-h-[min(78vh,680px)] w-full max-w-7xl flex-col justify-end px-4 pb-12 pt-28 sm:px-6 lg:px-8 lg:pb-16">
+          <div className="relative z-10 mx-auto flex min-h-[min(85vh,720px)] w-full max-w-7xl flex-col justify-end px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pb-16">
             <Link
               href="/blog"
-              className="mb-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] text-zinc-300 transition-colors hover:text-white"
+              className="mb-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] text-zinc-200 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)] transition-colors hover:text-white"
             >
               <span className="text-[#4fc1c6]">‹</span>
               BACK TO BLOG
             </Link>
 
-            <p className="mb-4 font-mono text-[11px] tracking-[0.18em] text-zinc-400">
+            <p className="mb-4 font-mono text-[11px] tracking-[0.18em] text-zinc-300 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
               {formatDate(post.publishedAt)}
               <span className="mx-2 text-zinc-600">•</span>
               {readMinutes} MIN READ
             </p>
 
-            <h1 className="max-w-4xl text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[3.5rem]">
+            <h1 className="max-w-4xl text-4xl font-bold leading-[1.08] tracking-tight text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.85)] sm:text-5xl md:text-6xl lg:text-[3.5rem]">
               {post.title}
             </h1>
 

@@ -89,14 +89,23 @@ export default function Navigation() {
     return activeSection === href.substring(1);
   };
 
+  const isBlogPostPage = Boolean(pathname?.match(/^\/blog\/[^/]+$/));
+  const isBlogListing = pathname === '/blog';
+
+  const navSurfaceClass = isBlogPostPage
+    ? isScrolled
+      ? 'border-b border-white/5 bg-black/80 py-0 backdrop-blur-xl'
+      : 'border-b border-white/10 bg-black/25 py-0 backdrop-blur-xl'
+    : isBlogListing
+      ? 'border-b border-white/5 bg-black/80 py-0 backdrop-blur-xl'
+      : isScrolled
+        ? 'border-b border-white/5 bg-black/50 py-0 backdrop-blur-xl'
+        : 'bg-black/20 py-2 backdrop-blur-md';
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 hidden md:block ${
-          isScrolled
-            ? 'bg-black/50 backdrop-blur-xl border-b border-white/5 py-0'
-            : 'bg-black/20 backdrop-blur-md py-2'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 hidden transition-all duration-300 md:block ${navSurfaceClass}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -139,7 +148,8 @@ export default function Navigation() {
         </div>
       </nav>
 
-      <div className="h-16 md:block hidden" />
+      {/* Post hero sits under nav — listing/other pages keep spacer */}
+      {!isBlogPostPage && <div className="hidden h-16 md:block" />}
     </>
   );
 }
