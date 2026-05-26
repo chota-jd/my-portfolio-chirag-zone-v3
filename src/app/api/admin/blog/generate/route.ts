@@ -1,16 +1,11 @@
 import { NextResponse } from 'next/server';
 
 import { BLOG_CATEGORIES } from '@/lib/blog/categories';
-import { verifyAdminSecret } from '@/lib/blog/admin-auth';
 import { generateBlogWithGemini } from '@/lib/blog/gemini';
 import { generateCoverImageWithGemini } from '@/lib/blog/gemini-image';
 import { buildCoverImagePrompt } from '@/lib/blog/prompts/blog-generation';
 
 export async function POST(request: Request) {
-  if (!verifyAdminSecret(request)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
     const body = await request.json();
     const { title, description, category } = body ?? {};

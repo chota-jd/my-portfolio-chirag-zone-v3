@@ -1,15 +1,10 @@
 import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
 
-import { verifyAdminSecret } from '@/lib/blog/admin-auth';
 import { publishBlogToSanity } from '@/lib/blog/sanity-publish';
 import type { GeneratedBlogContent } from '@/lib/blog/types';
 
 export async function POST(request: Request) {
-  if (!verifyAdminSecret(request)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
     const body = await request.json();
     const { title, description, category, generated } = body ?? {};

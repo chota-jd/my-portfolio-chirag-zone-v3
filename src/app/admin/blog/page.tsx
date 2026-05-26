@@ -4,7 +4,6 @@ import { Alert, Button, Card, Form, Input, Select, Space, Typography } from 'ant
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 
-import { generateBlogAction, publishBlogAction } from '@/app/admin/blog/actions';
 import { BLOG_CATEGORIES } from '@/lib/blog/categories';
 import type { GeneratedBlogContent } from '@/lib/blog/types';
 
@@ -33,17 +32,23 @@ export default function AdminBlogPage() {
       setSuccessUrl(null);
       setGenerated(null);
 
-      const result = await generateBlogAction({
-        title: values.title,
-        description: form.getFieldValue('description'),
-        category: values.category,
+      const res = await fetch('/api/admin/blog/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: values.title,
+          description: form.getFieldValue('description'),
+          category: values.category,
+        }),
       });
 
-      if (!result.success) {
-        throw new Error(result.error);
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Generation failed');
       }
 
-      setGenerated(result.generated);
+      setGenerated(data.generated);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Generation failed');
     } finally {
@@ -62,18 +67,24 @@ export default function AdminBlogPage() {
       setPublishing(true);
       setError(null);
 
-      const result = await publishBlogAction({
-        title: values.title,
-        description: form.getFieldValue('description'),
-        category: values.category,
-        generated,
+      const res = await fetch('/api/admin/blog/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: values.title,
+          description: form.getFieldValue('description'),
+          category: values.category,
+          generated,
+        }),
       });
 
-      if (!result.success) {
-        throw new Error(result.error);
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Publish failed');
       }
 
-      setSuccessUrl(result.url);
+      setSuccessUrl(data.url);
       setGenerated(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Publish failed');
