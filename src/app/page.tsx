@@ -4,7 +4,7 @@ import BlogSection from '@/components/sections/BlogSection';
 export default function Home() {
   return (
     <HomePage>
-      <BlogSection />
+      <BlogSection limit={3} />
     </HomePage>
   );
 }

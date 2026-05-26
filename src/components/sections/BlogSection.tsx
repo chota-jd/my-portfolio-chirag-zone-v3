@@ -5,15 +5,16 @@ import { getPosts } from '@/sanity/queries';
 import { isSanityConfigured } from '@/sanity/env';
 
 export default async function BlogSection({
-  limit = 3,
+  limit,
   hideViewMore = false,
   hideHeader = false,
 }: {
+  /** When set, only show this many posts (e.g. homepage preview). Omit on /blog for all posts. */
   limit?: number;
   hideViewMore?: boolean;
   hideHeader?: boolean;
 }) {
-  const posts = limit !== undefined ? await getPosts(limit) : await getPosts();
+  const posts = typeof limit === 'number' ? await getPosts(limit) : await getPosts();
 
   if (!isSanityConfigured()) {
     return (
