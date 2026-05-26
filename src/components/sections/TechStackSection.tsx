@@ -11,16 +11,17 @@ import {
   SiTailwindcss,
   SiAngular,
   SiHtml5,
-  SiCss3,
+  SiCss,
   SiFirebase,
   SiNodedotjs,
   SiGit,
   SiGithub,
-  SiAdobelightroom,
+  SiPhotopea,
   SiCanva,
-  SiAdobe,
+  SiAffinityphoto,
 } from 'react-icons/si';
 import VN from '@/assets/vn.png';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 type Skill = {
   name: string;
@@ -32,6 +33,10 @@ function isStaticImage(icon: IconType | StaticImageData): icon is StaticImageDat
   return typeof icon === 'object' && icon !== null && 'src' in icon;
 }
 
+function isIconComponent(icon: IconType | StaticImageData): icon is IconType {
+  return typeof icon === 'function';
+}
+
 const techStack: Record<string, Skill[]> = {
   'Code & Creativity': [
     { name: 'React', icon: SiReact, color: '#61DAFB' },
@@ -40,15 +45,15 @@ const techStack: Record<string, Skill[]> = {
     { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
     { name: 'Angular', icon: SiAngular, color: '#DD0031' },
     { name: 'HTML5', icon: SiHtml5, color: '#E34F26' },
-    { name: 'CSS3', icon: SiCss3, color: '#1572B6' },
+    { name: 'CSS3', icon: SiCss, color: '#1572B6' },
     { name: 'JavaScript', icon: FaJsSquare, color: '#F7DF1E' },
     { name: 'Firebase', icon: SiFirebase, color: '#FFCA28' },
     { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
     { name: 'Git', icon: SiGit, color: '#F05032' },
     { name: 'Github', icon: SiGithub, color: '#e4e4e7' },
-    { name: 'Lightroom', icon: SiAdobelightroom, color: '#31A8FF' },
+    { name: 'Lightroom', icon: SiPhotopea, color: '#31A8FF' },
     { name: 'Canva', icon: SiCanva, color: '#00C4CC' },
-    { name: 'Adobe', icon: SiAdobe, color: '#FF0000' },
+    { name: 'Adobe', icon: SiAffinityphoto, color: '#FF0000' },
     { name: 'VN Editor', icon: VN, color: '#e4e4e7' },
   ],
 };
@@ -64,12 +69,12 @@ function SkillTile({ skill }: { skill: Skill }) {
             aria-hidden
             className="h-11 w-11 object-contain opacity-90 invert transition-opacity duration-300 group-hover:opacity-100 sm:h-12 sm:w-12"
           />
-        ) : (
+        ) : isIconComponent(skill.icon) ? (
           <skill.icon
             className="h-10 w-10 opacity-90 transition-opacity duration-300 group-hover:opacity-100 sm:h-12 sm:w-12"
             style={{ color: skill.color }}
           />
-        )}
+        ) : null}
       </div>
       <span className="text-center text-base font-medium tracking-wide text-zinc-300 transition-colors duration-300 group-hover:text-white">
         {skill.name}
@@ -96,14 +101,12 @@ export default function TechStackSection() {
   return (
     <section id="techstack" className="relative py-20 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-16 text-center">
-          <h2 className="pb-4 text-4xl font-bold gradient-text sm:text-5xl">Technologies &amp; Skills</h2>
-          <div className="mx-auto h-1 w-24 rounded-full bg-accent" />
-          <p className="mx-auto mt-6 max-w-2xl text-gray-400">
-            A comprehensive overview of my technical expertise and the tools I use to build exceptional digital
-            experiences.
-          </p>
-        </div>
+        <SectionHeading
+          titleClassName="gradient-text"
+          subtitle="A comprehensive overview of my technical expertise and the tools I use to build exceptional digital experiences."
+        >
+          Technologies &amp; Skills
+        </SectionHeading>
 
         <div className="mb-10 flex items-center gap-4">
           <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#4fc1c6]/25" />

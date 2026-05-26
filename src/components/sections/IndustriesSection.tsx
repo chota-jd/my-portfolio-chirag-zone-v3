@@ -1,6 +1,7 @@
 'use client';
 
 import { Stethoscope, GraduationCap, Gavel, ShoppingBag, Trophy, TentTree } from 'lucide-react';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 const industries = [
   { name: 'Healthcare', color: '#4fc1c6', icon: Stethoscope },
@@ -15,10 +16,7 @@ export default function IndustriesSection() {
   return (
     <section id="industries" className="py-20 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold gradient-text mb-4">Industries I Worked In</h2>
-          <div className="w-24 h-1 bg-[#4fc1c6] mx-auto rounded-full" />
-        </div>
+        <SectionHeading titleClassName="gradient-text">Industries I Worked In</SectionHeading>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 gap-12 justify-items-center">
           {industries.map((industry) => (
             <div key={industry.name} className="flex flex-col items-center group">

@@ -1,13 +1,12 @@
 'use client';
 
+import SectionHeading from '@/components/ui/SectionHeading';
+
 export default function AboutSection() {
   return (
     <section id="about" className="py-10 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold gradient-text mb-4">About Me</h2>
-          <div className="w-24 h-1 bg-[#4fc1c6] mx-auto rounded-full" />
-        </div>
+        <SectionHeading titleClassName="gradient-text">About Me</SectionHeading>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>

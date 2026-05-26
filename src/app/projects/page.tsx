@@ -4,6 +4,7 @@ import Navigation from '@/components/ui/Navigation';
 import Footer from '@/components/ui/Footer';
 import AnimatedBackground from '@/components/ui/AnimatedBackground';
 import ProjectsSection from '@/components/sections/ProjectsSection';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 export default function ProjectsPage() {
   return (
@@ -13,15 +14,14 @@ export default function ProjectsPage() {
       
       <main className="relative z-10 pt-20">
         <div className="container-custom py-12">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white">
-              Selected <span className="gradient-text">projects</span>
-            </h1>
-            <p className="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed">
-              A curated portfolio of high-impact projects I&apos;ve contributed to with cross-functional
-              teams, spanning civic platforms, inclusive learning, and public AI literacy.
-            </p>
-          </div>
+          <SectionHeading
+            as="h1"
+            spacing="sm"
+            titleClassName="text-5xl text-white md:text-7xl"
+            subtitle="A curated portfolio of high-impact projects I&apos;ve contributed to with cross-functional teams, spanning civic platforms, inclusive learning, and public AI literacy."
+          >
+            Selected <span className="gradient-text">projects</span>
+          </SectionHeading>
 
           {/* We'll pass a prop to ProjectsSection to show all by default if needed, 
               but since it's a separate page, we can just let it render. 

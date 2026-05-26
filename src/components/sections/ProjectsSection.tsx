@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowUpRight, X } from 'lucide-react';
 
 import { projects } from '@/data/projects';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 export default function ProjectsSection({
   showAllDefault = false,
@@ -32,18 +33,18 @@ export default function ProjectsSection({
 
       <div className="max-w-7xl mx-auto relative z-10">
         {!hideHeader && (
-          <div className="text-center mb-20">
-            <h2 className="text-4xl sm:text-6xl font-bold mb-6 tracking-tight">
-              Selected <span className="gradient-text">projects</span>
-            </h2>
-
-            <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#4fc1c6] to-transparent mx-auto mb-8" />
-
-            <p className="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed">
-              A curated portfolio of high-impact projects I&apos;ve contributed to with cross-functional teams, spanning
-              civic platforms, inclusive learning, and public AI literacy.
-            </p>
-          </div>
+          <SectionHeading
+            spacing="lg"
+            titleClassName="sm:text-6xl"
+            subtitle={
+              <>
+                A curated portfolio of high-impact projects I&apos;ve contributed to with cross-functional teams,
+                spanning civic platforms, inclusive learning, and public AI literacy.
+              </>
+            }
+          >
+            Selected <span className="gradient-text">projects</span>
+          </SectionHeading>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

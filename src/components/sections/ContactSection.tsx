@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Form, Input, message } from 'antd';
 import { Mail, Phone, MapPin, CheckCircle, MessageCircle, Loader } from 'lucide-react';
 import { saveContactMessage, type ContactFormData } from '../../firebaseConfig';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 const { TextArea } = Input;
 
@@ -101,16 +102,17 @@ const onFinish = async (values: ContactForm) => {
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 relative">
       {contextHolder}
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold gradient-text-reverse mb-4">
-            Get In Touch
-          </h2>
-          <div className="w-24 h-1 bg-[#4fc1c6] mx-auto rounded-full" />
-          <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? I&apos;d love to hear from you.
-            Let&apos;s create something amazing together!
-          </p>
-        </div>
+        <SectionHeading
+          titleClassName="gradient-text-reverse"
+          subtitle={
+            <>
+              Have a project in mind or want to collaborate? I&apos;d love to hear from you. Let&apos;s create
+              something amazing together!
+            </>
+          }
+        >
+          Get In Touch
+        </SectionHeading>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
           <div className="flex flex-col">

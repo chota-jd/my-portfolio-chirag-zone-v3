@@ -285,6 +285,21 @@ body::-webkit-scrollbar-thumb:hover {
   animation: gradient-shift 8s ease infinite reverse;
 }
 
+/* Centered glow underline for section titles (matches Latest articles) */
+.section-heading-accent {
+  width: 6rem;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(79, 193, 198, 0.2) 20%,
+    #4fc1c6 50%,
+    rgba(79, 193, 198, 0.2) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 12px rgba(79, 193, 198, 0.5);
+}
+
 
 
 /* Additional mobile-specific utilities */

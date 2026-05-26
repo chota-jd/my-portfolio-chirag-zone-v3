@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import { products } from '@/data/products';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 export default function ProductsSection({
   showAllDefault = false,
@@ -26,17 +27,13 @@ export default function ProductsSection({
 
       <div className="max-w-7xl mx-auto relative z-10">
         {!hideHeader && (
-          <div className="text-center mb-20">
-            <h2 className="text-4xl sm:text-6xl font-bold mb-6 tracking-tight">
-              I am <span className="gradient-text">contributing</span> to
-            </h2>
-
-            <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#4fc1c6] to-transparent mx-auto mb-8" />
-
-            <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
-              I collaborate on high-impact digital products that serve millions of users across various industries.
-            </p>
-          </div>
+          <SectionHeading
+            spacing="lg"
+            titleClassName="sm:text-6xl"
+            subtitle="I collaborate on high-impact digital products that serve millions of users across various industries."
+          >
+            I am <span className="gradient-text">contributing</span> to
+          </SectionHeading>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

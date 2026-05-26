@@ -3,6 +3,7 @@ import Link from 'next/link';
 import BlogCard from '@/components/blog/BlogCard';
 import { getPosts } from '@/sanity/queries';
 import { isSanityConfigured } from '@/sanity/env';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 export default async function BlogSection({
   limit,
@@ -37,9 +38,9 @@ export default async function BlogSection({
       >
         <div className="max-w-3xl mx-auto text-center">
           {!hideHeader && (
-            <h2 className="text-4xl sm:text-6xl font-bold mb-6 tracking-tight">
+            <SectionHeading spacing="lg" titleClassName="sm:text-6xl" className="mb-8">
               Latest <span className="gradient-text">articles</span>
-            </h2>
+            </SectionHeading>
           )}
           <p className="text-zinc-400 text-lg sm:text-xl">No blog available</p>
           {!hideHeader && (
@@ -59,15 +60,13 @@ export default async function BlogSection({
 
       <div className="max-w-7xl mx-auto relative z-10">
         {!hideHeader && (
-          <div className="text-center mb-20">
-            <h2 className="text-4xl sm:text-6xl font-bold mb-6 tracking-tight">
-              Latest <span className="gradient-text">articles</span>
-            </h2>
-            <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#4fc1c6] to-transparent mx-auto mb-8" />
-            <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
-              Thoughts on building products, performance, and shipping ideas with clarity.
-            </p>
-          </div>
+          <SectionHeading
+            spacing="lg"
+            titleClassName="sm:text-6xl"
+            subtitle="Thoughts on building products, performance, and shipping ideas with clarity."
+          >
+            Latest <span className="gradient-text">articles</span>
+          </SectionHeading>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -1,6 +1,7 @@
 'use client';
 
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 const experiences = [
   {
@@ -26,14 +27,12 @@ export default function ExperienceSection() {
   return (
     <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold gradient-text-reverse mb-4">Work Experience</h2>
-          <div className="w-24 h-1 bg-[#4fc1c6] mx-auto rounded-full" />
-          <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
-            My professional journey through various roles and companies, building expertise and delivering impactful
-            solutions.
-          </p>
-        </div>
+        <SectionHeading
+          titleClassName="gradient-text-reverse"
+          subtitle="My professional journey through various roles and companies, building expertise and delivering impactful solutions."
+        >
+          Work Experience
+        </SectionHeading>
 
         <div className="relative">
           <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-700">
