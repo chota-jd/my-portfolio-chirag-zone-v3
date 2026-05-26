@@ -30,14 +30,22 @@ export default async function BlogSection({
 
   if (posts.length === 0) {
     return (
-      <section id="blog" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden bg-black/20">
+      <section
+        id="blog"
+        className="flex min-h-[50vh] items-center justify-center py-24 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden bg-black/20"
+      >
         <div className="max-w-3xl mx-auto text-center">
           {!hideHeader && (
             <h2 className="text-4xl sm:text-6xl font-bold mb-6 tracking-tight">
               Latest <span className="gradient-text">articles</span>
             </h2>
           )}
-          <p className="text-zinc-400 text-lg">No posts yet. Publish your first article in Sanity Studio.</p>
+          <p className="text-zinc-400 text-lg sm:text-xl">No blog available</p>
+          {!hideHeader && (
+            <p className="mt-3 text-sm text-zinc-500">
+              Publish your first article in Sanity Studio to see it here.
+            </p>
+          )}
         </div>
       </section>
     );

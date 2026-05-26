@@ -5,7 +5,8 @@ import BlogSection from '@/components/sections/BlogSection';
 
 export const metadata = {
   title: 'Blog | Chirag Prajapati',
-  description: 'Articles on product development, performance, and building scalable software.',
+  description:
+    'Stories from the stack — practical reads on building products, writing better code, and lessons from shipping.',
 };
 
 export default function BlogPage() {
@@ -18,10 +19,11 @@ export default function BlogPage() {
         <div className="container-custom py-12">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white">
-              Writing & <span className="gradient-text">insights</span>
+              Stories from the <span className="gradient-text">stack</span>
             </h1>
             <p className="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed">
-              Notes from the workbench — product thinking, engineering craft, and lessons from shipping.
+              Practical reads on building products, writing better code, and what I learn while
+              shipping real work.
             </p>
           </div>
 

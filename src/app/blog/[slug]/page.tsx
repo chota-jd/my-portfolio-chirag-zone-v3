@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import BlogPostView from '@/components/blog/BlogPostView';
+import { buildBlogPostMetadata } from '@/lib/blog/seo-metadata';
 import { getPostBySlug, getPostSlugs } from '@/sanity/queries';
 import { getImageUrl } from '@/sanity/image';
 
@@ -21,10 +22,7 @@ export async function generateMetadata({ params }: PageProps) {
     return { title: 'Post not found' };
   }
 
-  return {
-    title: `${post.title} | Blog`,
-    description: post.excerpt,
-  };
+  return buildBlogPostMetadata(post);
 }
 
 export default async function BlogPostPage({ params }: PageProps) {

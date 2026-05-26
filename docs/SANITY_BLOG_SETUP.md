@@ -27,6 +27,30 @@ NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
 
 Restart `yarn dev` after saving.
 
+### AI blog generator (`/admin/blog`)
+
+Add these for Gemini → Sanity publishing:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+SANITY_API_WRITE_TOKEN=your_sanity_write_token
+# Optional
+GEMINI_MODEL=gemini-2.0-flash
+ADMIN_API_SECRET=choose_a_long_random_string
+```
+
+1. Create a Sanity API token with **Editor** (write) permissions at [sanity.io/manage](https://www.sanity.io/manage) → API → Tokens.
+2. Get a Gemini key from [Google AI Studio](https://aistudio.google.com/apikey).
+3. Open **`/admin/blog`**, fill title / optional description / category, click **Generate with Gemini**, review the preview, then **Publish to Sanity**.
+4. Posts appear on **`/blog`** and the homepage blog section after publish (paths are revalidated automatically).
+
+Prompts live in `src/lib/blog/prompts/blog-generation.ts`:
+- **`BLOG_GENERATION_SYSTEM_PROMPT`** — article + SEO JSON schema
+- **`BLOG_COVER_IMAGE_STYLE_PROMPT`** — hero image style (`{subject}` placeholder)
+- **`buildCoverImagePrompt()`** — combines style + title/category for the image model
+
+Each generate run also creates a **cover image** (Gemini image model) and **SEO fields** stored on the post. Blog post pages use them for meta tags, Open Graph, and Twitter cards.
+
 ## 3. Open Sanity Studio (content editor)
 
 **Option A — embedded in your site (recommended)**

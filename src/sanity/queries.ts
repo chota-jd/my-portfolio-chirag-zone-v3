@@ -9,6 +9,14 @@ const postFields = `
   excerpt,
   publishedAt,
   author,
+  seo {
+    metaTitle,
+    metaDescription,
+    focusKeyword,
+    keywords,
+    ogTitle,
+    ogDescription
+  },
   mainImage {
     asset->{ _id, url },
     alt

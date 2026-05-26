@@ -35,7 +35,57 @@ export const post = defineType({
       title: 'Excerpt',
       type: 'text',
       rows: 3,
-      description: 'Short summary shown on cards and SEO.',
+      description: 'Short summary shown on cards and SEO fallback.',
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'object',
+      options: { collapsible: true, collapsed: false },
+      fields: [
+        defineField({
+          name: 'metaTitle',
+          title: 'Meta title',
+          type: 'string',
+          description: '50–60 characters for Google.',
+        }),
+        defineField({
+          name: 'metaDescription',
+          title: 'Meta description',
+          type: 'text',
+          rows: 3,
+          description: '140–160 characters for search snippets.',
+        }),
+        defineField({
+          name: 'focusKeyword',
+          title: 'Focus keyword',
+          type: 'string',
+        }),
+        defineField({
+          name: 'keywords',
+          title: 'Keywords',
+          type: 'array',
+          of: [{ type: 'string' }],
+        }),
+        defineField({
+          name: 'ogTitle',
+          title: 'Open Graph title',
+          type: 'string',
+        }),
+        defineField({
+          name: 'ogDescription',
+          title: 'Open Graph description',
+          type: 'text',
+          rows: 2,
+        }),
+      ],
+    }),
+    defineField({
+      name: 'coverImagePrompt',
+      title: 'Cover image prompt (AI)',
+      type: 'text',
+      rows: 4,
+      description: 'Prompt used to generate the cover image. Edit in blog-generation.ts for future posts.',
     }),
     defineField({
       name: 'mainImage',
