@@ -146,25 +146,33 @@ const components: PortableTextComponents = {
     },
     blogKeyPoints: ({ value }) => {
       const v = value as KeyPointsValue;
-      if (!v.items?.length) return null;
+      const items = v.items ?? [];
+      if (!items.length) return null;
+
+      const title = v.title ?? 'Key takeaways';
+
       return (
-        <section className="my-12 rounded-2xl bg-gradient-to-br from-zinc-900/80 via-zinc-900/50 to-zinc-950 p-6 sm:p-8">
-          {v.title && (
-            <h4 className="mb-6 flex items-center gap-2 text-sm font-mono uppercase tracking-[0.2em] text-[#4fc1c6]">
-              <BlogIcon name="Target" className="h-4 w-4" />
-              {v.title}
+        <section className="relative my-12 border-l-2 border-[#4fc1c6]/50 py-1 pl-5 sm:my-14 sm:pl-7 md:pl-8">
+          <header className="mb-6 flex items-center gap-3 sm:mb-8">
+            <BlogIcon name="Target" className="h-5 w-5 shrink-0 text-[#4fc1c6]" />
+            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-[#4fc1c6] sm:text-sm">
+              {title}
             </h4>
-          )}
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {v.items.map((item, i) => (
+          </header>
+
+          <ul className="divide-y divide-white/[0.08]">
+            {items.map((item, i) => (
               <li
                 key={`${item.text}-${i}`}
-                className="flex gap-4 rounded-xl bg-white/[0.04] p-4 transition-colors hover:bg-[#4fc1c6]/10"
+                className="group flex gap-4 py-5 first:pt-0 last:pb-0 sm:gap-5 sm:py-6"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#4fc1c6]/20 text-[#4fc1c6]">
-                  <BlogIcon name={item.icon} className="h-5 w-5" />
-                </div>
-                <p className="text-sm leading-relaxed text-zinc-300 sm:text-base">{item.text}</p>
+                <BlogIcon
+                  name={item.icon}
+                  className="mt-0.5 h-5 w-5 shrink-0 text-[#4fc1c6]/90 transition-colors group-hover:text-[#4fc1c6] sm:h-6 sm:w-6"
+                />
+                <p className="text-base leading-relaxed text-zinc-300 transition-colors group-hover:text-zinc-100 sm:text-lg sm:leading-relaxed">
+                  {item.text}
+                </p>
               </li>
             ))}
           </ul>
@@ -173,7 +181,8 @@ const components: PortableTextComponents = {
     },
     blogStats: ({ value }) => {
       const v = value as StatsValue;
-      if (!v.items?.length) return null;
+      const statItems = v.items ?? [];
+      if (!statItems.length) return null;
 
       const statThemes = [
         {
@@ -210,9 +219,9 @@ const components: PortableTextComponents = {
           />
 
           <ul className="relative flex flex-col sm:flex-row sm:items-stretch">
-            {v.items.map((item, i) => {
+            {statItems.map((item, i) => {
               const theme = statThemes[i % statThemes.length];
-              const isLast = i === v.items.length - 1;
+              const isLast = i === statItems.length - 1;
               return (
                 <li
                   key={`${item.label}-${i}`}
