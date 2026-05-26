@@ -4,6 +4,8 @@ import { Alert, Button, Card, Checkbox, Form, Input, Select, Space, Typography }
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 
+import AdminBlogAuthLoader from '@/components/admin/AdminBlogAuthLoader';
+import AdminBlogAuthModal, { isAdminBlogAuthenticated } from '@/components/admin/AdminBlogAuthModal';
 import PortableTextContent from '@/components/blog/PortableTextContent';
 import { BLOG_CATEGORIES } from '@/lib/blog/categories';
 import { sectionsToPortableText } from '@/lib/blog/portable-text';
@@ -20,12 +22,17 @@ type FormValues = {
 };
 
 export default function AdminBlogPage() {
+  const [authenticated, setAuthenticated] = useState(
+    () => typeof window !== 'undefined' && isAdminBlogAuthenticated(),
+  );
   const [form] = Form.useForm<FormValues>();
   const [generated, setGenerated] = useState<GeneratedBlogContent | null>(null);
   const [generating, setGenerating] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successUrl, setSuccessUrl] = useState<string | null>(null);
+
+  const handleAuthenticated = useCallback(() => setAuthenticated(true), []);
 
   const handleGenerate = useCallback(async () => {
     try {
@@ -99,6 +106,13 @@ export default function AdminBlogPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] px-4 py-12 text-white">
+      <AdminBlogAuthModal onAuthenticated={handleAuthenticated} />
+
+      {!authenticated ? (
+        <div className="mx-auto max-w-3xl">
+          <AdminBlogAuthLoader />
+        </div>
+      ) : (
       <div className="mx-auto max-w-3xl">
         <Space direction="vertical" size="large" className="w-full">
           <div>
@@ -241,6 +255,7 @@ export default function AdminBlogPage() {
           )}
         </Space>
       </div>
+      )}
     </main>
   );
 }

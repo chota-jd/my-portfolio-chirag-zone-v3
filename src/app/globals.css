@@ -343,6 +343,94 @@ body::-webkit-scrollbar-thumb:hover {
   }
 }
 
+/* Admin blog auth modal — match portfolio dark + cyan theme */
+.admin-blog-auth-modal .ant-modal-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.admin-blog-auth-modal .ant-modal-footer .ant-btn-primary {
+  border: none !important;
+}
+
+.admin-blog-auth-modal .ant-modal-footer .ant-btn-primary:hover {
+  filter: brightness(1.08);
+  color: #0a0a0f !important;
+}
+
+.admin-blog-auth-form .ant-form-item-label > label {
+  height: auto !important;
+  color: #71717a !important;
+}
+
+/* Username — single bordered field */
+.admin-blog-auth-modal .admin-blog-auth-input.ant-input {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+}
+
+.admin-blog-auth-modal .admin-blog-auth-input.ant-input::placeholder {
+  color: #52525b !important;
+}
+
+.admin-blog-auth-modal .admin-blog-auth-input.ant-input:hover {
+  border-color: rgba(79, 193, 198, 0.4) !important;
+}
+
+.admin-blog-auth-modal .admin-blog-auth-input.ant-input:focus {
+  border-color: #4fc1c6 !important;
+  box-shadow: 0 0 0 2px rgba(79, 193, 198, 0.2) !important;
+}
+
+/* Password — border only on outer wrapper (no inner box) */
+.admin-blog-auth-modal .ant-input-affix-wrapper {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  padding-inline: 12px !important;
+}
+
+.admin-blog-auth-modal .ant-input-affix-wrapper > input.ant-input {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #ffffff !important;
+}
+
+.admin-blog-auth-modal .ant-input-affix-wrapper > input.ant-input::placeholder {
+  color: #52525b !important;
+}
+
+.admin-blog-auth-modal .ant-input-affix-wrapper:hover {
+  border-color: rgba(79, 193, 198, 0.4) !important;
+}
+
+.admin-blog-auth-modal .ant-input-affix-wrapper-focused,
+.admin-blog-auth-modal .ant-input-affix-wrapper:focus-within {
+  border-color: #4fc1c6 !important;
+  box-shadow: 0 0 0 2px rgba(79, 193, 198, 0.2) !important;
+}
+
+.admin-blog-auth-modal .ant-input-password-icon {
+  color: #71717a !important;
+}
+
+.admin-blog-auth-modal .ant-input-password-icon:hover {
+  color: #4fc1c6 !important;
+}
+
+.admin-blog-auth-modal input:-webkit-autofill,
+.admin-blog-auth-modal input:-webkit-autofill:hover,
+.admin-blog-auth-modal input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #141416 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 /* Sanity Studio — full viewport + centered boot loaders */
 .studio-shell #sanity {
   flex: 1;
