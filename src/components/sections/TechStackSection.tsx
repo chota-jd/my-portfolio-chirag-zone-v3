@@ -6,6 +6,7 @@ import { FaJsSquare } from 'react-icons/fa';
 import {
   SiReact,
   SiNextdotjs,
+  SiSvelte,
   SiTypescript,
   SiTailwindcss,
   SiAngular,
@@ -16,33 +17,31 @@ import {
   SiGit,
   SiGithub,
   SiN8N,
-  SiPhotopea,
-  SiCanva,
-  SiAffinityphoto,
 } from 'react-icons/si';
 import VN from '@/assets/vn.png';
 import SectionHeading from '@/components/ui/SectionHeading';
 
 type Skill = {
   name: string;
-  icon: IconType | StaticImageData;
+  icon: IconType | StaticImageData | string;
   color: string;
 };
 
-function isStaticImage(icon: IconType | StaticImageData): icon is StaticImageData {
+function isStaticImage(icon: IconType | StaticImageData | string): icon is StaticImageData {
   return typeof icon === 'object' && icon !== null && 'src' in icon;
 }
 
-function isIconComponent(icon: IconType | StaticImageData): icon is IconType {
+function isIconComponent(icon: IconType | StaticImageData | string): icon is IconType {
   return typeof icon === 'function';
 }
 
 const skills: Skill[] = [
   { name: 'React', icon: SiReact, color: '#61DAFB' },
   { name: 'Next.js', icon: SiNextdotjs, color: '#e4e4e7' },
+  { name: 'Svelte', icon: SiSvelte, color: '#FF3E00' },
   { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-  { name: 'Tailwind', icon: SiTailwindcss, color: '#06B6D4' },
   { name: 'Angular', icon: SiAngular, color: '#DD0031' },
+  { name: 'Tailwind', icon: SiTailwindcss, color: '#06B6D4' },
   { name: 'HTML5', icon: SiHtml5, color: '#E34F26' },
   { name: 'CSS3', icon: SiCss, color: '#1572B6' },
   { name: 'JavaScript', icon: FaJsSquare, color: '#F7DF1E' },
@@ -51,9 +50,9 @@ const skills: Skill[] = [
   { name: 'Git', icon: SiGit, color: '#F05032' },
   { name: 'GitHub', icon: SiGithub, color: '#e4e4e7' },
   { name: 'n8n', icon: SiN8N, color: '#EA4B71' },
-  { name: 'Lightroom', icon: SiPhotopea, color: '#31A8FF' },
-  { name: 'Canva', icon: SiCanva, color: '#00C4CC' },
-  { name: 'Adobe', icon: SiAffinityphoto, color: '#FF0000' },
+  { name: 'Lightroom', icon: '/icons/adobelightroom.svg', color: '#31A8FF' },
+  { name: 'Canva', icon: '/icons/canva.svg', color: '#00C4CC' },
+  { name: 'Adobe', icon: '/icons/adobe.svg', color: '#FF0000' },
   { name: 'VN Editor', icon: VN, color: '#e4e4e7' },
 ];
 
@@ -72,6 +71,22 @@ function SkillIcon({ skill }: { skill: Skill }) {
             src={skill.icon}
             alt=""
             className="h-10 w-10 object-contain invert opacity-95 transition-transform sm:h-12 sm:w-12 md:h-14 md:w-14"
+          />
+        ) : typeof skill.icon === 'string' ? (
+          <span
+            aria-hidden
+            className="h-10 w-10 opacity-95 transition-transform sm:h-12 sm:w-12 md:h-14 md:w-14"
+            style={{
+              backgroundColor: skill.color,
+              WebkitMaskImage: `url(${skill.icon})`,
+              maskImage: `url(${skill.icon})`,
+              WebkitMaskRepeat: 'no-repeat',
+              maskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'center',
+              maskPosition: 'center',
+              WebkitMaskSize: 'contain',
+              maskSize: 'contain',
+            }}
           />
         ) : isIconComponent(skill.icon) ? (
           <skill.icon
@@ -96,9 +111,14 @@ export default function TechStackSection() {
           Technologies &amp; Skills
         </SectionHeading>
 
-        <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-6 md:gap-8">
-          {skills.map((skill) => (
-            <SkillIcon key={skill.name} skill={skill} />
+        <div className="grid grid-cols-4 place-items-center gap-5 sm:grid-cols-6 sm:gap-6 md:grid-cols-11 md:gap-8">
+          {skills.map((skill, index) => (
+            <div
+              key={skill.name}
+              className={index === 11 ? 'md:col-start-3' : undefined}
+            >
+              <SkillIcon skill={skill} />
+            </div>
           ))}
         </div>
 
