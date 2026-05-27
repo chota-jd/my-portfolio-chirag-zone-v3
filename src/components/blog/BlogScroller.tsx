@@ -11,29 +11,36 @@ export default function BlogScroller({ posts }: { posts: BlogPostListItem[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
+  // Core translation & rotation math to establish the dramatic outward-tilting circular arch
+  const updateCardTransforms = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const cards = track.querySelectorAll('.blog-card-custom') as NodeListOf<HTMLElement>;
+    const viewportCenterX = window.innerWidth / 2;
+
+    cards.forEach((card) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenterX = cardRect.left + cardRect.width / 2;
+      const distX = cardCenterX - viewportCenterX;
+      
+      const maxDist = window.innerWidth || 800;
+      const t = Math.max(-1, Math.min(1, distX / (maxDist * 0.75)));
+
+      // Premium Outward-Tilting Circular Arch Mathematics (Convex Wheel Fan)
+      // Side cards translate downward (up to 100px) and rotate outward (up to 14.5deg) relative to the screen center.
+      // - t < 0 (left of center): rotate is negative (counter-clockwise tilt, top of card points left)
+      // - t > 0 (right of center): rotate is positive (clockwise tilt, top of card points right)
+      const translateY = t * t * 100;
+      const rotate = t * 14.5;
+
+      card.style.transform = `translateY(${translateY}px) rotate(${rotate}deg)`;
+    });
+  };
+
   useEffect(() => {
     const container = containerRef.current;
     const track = trackRef.current;
     if (!container || !track) return;
-
-    const updateCardTransforms = () => {
-      const cards = track.querySelectorAll('.blog-card-custom') as NodeListOf<HTMLElement>;
-      const viewportCenterX = window.innerWidth / 2;
-
-      cards.forEach((card) => {
-        const cardRect = card.getBoundingClientRect();
-        const cardCenterX = cardRect.left + cardRect.width / 2;
-        const distX = cardCenterX - viewportCenterX;
-        
-        const maxDist = window.innerWidth || 800;
-        const t = Math.max(-1, Math.min(1, distX / (maxDist * 0.75)));
-
-        const translateY = t * t * 45;
-        const rotate = t * -9.5;
-
-        card.style.transform = `translateY(${translateY}px) rotate(${rotate}deg)`;
-      });
-    };
 
     // Run once on mount to establish base tilts
     updateCardTransforms();
@@ -104,24 +111,7 @@ export default function BlogScroller({ posts }: { posts: BlogPostListItem[] }) {
   // Adjust card transforms on window resizing
   useEffect(() => {
     const handleResize = () => {
-      const track = trackRef.current;
-      if (!track) return;
-      const cards = track.querySelectorAll('.blog-card-custom') as NodeListOf<HTMLElement>;
-      const viewportCenterX = window.innerWidth / 2;
-
-      cards.forEach((card) => {
-        const cardRect = card.getBoundingClientRect();
-        const cardCenterX = cardRect.left + cardRect.width / 2;
-        const distX = cardCenterX - viewportCenterX;
-        
-        const maxDist = window.innerWidth || 800;
-        const t = Math.max(-1, Math.min(1, distX / (maxDist * 0.75)));
-
-        const translateY = t * t * 45;
-        const rotate = t * -9.5;
-
-        card.style.transform = `translateY(${translateY}px) rotate(${rotate}deg)`;
-      });
+      updateCardTransforms();
     };
 
     window.addEventListener('resize', handleResize, { passive: true });

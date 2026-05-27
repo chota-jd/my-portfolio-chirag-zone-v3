@@ -2361,29 +2361,33 @@ a.chr-hover {
 }
 
 /* Premium Creative Blog Section & Cards */
-/* Premium Creative Blog Section & Cards */
 .blog-section {
   position: relative;
-  padding: 16vh 0; /* Full-width outer boundary for seamless edge-to-edge scroller masks */
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
   background: #0a0a0a;
   z-index: 30010;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
 }
 
-@media (max-width: 1200px) {
-  .blog-section {
-    padding: 14vh 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .blog-section {
-    padding: 10vh 0;
-  }
+.blog-section-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+  padding: 4vh 0;
 }
 
 .blog-section-header {
-  margin-bottom: 8vh;
+  margin-bottom: 2vh; /* Balanced spacing to optimize vertical card area */
   text-align: left;
   max-width: 60rem;
   padding-left: 8rem;
@@ -2410,7 +2414,7 @@ a.chr-hover {
   font-weight: 300;
   line-height: 1.1;
   color: #f0f0f0;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
 }
 
@@ -2429,6 +2433,9 @@ a.chr-hover {
   scrollbar-width: none; /* Firefox scrollbar hide */
   -ms-overflow-style: none; /* IE scrollbar hide */
   -webkit-overflow-scrolling: touch; /* Momentum scroll for iOS */
+  flex-grow: 1;
+  display: flex;
+  align-items: center; /* Perfect vertical centering of the track inside the grid */
 }
 
 .blog-grid-custom::-webkit-scrollbar {
@@ -2439,19 +2446,20 @@ a.chr-hover {
   display: flex;
   gap: 3.5rem;
   width: max-content;
-  padding: 5rem 8rem;
+  padding: 2vh 8rem;
+  align-items: center; /* Centering cards along the horizontal scroll line */
 }
 
 @media (max-width: 1200px) {
   .blog-track-custom {
-    padding: 4rem 4rem;
+    padding: 2vh 4rem;
     gap: 2.8rem;
   }
 }
 
 @media (max-width: 768px) {
   .blog-track-custom {
-    padding: 3.5rem 1.5rem;
+    padding: 2vh 1.5rem;
     gap: 2.2rem;
   }
 }

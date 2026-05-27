@@ -49,7 +49,7 @@ export default async function BlogSection({
 
   return (
     <section id="blog" className="blog-section">
-      <div className="relative z-10">
+      <div className="blog-section-inner relative z-10">
         {!hideHeader && (
           <div className="blog-section-header">
             <h2 className="blog-section-title">
