@@ -4,7 +4,7 @@ import BlogSection from '@/components/sections/BlogSection';
 export default function Home() {
   return (
     <HomePage>
-      <BlogSection limit={3} />
+      <BlogSection hideViewMore={true} />
     </HomePage>
   );
 }

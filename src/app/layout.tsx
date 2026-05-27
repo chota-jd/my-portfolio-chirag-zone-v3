@@ -76,6 +76,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script defer src="/js/core-renderer.js"></script>
+        <script defer src="/js/hero-project.js"></script>
+      </head>
       <body
         className={`${jost.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
         suppressHydrationWarning

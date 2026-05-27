@@ -25,9 +25,8 @@ export default function ProjectsPage() {
 
           {/* We'll pass a prop to ProjectsSection to show all by default if needed, 
               but since it's a separate page, we can just let it render. 
-              However, the current ProjectsSection has 'show 3' logic. 
-              I should update ProjectsSection to accept a prop to show all. */}
-          <ProjectsSection showAllDefault={true} hideViewMore={true} hideHeader={true} />
+              However, the current ProjectsSection has 'show 3' logic. */}
+          <ProjectsSection />
         </div>
       </main>
       

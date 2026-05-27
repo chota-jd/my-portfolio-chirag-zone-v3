@@ -23,7 +23,7 @@ export default function ProductsPage() {
             Product Contributions
           </SectionHeading>
 
-          <ProductsSection showAllDefault={true} hideViewMore={true} hideHeader={true} />
+          <ProductsSection />
         </div>
       </main>
       

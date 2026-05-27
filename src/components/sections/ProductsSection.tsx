@@ -1,89 +1,189 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { products } from '@/data/products';
-import SectionHeading from '@/components/ui/SectionHeading';
+import { ChrHover } from '@/components/ui/ChrHover';
 
-export default function ProductsSection({
-  showAllDefault = false,
-  hideViewMore = false,
-  hideHeader = false,
-}: {
-  showAllDefault?: boolean;
-  hideViewMore?: boolean;
-  hideHeader?: boolean;
-}) {
-  const [showAll] = useState(showAllDefault);
+export default function ProductsSection() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const displayedProducts = showAll ? products : products.slice(0, 3);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const pinTrigger = ScrollTrigger.create({
+      id: 'products-pin',
+      trigger: '#products',
+      start: 'top top',
+      end: '+=260%', // Expanded scroll space for comfortable viewing pacing
+      pin: true,
+      scrub: 0.5,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const activeRangeEnd = 0.85; // Allow the last product to stay pinned and active from 0.85 to 1.00
+        
+        let idx = 0;
+        if (progress >= activeRangeEnd) {
+          idx = products.length - 1;
+        } else {
+          const normProgress = progress / activeRangeEnd;
+          idx = Math.floor(normProgress * (products.length - 1));
+        }
+        
+        setActiveIdx(Math.min(products.length - 1, Math.max(0, idx)));
+      },
+    });
+
+    return () => {
+      pinTrigger.kill();
+    };
+  }, [isMobile]);
+
+  const handleItemClick = (index: number) => {
+    if (isMobile) {
+      setActiveIdx(index);
+      return;
+    }
+
+    const scrollTriggerInstance = ScrollTrigger.getById('products-pin');
+    if (scrollTriggerInstance) {
+      const start = scrollTriggerInstance.start;
+      const end = scrollTriggerInstance.end;
+      const totalDist = end - start;
+      
+      // Calculate the exact midpoint of the item's active scroll range
+      const activeRangeEnd = 0.85;
+      let targetProgress = 0;
+      if (index === products.length - 1) {
+        targetProgress = activeRangeEnd + 0.075; // Middle of [0.85, 1.00] range
+      } else {
+        const step = activeRangeEnd / (products.length - 1);
+        targetProgress = (index + 0.5) * step; // Middle of item's specific sub-range
+      }
+      
+      const targetScroll = start + targetProgress * totalDist;
+      
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      });
+    } else {
+      setActiveIdx(index);
+    }
+  };
+
+  const activeProduct = products[activeIdx] || products[0];
 
   return (
-    <section id="products" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden bg-black/20">
-      <div className="absolute top-1/2 -left-20 w-96 h-96 bg-[#4fc1c6]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/2 -right-20 w-96 h-96 bg-[#4fc1c6]/5 rounded-full blur-[120px] pointer-events-none" />
+    <section id="products" className="products-split">
+      {/* Left Column: Curved Title Selector Wheel */}
+      <div className="products-split-left">
+        <h2 className="products-title">
+          SaaS <span className="other-accent">Products.</span>
+        </h2>
+        <p className="products-subtitle">
+          I design and architect high-impact digital systems that scale. Here is a curated selection of products I lead.
+        </p>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {!hideHeader && (
-          <SectionHeading
-            spacing="lg"
-            titleClassName="sm:text-6xl"
-            subtitle="I collaborate on high-impact digital products that serve millions of users across various industries."
-          >
-            I am <span className="gradient-text">contributing</span> to
-          </SectionHeading>
-        )}
+        <div className="products-wheel-container">
+          <div className="products-wheel-list">
+            {products.map((product, i) => {
+              const diff = i - activeIdx;
+              const isActive = i === activeIdx;
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayedProducts.map((product) => (
-            <div key={product.id} className="group relative">
-              <div className="relative h-full rounded-3xl overflow-hidden border border-white/10 bg-zinc-900/50 backdrop-blur-sm transition-all duration-500 group-hover:border-[#4fc1c6]/50 group-hover:shadow-[0_0_40px_rgba(79,193,198,0.15)]">
-                <Link href={`/products/${product.slug}`} className="absolute inset-0 z-10" />
-                <div className="aspect-video overflow-hidden relative">
-                  <img
-                    src={product.thumbnailImage}
-                    alt={product.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80" />
-                </div>
+              // Calculate precise circular wheel offsets based on fromanother.love
+              const R = 500; // Radius of the circle
+              const angleStep = 13.0; // Degree step between items
+              const angleRad = (diff * angleStep) * Math.PI / 180;
+              const translateY = R * Math.sin(angleRad);
+              const translateX = R * (Math.cos(angleRad) - 1);
+              const rotate = diff * angleStep; // CSS rotation angle
 
-                <div className="p-6 flex flex-col justify-between h-1/2">
-                  <div>
-                    <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-[#4fc1c6] transition-colors">
-                      {product.title}
-                    </h3>
-                    <p className="text-zinc-400 text-sm line-clamp-3 leading-relaxed mb-4">{product.description}</p>
-                  </div>
+              const transformStyle = isMobile
+                ? {
+                    opacity: isActive ? 1 : 0.35,
+                    color: isActive ? '#ff1e00' : '#f0f0f0',
+                  }
+                : {
+                    transform: `translateY(calc(-50% + ${translateY}px)) rotate(${rotate}deg) translateX(${translateX}px)`,
+                    opacity: isActive ? 1 : 0.22,
+                    zIndex: isActive ? 10 : 5 - Math.abs(diff),
+                    color: isActive ? '#ff1e00' : '#f0f0f0',
+                    pointerEvents: 'auto' as const,
+                    position: 'absolute' as const,
+                    top: '50%',
+                  };
 
-                  <div className="flex items-center justify-center pt-4 border-t border-white/5 relative z-20">
-                    <Link
-                      href={`/products/${product.slug}`}
-                      className="flex items-center gap-1 text-xs font-bold tracking-widest text-[#4fc1c6] uppercase hover:underline"
-                    >
-                      Details
-                    </Link>
-                  </div>
-                </div>
-
+              return (
                 <div
-                  className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500 bg-gradient-to-br ${product.color}`}
-                />
-              </div>
-            </div>
-          ))}
+                  key={product.id}
+                  className={`products-wheel-item ${isActive ? 'active' : ''}`}
+                  style={transformStyle}
+                  onClick={() => handleItemClick(i)}
+                >
+                  {isActive && <span className="product-active-circle" />}
+                  {product.title}
+                </div>
+              );
+            })}
+          </div>
         </div>
+      </div>
 
-        {!hideViewMore && !showAll && products.length > 3 && (
-          <div className="mt-16 text-center">
-            <Link
-              href="/products"
-              className="group relative inline-block overflow-hidden px-8 py-3 rounded-full bg-white/5 border border-white/10 text-white font-bold tracking-widest text-xs uppercase hover:bg-[#4fc1c6] hover:text-black hover:border-[#4fc1c6] transition-all duration-500 shadow-xl"
-            >
-              <span className="relative z-10 flex items-center gap-2">View All Products</span>
-            </Link>
+      {/* Right Column: Detailed Product View Panel */}
+      <div className="products-split-right">
+        {activeProduct && (
+          <div key={activeIdx} className="product-detail-view animate-products-fade">
+            <div className="product-detail-image-wrap">
+              {activeProduct.thumbnailImage ? (
+                <img
+                  src={activeProduct.thumbnailImage}
+                  alt={activeProduct.title}
+                  className="product-detail-image"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-zinc-950">
+                  <span className="text-xl font-light text-zinc-800 tracking-widest font-breton">SAAS PRODUCT</span>
+                </div>
+              )}
+            </div>
+
+            <div className="product-detail-info-block">
+              <span className="product-detail-role">
+                {activeProduct.role || 'LEAD DEVELOPER'}
+              </span>
+              
+              <p className="product-detail-desc">
+                {activeProduct.fullDescription || activeProduct.description}
+              </p>
+
+              {activeProduct.productLink && activeProduct.productLink !== '#' && (
+                <div style={{ display: 'inline-flex', marginTop: '1rem' }}>
+                  <ChrHover
+                    text="LAUNCH PLATFORM 🡺"
+                    href={activeProduct.productLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

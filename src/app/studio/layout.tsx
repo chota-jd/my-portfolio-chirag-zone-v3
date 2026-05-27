@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   ...studioViewport,
-};
+} as Viewport;
 
 export default function StudioLayout({ children }: { children: React.ReactNode }) {
   return (
