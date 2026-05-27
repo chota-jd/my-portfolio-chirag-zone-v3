@@ -139,15 +139,6 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
             const pageP = docH > 0 ? Math.round((window.scrollY / docH) * 100) : 0;
             pctEl.textContent = `(${pageP})`;
 
-            if (progress <= 0 || progress >= 0.9) {
-              timeline.classList.remove('visible');
-              pctEl.classList.remove('visible');
-              return;
-            }
-
-            timeline.classList.add('visible');
-            pctEl.classList.add('visible');
-
             let activeIdx = 0;
             const viewportMid = window.innerHeight / 2;
             let found = false;
@@ -179,6 +170,18 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
                   }
                 }
               });
+            }
+
+            const activeSectionId = sections[activeIdx]?.id;
+
+            // Smoothly hide the scroll timeline and percentage indicator in the Products and Blog sections
+            // to avoid layout overlaps on laptops (just like at the top/bottom of the page)
+            if (progress <= 0 || progress >= 0.9 || activeSectionId === 'products' || activeSectionId === 'blog') {
+              timeline.classList.remove('visible');
+              pctEl.classList.remove('visible');
+            } else {
+              timeline.classList.add('visible');
+              pctEl.classList.add('visible');
             }
 
             // 2. Update all segment fills based on actual viewport progress

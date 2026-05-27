@@ -115,6 +115,17 @@ export default function ProductsSection() {
               const translateX = R * (Math.cos(angleRad) - 1);
               const rotate = diff * angleStep; // CSS rotation angle
 
+              // Dynamic distance-based opacity drop-off (active = 1.0, 1 step = 0.35, 2 steps = 0.12, 3+ steps = hidden)
+              // This strictly prevents titles from gathering and mixing at the top/bottom edges of the page.
+              const distance = Math.abs(diff);
+              const itemOpacity = isActive 
+                ? 1 
+                : distance === 1 
+                  ? 0.35 
+                  : distance === 2 
+                    ? 0.12 
+                    : 0;
+
               const transformStyle = isMobile
                 ? {
                     opacity: isActive ? 1 : 0.35,
@@ -122,10 +133,10 @@ export default function ProductsSection() {
                   }
                 : {
                     transform: `translateY(calc(-50% + ${translateY}px)) rotate(${rotate}deg) translateX(${translateX}px)`,
-                    opacity: isActive ? 1 : 0.22,
-                    zIndex: isActive ? 10 : 5 - Math.abs(diff),
+                    opacity: itemOpacity,
+                    zIndex: isActive ? 10 : 5 - distance,
                     color: isActive ? '#ff1e00' : '#f0f0f0',
-                    pointerEvents: 'auto' as const,
+                    pointerEvents: isActive || distance <= 2 ? ('auto' as const) : ('none' as const),
                     position: 'absolute' as const,
                     top: '50%',
                   };
@@ -135,7 +146,11 @@ export default function ProductsSection() {
                   key={product.id}
                   className={`products-wheel-item ${isActive ? 'active' : ''}`}
                   style={transformStyle}
-                  onClick={() => handleItemClick(i)}
+                  onClick={() => {
+                    if (isActive || distance <= 2) {
+                      handleItemClick(i);
+                    }
+                  }}
                 >
                   {isActive && <span className="product-active-circle" />}
                   {product.title}
