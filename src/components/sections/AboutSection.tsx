@@ -100,14 +100,15 @@ export default function AboutSection() {
       <div className="about">
         <div className="about-text" id="about-text">
           {textToWordsSpans(
-            'As a lead developer, I design custom web systems, blending absolute technical scaling with user intuition.'
+            'As a developer with a love for creating innovative digital solutions. My journey in technology started with curiosity and has evolved into a career dedicated to building exceptional user experiences.'
           )}
         </div>
 
         <div className="about-sub" id="about-sub">
-          My name is Chirag. Passionate creator, full-stack architect, and digital product specialist.
-          I design modern, scalable architectures and premium digital products, always searching for
-          a symbiosis between performance and design.
+          I specialize in full-stack development, with expertise in modern JavaScript frameworks, cloud technologies, and scalable architecture design. I believe in writing clean, maintainable code and staying up-to-date with the latest industry trends.
+          <p className="about-sub-small">
+            {`When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community. I'm always eager to take on new challenges and collaborate on exciting projects.`}
+          </p>
         </div>
 
         <div className="about-btn">

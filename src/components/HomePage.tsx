@@ -251,7 +251,7 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
       <Footer />
 
       {/* Left Percentage Indicator */}
-      <div className="scroll-pct" id="scroll-pct" ref={pctRef}>
+      <div className="scroll-pct hidden" id="scroll-pct" ref={pctRef}>
         (0)
       </div>
 

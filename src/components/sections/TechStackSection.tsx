@@ -19,18 +19,18 @@ const skillCategories: SkillCategory[] = [
   },
   {
     id: 'backend',
-    name: 'Backend & APIs',
-    skills: ['Node.js', 'Express', 'Firebase', 'PostgreSQL', 'MySQL', 'REST APIs', 'GraphQL', 'n8n'],
+    name: 'Backend',
+    skills: ['Node.js', 'Firebase', 'MySQL'],
   },
   {
     id: 'devops',
-    name: 'DevOps & Tools',
-    skills: ['Git', 'GitHub', 'Docker', 'Vercel', 'Netlify', 'Cloudflare', 'Linux'],
+    name: 'Tools',
+    skills: ['Git', 'GitHub','Vercel', 'Cloudflare', 'n8n'],
   },
   {
     id: 'creative',
     name: 'Design & Media',
-    skills: ['Photoshop', 'Lightroom', 'Figma', 'Canva', 'Adobe Suite', 'VN Video Editor'],
+    skills: ['Photoshop', 'Lightroom', 'Figma', 'Canva', 'Adobe', 'VN Video Editor'],
   },
 ];
 
