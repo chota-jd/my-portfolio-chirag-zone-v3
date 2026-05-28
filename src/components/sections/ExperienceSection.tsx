@@ -15,51 +15,64 @@ const experiences = [
       'Mentored junior developers, enhancing team productivity and code quality.',
       'Contributed to end-to-end product development from concept to launch.',
     ],
-    logo: '🚀',
   },
 ];
 
 export default function ExperienceSection() {
   return (
     <section id="experience" className="experience-section">
-      <div className="relative z-10">
-        <h2 className="experience-title">
+      <div className="experience-section-inner relative z-10">
+        <h2 className="experience-title text-white">
           Work <span className="other-accent">Experience.</span>
         </h2>
 
         <div className="experience-list">
           {experiences.map((exp) => (
-            <div key={exp.id} className="experience-row">
-              <div className="experience-period">{exp.period}</div>
-              
-              <div className="experience-company-wrap">
-                <h3 className="experience-company">{exp.company}</h3>
-                <span className="experience-role">{exp.role}</span>
-                <span className="experience-company-meta">{exp.location}</span>
-              </div>
+            <article key={exp.id} className="experience-row">
+              <div className="experience-entry">
+                <div className="experience-rail" aria-hidden="true">
+                  <span className="experience-rail-marker" />
+                  <span className="experience-rail-line" />
+                </div>
 
-              <div className="experience-detail-wrap">
-                <p className="experience-desc">{exp.description}</p>
-                
-                <h4 className="experience-achievements-title">Key Achievements</h4>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  {exp.achievements.map((achievement, idx) => (
-                    <li key={idx} className="experience-achievement-item">
-                      <span className="experience-achievement-bullet" style={{ fontFamily: 'sans-serif' }}>→</span>
-                      <span>{achievement}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="experience-entry-body">
+                  <div className="experience-company-wrap experience-headline-wrap">
+                    <div>
+                      <h3 className="experience-company text-white">{exp.company}</h3>
+                      <span className="experience-role text-accent-orange">{exp.role}</span>
+                    </div>
+                  </div>
+
+                  <div className="experience-meta-row text-text-muted">
+                    <span>{exp.period}</span>
+                    <span aria-hidden="true">•</span>
+                    <span>{exp.location}</span>
+                  </div>
+
+                  <div className="experience-detail-wrap">
+                    <p className="experience-desc text-white/80">{exp.description}</p>
+
+                    <h4 className="experience-achievements-title text-accent-orange">Key Achievements</h4>
+                    <ul className="experience-achievements-list">
+                      {exp.achievements.map((achievement, idx) => (
+                        <li key={idx} className="experience-achievement-item text-white/90">
+                          <span
+                            className="experience-achievement-bullet bg-accent-orange shadow-[0_0_10px_rgba(255,30,0,0.55)]"
+                            aria-hidden="true"
+                          />
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
-        <div className="text-center mt-16">
-          <a
-            href="#contact"
-            style={{ display: 'inline-flex', cursor: 'pointer' }}
-          >
+        <div className="mt-16 text-center">
+          <a href="#contact" className="inline-flex cursor-pointer">
             <ChrHover text="Want to know more? Contact me 🡺" />
           </a>
         </div>

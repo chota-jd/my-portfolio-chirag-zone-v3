@@ -6,6 +6,7 @@
   --background: #000000;
   --foreground: #ffffff;
   --accent: #4fc1c6;
+  --accent-orange: #ff1e00;
   --text-muted: #a1a1aa;
   --border: #27272a;
 }
@@ -2763,9 +2764,52 @@ a.chr-hover {
 .experience-section {
   position: relative;
   padding: 16vh 8rem 16vh 8rem;
-  background: #0a0a0a;
+  background: var(--background);
   z-index: 30010;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border);
+}
+
+.experience-section-inner {
+  position: relative;
+}
+
+.experience-entry {
+  position: relative;
+  padding-left: 3.5rem;
+}
+
+.experience-rail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.experience-rail-marker {
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 2px solid var(--accent-orange);
+  border-radius: 50%;
+  background: transparent;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent-orange) 45%, transparent);
+}
+
+.experience-rail-line {
+  flex: 1;
+  width: 2px;
+  margin-top: 0.35rem;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-orange) 0%,
+    color-mix(in srgb, var(--accent-orange) 35%, transparent) 100%
+  );
+  border-radius: 2px;
 }
 
 @media (max-width: 1200px) {
@@ -2778,6 +2822,14 @@ a.chr-hover {
   .experience-section {
     padding: 10vh 1.5rem;
   }
+
+  .experience-entry {
+    padding-left: 0;
+  }
+
+  .experience-rail {
+    display: none;
+  }
 }
 
 .experience-title {
@@ -2785,7 +2837,6 @@ a.chr-hover {
   font-size: clamp(2.5rem, 5vw, 5rem);
   font-weight: 300;
   line-height: 1.1;
-  color: #f0f0f0;
   margin-bottom: 8vh;
   letter-spacing: -0.02em;
 }
@@ -2797,32 +2848,32 @@ a.chr-hover {
 }
 
 .experience-row {
-  display: grid;
-  grid-template-columns: 0.25fr 0.3fr 0.45fr;
-  gap: 3rem;
-  padding: 3rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  transition: background-color 0.4s ease;
+  width: 100%;
+  max-width: 82rem;
+  padding: 0;
+  border: 0;
 }
 
 @media (max-width: 1024px) {
   .experience-row {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 2.5rem 0;
+    max-width: 100%;
   }
 }
 
-.experience-row:first-child {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+.experience-headline-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-bottom: 0.45rem;
 }
 
-.experience-period {
+.experience-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  color: rgba(240, 240, 240, 0.4);
+  font-size: 0.95rem;
 }
 
 .experience-company-wrap {
@@ -2834,7 +2885,6 @@ a.chr-hover {
   font-family: 'Breton', sans-serif;
   font-size: clamp(1.4rem, 2vw, 1.8rem);
   font-weight: 300;
-  color: #f0f0f0;
   line-height: 1.2;
   margin-bottom: 0.5rem;
 }
@@ -2843,15 +2893,7 @@ a.chr-hover {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   font-weight: 600;
-  color: #ff1e00;
   letter-spacing: -0.01em;
-}
-
-.experience-company-meta {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  color: rgba(240, 240, 240, 0.4);
-  margin-top: 0.5rem;
 }
 
 .experience-detail-wrap {
@@ -2863,34 +2905,46 @@ a.chr-hover {
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: rgba(240, 240, 240, 0.6);
   margin-bottom: 1.5rem;
 }
 
 .experience-achievements-title {
   font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #f0f0f0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
   margin-bottom: 1rem;
+}
+
+.experience-achievements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .experience-achievement-item {
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   line-height: 1.5;
-  color: rgba(240, 240, 240, 0.55);
   margin-bottom: 0.75rem;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.75rem;
 }
 
 .experience-achievement-bullet {
-  color: #ff1e00;
-  font-weight: 700;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .experience-achievement-item {
+    font-size: 0.95rem;
+    align-items: flex-start;
+  }
 }
 
 /* Premium Creative Products Section */
