@@ -48,6 +48,7 @@ export default function TechStackSection() {
         arrow,
         { xPercent: 0 },
         {
+          xPercent: 100,
           x: () => {
             const left = arrow.parentElement;
             if (!left) return 0;
@@ -60,7 +61,7 @@ export default function TechStackSection() {
           scrollTrigger: {
             trigger: '#skills',
             start: 'top top',
-            endTrigger: '#contact',
+            endTrigger: '#experience',
             end: 'top center',
             scrub: 0.5,
           },

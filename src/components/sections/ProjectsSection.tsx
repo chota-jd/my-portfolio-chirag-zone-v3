@@ -133,17 +133,8 @@ export default function ProjectsSection() {
               const prevCover = coverRef.current.src;
               const nextCover = mergedItems[closestIdx].image;
               if (prevCover !== nextCover) {
-                gsap.to(cardRef.current, {
-                  opacity: 0,
-                  duration: 0.15,
-                  onComplete: () => {
-                    if (coverRef.current && dateRef.current && cardRef.current) {
-                      coverRef.current.src = nextCover;
-                      dateRef.current.textContent = mergedItems[closestIdx].date;
-                      gsap.to(cardRef.current, { opacity: 1, duration: 0.3 });
-                    }
-                  },
-                });
+                coverRef.current.src = nextCover;
+                dateRef.current.textContent = mergedItems[closestIdx].date;
               }
             }
           } else {

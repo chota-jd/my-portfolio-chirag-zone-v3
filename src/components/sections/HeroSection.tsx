@@ -61,7 +61,6 @@ export default function HeroSection() {
           <div className="hero-line" id="hero-line"></div>
           <div className="hero-bar" id="hero-bar">
             <div className="hero-bar-left">
-              <ChrHover text="🡺V3.0" />
             </div>
 
             <nav className="hero-bar-center" aria-label="Réseaux sociaux">

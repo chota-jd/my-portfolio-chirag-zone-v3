@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
   },
+  devIndicators: {
+    appIsrStatus: false,
+  },
   transpilePackages: ['sanity', 'next-sanity'],
   // Sanity needs project React 19.2 (useEffectEvent). Next bundles an older copy.
   webpack: (config, { isServer }) => {

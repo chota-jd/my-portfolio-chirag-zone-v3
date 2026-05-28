@@ -11,6 +11,7 @@ import AboutSection from '@/components/sections/AboutSection';
 import IndustriesSection from '@/components/sections/IndustriesSection';
 import TechStackSection from '@/components/sections/TechStackSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
+import ProjectsSection from '@/components/sections/ProjectsSection';
 import ProductsSection from '@/components/sections/ProductsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/ui/Footer';
@@ -73,6 +74,7 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
       { id: 'industries', name: 'Industries' },
       { id: 'skills', name: 'Skills' },
       { id: 'experience', name: 'Experience' },
+      { id: 'projects', name: 'Projects' },
       { id: 'products', name: 'Products' },
       { id: 'blog', name: 'Blog' },
       { id: 'contact', name: 'Contact' },
@@ -240,6 +242,7 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
         <IndustriesSection />
         <TechStackSection />
         <ExperienceSection />
+        <ProjectsSection />
         <ProductsSection />
         {children}
         <ContactSection />

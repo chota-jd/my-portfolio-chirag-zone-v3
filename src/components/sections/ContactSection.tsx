@@ -3,25 +3,87 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChrHover } from '@/components/ui/ChrHover';
+import { Form, Input, message } from 'antd';
+import { MessageCircle, Loader } from 'lucide-react';
+import { saveContactMessage } from '@/firebaseConfig';
+
+const { TextArea } = Input;
 
 export default function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const blobRef = useRef<HTMLDivElement>(null);
   const blobWrapRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const socialsRef = useRef<HTMLDivElement>(null);
-  const mailRef = useRef<HTMLAnchorElement>(null);
-  
-  const dispoRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef<HTMLDivElement>(null);
-  const frameImgRef = useRef<HTMLImageElement>(null);
-  
-  const dispo2Ref = useRef<HTMLDivElement>(null);
-  const frame2Ref = useRef<HTMLDivElement>(null);
-  const frameImg2Ref = useRef<HTMLImageElement>(null);
+  const leftTextRef = useRef<HTMLDivElement>(null);
+  const formContainerRef = useRef<HTMLDivElement>(null);
+
+  const [form] = Form.useForm();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const [isClient, setIsClient] = useState(false);
+
+  const onFinish = async (values: any) => {
+    setIsSubmitting(true);
+    try {
+      // Save to Firebase
+      const result = await saveContactMessage(values);
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/12chiragprajapati12@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: JSON.stringify({
+            name: values.name,
+            email: values.email,
+            Subject: values.subject,
+            Message: values.message,
+            'Submitted At': new Date().toLocaleString(undefined, {
+              dateStyle: 'medium',
+              timeStyle: 'short',
+            }),
+            Browser: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+            _subject: `🔔 New Message from ${values.name}: ${values.subject}`,
+            _replyto: values.email,
+            _template: 'table',
+            _autoresponse: `Hi ${values.name},\n\nThanks for reaching out! I received your message about: ${values.subject}.\n\nI'll get back to you soon.\n\n— Chirag`,
+          }),
+        });
+        if (!res.ok) {
+          const text = await res.text();
+          console.warn('FormSubmit error', res.status, text);
+        } else {
+          const data = await res.json().catch(() => ({}));
+          console.log('FormSubmit response', data);
+        }
+      } catch (emailErr) {
+        console.warn('Email send failed', emailErr);
+      }
+
+      if (result.success) {
+        messageApi.success("Message sent successfully! I'll get back to you soon.");
+        setIsSubmitted(true);
+        form.resetFields();
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        throw new Error('Failed to save to Firebase');
+      }
+    } catch (error) {
+      console.error('Error saving message:', error);
+      messageApi.error('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+    messageApi.error('Please fill in all required fields correctly.');
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -30,8 +92,6 @@ export default function ContactSection() {
   useEffect(() => {
     if (!isClient) return;
     gsap.registerPlugin(ScrollTrigger);
-
-    const isMobile = window.innerWidth <= 768;
 
     const ctx = gsap.context(() => {
       // Toggle visibility of contact layers
@@ -102,57 +162,21 @@ export default function ContactSection() {
         0.18
       );
 
-      // Reveal socials and direct mail
+
+      // Reveal left-side collaborative text
       tl.fromTo(
-        socialsRef.current,
-        { clipPath: 'inset(0 0 100% 0)' },
-        { clipPath: 'inset(0 0 0% 0)', duration: 0.2, ease: 'none' },
+        leftTextRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' },
         0.28
       );
 
+      // Reveal contact form
       tl.fromTo(
-        mailRef.current,
-        { clipPath: 'inset(0 0 100% 0)' },
-        { clipPath: 'inset(0 0 0% 0)', duration: 0.2, ease: 'none' },
-        0.36
-      );
-
-      // Parallax flying items
-      const pairStart = 0.22;
-      const frameDur = 0.65;
-      const frameY = () => window.innerHeight * 1.1;
-      const frameYEnd = () => -window.innerHeight * 1.4;
-      const dispoY = () => window.innerHeight * 1.1;
-      const dispoYEnd = () => -window.innerHeight * 1.65;
-
-      // Picture Frame 1 Parallax
-      gsap.set(frameRef.current, { yPercent: -50, y: frameY });
-      gsap.set(frameImgRef.current, { yPercent: -30 });
-      tl.to(frameRef.current, { y: frameYEnd, duration: frameDur, ease: 'none' }, pairStart);
-      tl.to(frameImgRef.current, { yPercent: 30, duration: frameDur, ease: 'none' }, pairStart);
-
-      // Availability card 1 Parallax
-      gsap.set(dispoRef.current, { yPercent: -50, y: dispoY, opacity: 1, clipPath: 'inset(0% 0 0% 0)' });
-      tl.to(dispoRef.current, { y: dispoYEnd, duration: frameDur, ease: 'none' }, pairStart);
-      tl.to(
-        dispoRef.current,
-        { opacity: 0, clipPath: 'inset(100% 0 0% 0)', duration: 0.15, ease: 'power2.in' },
-        pairStart + 0.45
-      );
-
-      // Picture Frame 2 Parallax
-      gsap.set(frame2Ref.current, { yPercent: -50, y: () => window.innerHeight * 1.3 });
-      gsap.set(frameImg2Ref.current, { yPercent: -30 });
-      tl.to(frame2Ref.current, { y: frameYEnd, duration: frameDur, ease: 'none' }, pairStart + 0.07);
-      tl.to(frameImg2Ref.current, { yPercent: 30, duration: frameDur, ease: 'none' }, pairStart + 0.07);
-
-      // Availability card 2 Parallax
-      gsap.set(dispo2Ref.current, { yPercent: -50, y: frameY, opacity: 1, clipPath: 'inset(0% 0 0% 0)' });
-      tl.to(dispo2Ref.current, { y: frameYEnd, duration: frameDur, ease: 'none' }, pairStart);
-      tl.to(
-        dispo2Ref.current,
-        { opacity: 0, clipPath: 'inset(100% 0 0% 0)', duration: 0.15, ease: 'power2.in' },
-        pairStart + 0.45
+        formContainerRef.current,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' },
+        0.32
       );
     }, containerRef);
 
@@ -163,6 +187,7 @@ export default function ContactSection() {
 
   return (
     <div ref={containerRef}>
+      {contextHolder}
       <div className="contact-bg" id="contact-bg" />
       
       <div className="contact-blob-wrap" id="contact-blob-wrap" ref={blobWrapRef}>
@@ -175,66 +200,126 @@ export default function ContactSection() {
             Contact
           </div>
 
-          <div className="contact-dispo" id="contact-dispo" ref={dispoRef}>
+          <div className="contact-left-text" id="contact-left-text" ref={leftTextRef}>
             <p>
-              Available for <span className="other-accent">strategic full-stack consulting</span> or enterprise integration
-              contracts starting globally.
+              If you have any query or want to collaborate, please fill out this form and reach out to us. Let's build something exceptional together.
             </p>
           </div>
 
-          <div className="contact-frame" id="contact-frame" ref={frameRef}>
-            <img
-              className="contact-frame-img"
-              id="contact-frame-img"
-              ref={frameImgRef}
-              src="/art/Untitled2.png"
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
-            <span className="frame-corner tl"></span>
-            <span className="frame-corner tr"></span>
-            <span className="frame-corner bl"></span>
-            <span className="frame-corner br"></span>
-          </div>
 
-          <div className="contact-dispo" id="contact-dispo-2" ref={dispo2Ref}>
-            <p>
-              Always seeking <span className="other-accent">ambitious software problems</span> to build robust pipelines and
-              scalable architectures.
-            </p>
-          </div>
+          {/* Premium Light-Glassmorphic Contact Form */}
+          <div className="contact-form-wrap" ref={formContainerRef}>
+            {isSubmitted ? (
+              <div className="contact-form-success">
+                <div className="success-icon-wrap">
+                  <svg className="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <h3>Message Sent!</h3>
+                <p>Thank you for reaching out. I'll get back to you soon!</p>
+              </div>
+            ) : (
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                requiredMark={(label, { required }) => (
+                  <span className="flex items-center gap-1">
+                    {required && <span className="text-[#ff1e00]">*</span>}
+                    {label}
+                  </span>
+                )}
+                className="space-y-4"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Form.Item
+                    name="name"
+                    label={<span className="form-label">Name</span>}
+                    rules={[
+                      { required: true, message: 'Please enter your name' },
+                      { min: 2, message: 'Name must be at least 2 characters' }
+                    ]}
+                    className="mb-0"
+                  >
+                    <Input
+                      placeholder="Your name"
+                      size="large"
+                      className="form-input"
+                    />
+                  </Form.Item>
 
-          <div className="contact-frame" id="contact-frame-2" ref={frame2Ref}>
-            <img
-              className="contact-frame-img"
-              id="contact-frame-img-2"
-              ref={frameImg2Ref}
-              src="/art/Untitled1.png"
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
-            <span className="frame-corner tl"></span>
-            <span className="frame-corner tr"></span>
-            <span className="frame-corner bl"></span>
-            <span className="frame-corner br"></span>
-          </div>
+                  <Form.Item
+                    name="email"
+                    label={<span className="form-label">Email</span>}
+                    rules={[
+                      { required: true, message: 'Please enter your email' },
+                      { type: 'email', message: 'Please enter a valid email' }
+                    ]}
+                    className="mb-0"
+                  >
+                    <Input
+                      placeholder="Your email"
+                      size="large"
+                      className="form-input"
+                    />
+                  </Form.Item>
+                </div>
 
-          <div className="contact-bottom" id="contact-bottom">
-            <nav className="contact-socials" id="contact-socials" ref={socialsRef} aria-label="Réseaux sociaux">
-              <ChrHover text="GitHub" href="https://github.com/chota-jd" target="_blank" rel="noopener noreferrer" />
-              <ChrHover
-                text="LinkedIn"
-                href="https://www.linkedin.com/in/chirag-prajapati-a5ab7a268/"
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-              <ChrHover text="Email" href="mailto:chirag.work@gmail.com" />
-            </nav>
-            <a className="contact-mail" id="contact-mail" ref={mailRef} href="mailto:chirag.work@gmail.com">
-              chirag.work@gmail.com
-            </a>
+                <Form.Item
+                  name="subject"
+                  label={<span className="form-label">Subject</span>}
+                  rules={[
+                    { required: true, message: 'Please enter a subject' },
+                    { min: 5, message: 'Subject must be at least 5 characters' }
+                  ]}
+                  className="mb-0"
+                >
+                  <Input
+                    placeholder="Subject"
+                    size="large"
+                    className="form-input"
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name="message"
+                  label={<span className="form-label">Message</span>}
+                  rules={[
+                    { required: true, message: 'Please enter your message' },
+                    { min: 10, message: 'Message must be at least 10 characters' }
+                  ]}
+                  className="mb-4"
+                >
+                  <TextArea
+                    placeholder="Tell me about your project or say hello..."
+                    rows={4}
+                    className="form-input form-textarea"
+                  />
+                </Form.Item>
+
+                <Form.Item className="mb-0">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`form-submit-btn ${isSubmitting ? "loading" : ""}`}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader size={16} className="animate-spin" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <MessageCircle size={16} />
+                        <span>Send Message</span>
+                      </>
+                    )}
+                  </button>
+                </Form.Item>
+              </Form>
+            )}
           </div>
         </div>
       </section>

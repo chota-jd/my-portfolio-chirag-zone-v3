@@ -286,58 +286,6 @@ export default function Footer() {
     };
     parallaxLoop();
 
-    // Large signature character stagger reveals
-    const lukeEl = document.querySelector('.footer-name-luke') as HTMLElement;
-    const baffaitEl = document.querySelector('.footer-name-baffait') as HTMLElement;
-    const dotEl = document.querySelector('.footer-name-dot') as HTMLElement;
-
-    if (lukeEl && baffaitEl) {
-      const rebuildChars = (el: HTMLElement, keepFirstLetter: boolean) => {
-        const text = el.textContent || '';
-        el.textContent = '';
-        const inners: HTMLElement[] = [];
-        for (let i = 0; i < text.length; i++) {
-          const outer = document.createElement('span');
-          outer.style.cssText =
-            'display:inline-block;overflow:hidden;vertical-align:top;padding:0.1em 0.3em;margin:-0.1em -0.3em;';
-          if (keepFirstLetter && i === 0) outer.className = 'first-letter';
-          const inner = document.createElement('span');
-          inner.style.cssText = 'display:inline-block;will-change:transform;';
-          inner.textContent = text[i];
-          outer.appendChild(inner);
-          el.appendChild(outer);
-          inners.push(inner);
-        }
-        return inners;
-      };
-
-      const lukeChars = rebuildChars(lukeEl, true);
-      const baffaitChars = rebuildChars(baffaitEl, false);
-      const dotChars = dotEl ? rebuildChars(dotEl, false) : [];
-
-      const ordered: HTMLElement[] = [];
-      const lukeRev = lukeChars.slice().reverse();
-      const rightSide = baffaitChars.concat(dotChars);
-      const maxLen = Math.max(lukeRev.length, rightSide.length);
-      for (let i = 0; i < maxLen; i++) {
-        if (rightSide[i]) ordered.push(rightSide[i]);
-        if (lukeRev[i]) ordered.push(lukeRev[i]);
-      }
-
-      gsap.set(ordered, { yPercent: 110 });
-      gsap.to(ordered, {
-        yPercent: 0,
-        ease: 'power3.out',
-        stagger: { each: 0.04, from: 'start' },
-        scrollTrigger: {
-          trigger: '#footer-transition',
-          start: 'center bottom+=500',
-          end: 'bottom bottom',
-          scrub: true,
-        },
-      });
-    }
-
     // Toggle entire footer visibility
     const footerEl = document.getElementById('footer');
     if (footerEl) {
@@ -398,16 +346,6 @@ export default function Footer() {
             <div className="footer-ascii right">
               <pre id="ascii-right" ref={asciiRightRef}></pre>
             </div>
-          </div>
-
-          <div className="footer-name">
-            <span className="footer-name-luke">
-              <span className="first-letter">C</span>hirag
-            </span>
-            <span className="footer-name-baffait-wrap">
-              <span className="footer-name-baffait">Prajapati</span>
-              <span className="footer-name-dot">.</span>
-            </span>
           </div>
         </div>
       </footer>

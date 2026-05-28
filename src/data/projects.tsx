@@ -156,34 +156,5 @@ export const projects: Project[] = [
       overview: 'AI Untuk Rakyat is structured as a mass-adoption learning experience that introduces AI in a non-technical and approachable format. The two-module progression helps users first understand what AI is, and then move into practical understanding of ethics, use cases, and responsibility. This makes the platform relevant for broad demographics, not only for technical professionals.',
       impact: 'The program demonstrates how national digital literacy initiatives can move fast when content is localized and the journey is clear. Multilingual support, badge-based recognition, and self-paced delivery create a model where citizens can participate on their own schedule while still feeling part of a coordinated national transformation effort.'
     }
-  },
-  {
-    id: 4,
-    slug: 'future-frontier',
-    title: 'Future Frontier',
-    description: 'Exploring the intersection of human intuition and artificial intelligence.',
-    fullDescription: 'A visionary collection of upcoming digital frontiers, exploring the intersection of human intuition and artificial intelligence. This lab is dedicated to prototyping next-generation technologies that redefine how we interact with the digital world.',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1600',
-    technologies: ['AI', 'Web3', 'Metaverse', 'Edge Computing', 'Neural Interface'],
-    githubUrl: 'https://github.com/chota-jd',
-    liveUrl: '#stats',
-    category: 'Visionary',
-    icon: <Sparkles className="w-5 h-5" />,
-    color: 'from-teal-500 to-cyan-500',
-    isSpecial: true,
-    detailedStats: [
-      { label: 'Prototypes', value: '12' },
-      { label: 'Research Papers', value: '5' }
-    ],
-    platformInsights: [
-      { label: 'Portfolio Link', value: 'Concept showcase placeholder (internal section link)' },
-      { label: 'Focus Areas', value: 'AI, Web3, Metaverse, Edge, Neural Interface' },
-      { label: 'Current State', value: 'R&D lab direction, not a public production portal' },
-      { label: 'Intended Outcome', value: 'Prototype and validate frontier interaction models' }
-    ],
-    narrative: {
-      overview: 'Future Frontier is presented as an innovation sandbox where speculative ideas are translated into tangible experiments. Instead of optimizing for immediate launch, the project focuses on hypothesis-driven prototyping across emerging domains such as ambient intelligence, spatial interaction, and decentralized systems.',
-      impact: 'The value of this lab is strategic: it creates optionality for future products by validating concepts early and identifying what is technically viable, human-centered, and scalable. This approach helps reduce future build risk and ensures the portfolio remains aligned with where digital interaction is heading next.'
-    }
   }
 ];

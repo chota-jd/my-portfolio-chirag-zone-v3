@@ -15,7 +15,7 @@ export default function AboutSection() {
 
     const ctx = gsap.context(() => {
       // Word fade reveal triggers
-      const wordElements = document.querySelectorAll('#about-text .word, #about-version .word');
+      const wordElements = document.querySelectorAll('#about-text .word');
       wordElements.forEach((word) => {
         gsap.to(word, {
           opacity: 1,
@@ -95,23 +95,6 @@ export default function AboutSection() {
     });
   };
 
-  const versionTextWords = (text: string) => {
-    return text.split(/(\s+)/).map((word, idx) => {
-      if (/^\s+$/.test(word)) {
-        return word;
-      }
-      return (
-        <span
-          key={idx}
-          className="word"
-          style={{ display: 'inline-block', opacity: 0, filter: 'blur(8px)' }}
-        >
-          {word}
-        </span>
-      );
-    });
-  };
-
   return (
     <section className="section-after" id="about" ref={containerRef}>
       <div className="about">
@@ -129,19 +112,6 @@ export default function AboutSection() {
 
         <div className="about-btn">
           <ChrHover text="Info🡺" href="#contact" aria-label="En savoir plus sur moi" />
-        </div>
-
-        <div className="about-version" id="about-version">
-          <svg
-            style={{ width: '1.25em', height: '1.25em', verticalAlign: '-0.25em', display: 'inline-block' }}
-            viewBox="0 0 84 85"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            className="word"
-          >
-            <path d="M11 38H54L37 21H51L73 43L51 65H37L54 48H11Z" />
-          </svg>
-          {versionTextWords('V3.0')}
         </div>
 
         <div className="about-photo-wrap" id="about-photo-wrap">
