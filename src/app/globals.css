@@ -3001,6 +3001,11 @@ a.chr-hover {
     padding: 8vh 1.5rem;
     gap: 3rem;
   }
+
+  .products-title {
+    white-space: normal;
+    font-size: clamp(1.85rem, 7.5vw, 2.75rem);
+  }
 }
 
 .products-split-left {
@@ -3021,12 +3026,17 @@ a.chr-hover {
 
 .products-title {
   font-family: 'Breton', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-size: clamp(2rem, 3.8vw, 4.5rem);
   font-weight: 300;
   line-height: 1.1;
   color: #f0f0f0;
   margin-bottom: 2rem;
   letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.products-title .other-accent {
+  display: inline;
 }
 
 .products-subtitle {

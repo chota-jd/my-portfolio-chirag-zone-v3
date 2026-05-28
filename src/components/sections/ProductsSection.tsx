@@ -95,10 +95,11 @@ export default function ProductsSection() {
       {/* Left Column: Curved Title Selector Wheel */}
       <div className="products-split-left">
         <h2 className="products-title">
-          SaaS <span className="other-accent">Products.</span>
+          Product <span className="other-accent">Contributions.</span>
         </h2>
         <p className="products-subtitle">
-          I design and architect high-impact digital systems that scale. Here is a curated selection of products I lead.
+          Contributing to enterprise-grade solutions and high-impact digital products. Explore the professional
+          projects where I&apos;ve contributed as a core team member.
         </p>
 
         <div className="products-wheel-container">
