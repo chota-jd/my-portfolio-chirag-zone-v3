@@ -41,7 +41,7 @@ export default function Footer() {
       const c = document.createElement('canvas');
       const ctx = c.getContext('2d');
       if (!ctx) return { text: '', poolGrid: [] };
-      
+
       const aspect = img.height / img.width;
       const charAspect = 1.0;
       const rows = Math.round(cols * aspect * charAspect);
@@ -302,6 +302,31 @@ export default function Footer() {
       });
     }
 
+    // Animate footer center content on scroll reveal
+    const footerTitle = document.querySelector('.footer-title');
+    const footerSub = document.querySelector('.footer-subtitle');
+    const footerCta = document.querySelector('.footer-cta');
+
+    if (footerTitle && footerSub && footerCta) {
+      gsap.fromTo(
+        [footerTitle, footerSub, footerCta],
+        { y: 35, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '#footer-transition',
+            start: 'top bottom-=200',
+            end: 'bottom bottom',
+            scrub: 1,
+          },
+        }
+      );
+    }
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
@@ -315,13 +340,33 @@ export default function Footer() {
 
       <footer className="footer" id="footer" ref={footerRef}>
         <div className="footer-content" id="footer-content">
+          {/* Centered CTA Information Block (between hands) */}
+          <div className="footer-center">
+            <h2 className="footer-title">
+              LET&apos;S CREATE <br />
+              <span className="other-accent text-accent-orange">SOMETHING NEW.</span>
+            </h2>
+            <p className="footer-subtitle">
+              Have an idea, a freelance proposal, or just want to collaborate? My inbox is always open. Let&apos;s build something exceptional together.
+            </p>
+            <div className="footer-cta">
+              <ChrHover
+                text="GET IN TOUCH 🡺"
+                href="mailto:chirag.work@gmail.com"
+                className="footer-cta-btn"
+              />
+            </div>
+          </div>
+
           <div className="footer-top">
             <div className="footer-top-col">
+              <span className="footer-col-label">INQUIRIES</span>
               <ChrHover text="chirag.work@gmail.com" href="mailto:chirag.work@gmail.com" className="footer-mail" />
-              <ChrHover text="© 2026" className="footer-date" />
+              <span className="footer-date-text">© 2026 Chirag Prajapati</span>
             </div>
 
             <nav className="footer-top-col" aria-label="Réseaux sociaux">
+              <span className="footer-col-label">CONNECT</span>
               <ChrHover text="GitHub" href="https://github.com/chota-jd" target="_blank" rel="noopener noreferrer" />
               <ChrHover
                 text="LinkedIn"
@@ -333,6 +378,7 @@ export default function Footer() {
             </nav>
 
             <nav className="footer-top-col" aria-label="Navigation pied de page">
+              <span className="footer-col-label">DIRECTORY</span>
               <ChrHover text="Work" href="#projects" />
               <ChrHover text="Info" href="#about" />
               <ChrHover text="Contact" href="#contact" />

@@ -79,7 +79,7 @@ export default function ProjectsSection() {
 
     // Trigger visibility of preview card based on view
     ScrollTrigger.create({
-      trigger: '#projects',
+      trigger: '.projects-inner',
       start: 'top 80%',
       end: 'bottom 20%',
       onEnter: () => {
@@ -99,6 +99,30 @@ export default function ProjectsSection() {
         projectsVisible = false;
       },
     });
+
+    // Animate projects header title and description
+    const headerTitle = document.querySelector('.projects-title');
+    const headerDesc = document.querySelector('.projects-description');
+
+    if (headerTitle && headerDesc) {
+      gsap.fromTo(
+        [headerTitle, headerDesc],
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '#projects',
+            start: 'top 85%',
+            end: 'top 55%',
+            scrub: 1,
+          },
+        }
+      );
+    }
 
     const itemQuickX = Array.from(items).map((item) =>
       gsap.quickTo(item, 'x', { duration: 0.6, ease: 'power2.out' })
@@ -353,6 +377,15 @@ export default function ProjectsSection() {
           "
           />
         </svg>
+
+        <div className="projects-header">
+          <h2 className="projects-title">
+            Selected <span className="other-accent">Projects.</span>
+          </h2>
+          <p className="projects-description">
+            A curated showcase of high-performance web systems, creative software engineering, and digital solutions I&apos;ve designed and developed.
+          </p>
+        </div>
 
         <div className="projects-inner">
           <div className="projects-list" id="projects-list">

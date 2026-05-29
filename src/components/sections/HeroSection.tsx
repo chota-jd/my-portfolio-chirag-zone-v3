@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import gsap from 'gsap';
 import { ChrHover } from '@/components/ui/ChrHover';
 
 export default function HeroSection() {
@@ -51,45 +52,63 @@ export default function HeroSection() {
         {/* WebGL background canvas container */}
         <div className="hero-canvas" id="hero-canvas"></div>
 
-        <div className="hero-content">
-          <div className="hero-tagline" id="hero-tagline">
-            Quiet developer, <span className="other-accent">I shape the future</span> of web interfaces,
-            <br />
-            balancing robust code, fluid animations, and absolute precision.
-          </div>
+        {/* Sleek Developer Silhouette Background Overlay */}
+        <div className="hero-silhouette-container">
+          <img
+            src="/hero_developer_silhouette.png"
+            alt="Chirag Prajapati - Developer Silhouette"
+            className="hero-silhouette-image"
+          />
+        </div>
 
-          <div className="hero-line" id="hero-line"></div>
-          <div className="hero-bar" id="hero-bar">
-            <div className="hero-bar-left">
+        <div className="hero-content">
+          {/* Redesigned Clean Single Column Editorial Layout */}
+          <div className="hero-content-left">
+            <h1 className="hero-heading">
+              SOFTWARE <span className="other-accent text-accent-orange">ENGINEER.</span>
+            </h1>
+            <p className="hero-bio">
+              Hi, I&apos;m Chirag. Architecting the fluidity between high-performance code, robust web systems, and creative digital experiences.
+            </p>
+            <p className="hero-collaborate">
+              Collaborating globally with brands and engineering teams to build fast, robust, and scalable products.
+            </p>
+
+            <div className="hero-bar" id="hero-bar">
+              <nav className="hero-nav" aria-label="Hero navigation">
+                <ChrHover
+                  text="GitHub"
+                  href="https://github.com/chota-jd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+                <span className="sep" aria-hidden="true">
+                  /
+                </span>
+                <ChrHover
+                  text="LinkedIn"
+                  href="https://www.linkedin.com/in/chirag-prajapati-a5ab7a268/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+                <span className="sep" aria-hidden="true">
+                  /
+                </span>
+                <ChrHover text="Email" href="mailto:chirag.work@gmail.com" />
+                <ChrHover text="Work" href="#projects" />
+                <ChrHover text="Info" href="#about" />
+                <ChrHover text="Contact" href="#contact" />
+              </nav>
             </div>
 
-            <nav className="hero-bar-center" aria-label="Réseaux sociaux">
-              <ChrHover
-                text="GitHub"
-                href="https://github.com/chota-jd"
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-              <span className="sep" aria-hidden="true">
-                /
-              </span>
-              <ChrHover
-                text="LinkedIn"
-                href="https://www.linkedin.com/in/chirag-prajapati-a5ab7a268/"
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-              <span className="sep" aria-hidden="true">
-                /
-              </span>
-              <ChrHover text="Email" href="mailto:chirag.prajapati@example.com" />
-            </nav>
-
-            <nav className="hero-bar-right" aria-label="Navigation principale">
-              <ChrHover text="Work" href="#projects" />
-              <ChrHover text="Info" href="#about" />
-              <ChrHover text="Contact" href="#contact" />
-            </nav>
+            <div className="hero-details-row">
+              <div className="details-group actions-group">
+                <div className="status-pill">
+                  <span className="status-dot"></span>
+                  <span className="status-text">Status: Available Global</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

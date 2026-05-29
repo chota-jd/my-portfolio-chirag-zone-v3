@@ -243,23 +243,30 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
           hero.style.opacity = '1';
         }
 
-        // Run standard script reveals for hero tagline & line
-        gsap.to('#hero-tagline', {
-          opacity: 1,
-          clipPath: 'inset(0 0 0% 0)',
-          duration: 1.1,
-          ease: 'power3.inOut',
-        });
+        // Run standard script reveals for hero content grid
+        const introColItems = document.querySelectorAll('.hero-intro-col > *');
+        const detailGroups = document.querySelectorAll('.details-group');
+
         gsap.to('#hero-bar', {
           opacity: 1,
           clipPath: 'inset(0 0 0% 0)',
           duration: 1.0,
           ease: 'power3.inOut',
         });
-        gsap.fromTo('#hero-line',
-          { opacity: 1, scaleX: 0 },
-          { scaleX: 1, duration: 1.0, ease: 'power3.inOut' }
-        );
+
+        if (introColItems.length || detailGroups.length) {
+          gsap.fromTo(
+            [...Array.from(introColItems), ...Array.from(detailGroups)],
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1.1,
+              stagger: 0.08,
+              ease: 'power3.out',
+            }
+          );
+        }
       })
       .to(tRedRef.current, {
         y: '-100%',
@@ -271,8 +278,16 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
         duration: 0.55,
         ease: 'power3.inOut',
       }, '-=0.4')
+      .to(nameLayerRef.current, {
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.inOut',
+      }, '-=0.35')
       .add(() => {
         // Complete hook
+        if (nameLayerRef.current) {
+          nameLayerRef.current.style.display = 'none';
+        }
         window.removeEventListener('resize', refreshIntroNameAnchor);
         if (nameAnchorRaf) cancelAnimationFrame(nameAnchorRaf);
         onComplete();
