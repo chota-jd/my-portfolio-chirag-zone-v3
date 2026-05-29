@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, ExternalLink, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
-import Navigation from '@/components/ui/Navigation';
 import Footer from '@/components/ui/Footer';
 
 export default function ProductDetail() {
@@ -28,8 +27,6 @@ export default function ProductDetail() {
 
   return (
     <main className="min-h-screen bg-black text-white relative overflow-hidden">
-      <Navigation />
-
       {/* Background Glows */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#4fc1c6]/10 rounded-full blur-[120px]" />

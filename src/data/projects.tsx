@@ -1,4 +1,4 @@
-import { Globe, Sparkles, Smartphone, Code2, Layers, Cpu } from 'lucide-react';
+import { Globe, Sparkles, Smartphone } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export interface Project {
@@ -25,6 +25,13 @@ export interface Project {
     overview: string;
     impact: string;
   };
+  year?: string;
+  role?: string;
+  challenge?: string;
+  solution?: string;
+  features?: string[];
+  impact?: string;
+  services?: string[];
 }
 
 export const projects: Project[] = [
@@ -69,7 +76,24 @@ export const projects: Project[] = [
     narrative: {
       overview: 'AI Impact Pledge is designed as a public-first civic platform where participation feels simple and trusted. The portal uses an OTP-based entry, a short responsible AI quiz, and an on-screen guided pledge so users can understand the intent before they commit. The flow is intentionally lightweight, making it easy for citizens, students, and professionals to complete the journey quickly from any device.',
       impact: 'What makes this initiative meaningful is how policy goals are translated into repeatable digital behavior. Instead of only spreading awareness through campaigns, the platform converts awareness into measurable participation through pledges and badges. This creates a visible social layer around responsible AI adoption and helps build long-term momentum for ethical technology practices at national scale.'
-    }
+    },
+    year: '2026',
+    role: 'Full Stack · Civic Tech',
+    challenge:
+      'Scale a national pledge campaign where millions of citizens needed a frictionless, trustworthy flow—without compromising security, accessibility, or clarity around responsible AI.',
+    solution:
+      'Designed a guided journey from OTP registration through a short ethics quiz to a digital pledge and downloadable badge, with progress states and mobile-first layouts that work on low-bandwidth devices.',
+    features: [
+      'OTP-based registration with secure session handling',
+      'Responsible AI quiz with clear pass/fail feedback',
+      'On-screen pledge ceremony with shareable completion state',
+      'Government-recognized digital badge generation',
+      'High-concurrency readiness for peak campaign traffic',
+      'Analytics-friendly event tracking for participation milestones',
+    ],
+    impact:
+      '2.8M+ registered users, 2.5M+ badges issued, and a Guinness World Record attempt window—proving civic platforms can combine policy intent with product-grade UX at national scale.',
+    services: ['Full Stack Web Apps', 'System Architecture', 'UI/UX Design', 'Performance Engineering'],
   },
   {
     id: 2,
@@ -112,7 +136,24 @@ export const projects: Project[] = [
     narrative: {
       overview: 'TechEquity operates as a discovery and growth ecosystem rather than a single-course website. Learners can browse curated pathways, compare course options, and move across categories like digital literacy, financial literacy, and technology skills. The platform experience is built to reduce friction for first-time learners while still giving advanced users enough depth to continue upskilling.',
       impact: 'The strongest outcome of TechEquity is accessibility at scale: high-quality learning opportunities are aggregated in one place and made free to access. By combining global partners, multilingual access patterns, and career-focused course tracks, the project supports women in building practical digital confidence that can translate into better employability and stronger economic participation.'
-    }
+    },
+    year: '2023',
+    role: 'Full Stack · EdTech',
+    challenge:
+      'Bridge the gender digital divide with a global learning hub that must feel personal, multilingual, and engaging—not like a static course catalog.',
+    solution:
+      'Built a discovery-first LMS experience with AI-guided pathways, gamified progress cues, and partner course aggregation so learners always know what to take next.',
+    features: [
+      'Personalized course recommendations by goals and skill level',
+      'Multilingual content discovery across 100+ languages',
+      'Gamified learning hub with progress and milestones',
+      'Events, webinars, and partner integrations in one flow',
+      'Scalable cloud LMS architecture for global traffic',
+      'Admin-ready structure for content and partner onboarding',
+    ],
+    impact:
+      '1M+ women targeted, 95+ expert courses, and learners across 80+ countries—turning G20 Empower policy into a living digital skills ecosystem.',
+    services: ['Full Stack Web Apps', 'Cloud LMS Integration', 'UI/UX Design', 'API Architecture'],
   },
   {
     id: 3,
@@ -155,6 +196,23 @@ export const projects: Project[] = [
     narrative: {
       overview: 'AI Untuk Rakyat is structured as a mass-adoption learning experience that introduces AI in a non-technical and approachable format. The two-module progression helps users first understand what AI is, and then move into practical understanding of ethics, use cases, and responsibility. This makes the platform relevant for broad demographics, not only for technical professionals.',
       impact: 'The program demonstrates how national digital literacy initiatives can move fast when content is localized and the journey is clear. Multilingual support, badge-based recognition, and self-paced delivery create a model where citizens can participate on their own schedule while still feeling part of a coordinated national transformation effort.'
-    }
-  }
+    },
+    year: '2024',
+    role: 'Full Stack · National Program',
+    challenge:
+      'Demystify AI for all Malaysians—from students to seniors—via a self-paced national program that had to ship in four languages and hit 1M completions quickly.',
+    solution:
+      'Delivered a two-module LMS (AI Aware → AI Appreciate) with OTP onboarding, interactive activities, quizzes, and digital badges—optimized for mobile-first, low-friction completion.',
+    features: [
+      'Enterprise LMS with modular lesson and quiz flows',
+      'Four-language support (BM, English, Mandarin, Tamil)',
+      'OTP mobile verification for trusted enrollment',
+      'Badge issuance and completion tracking at scale',
+      'National analytics dashboard readiness',
+      'Accessible UI for non-technical audiences',
+    ],
+    impact:
+      '1.39M+ registered learners, 1M national target achieved in under six months, and 90% public awareness outreach—proving mass AI literacy can move at startup speed.',
+    services: ['Full Stack Web Apps', 'Enterprise LMS', 'Multilingual UX', 'Analytics Integration'],
+  },
 ];

@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChrHover } from '@/components/ui/ChrHover';
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
   const footerRef = useRef<HTMLDivElement>(null);
   const asciiLeftRef = useRef<HTMLPreElement>(null);
   const asciiRightRef = useRef<HTMLPreElement>(null);
@@ -16,7 +19,14 @@ export default function Footer() {
   }, []);
 
   useEffect(() => {
-    if (!isClient) return;
+    const footerEl = document.getElementById('footer');
+    if (!footerEl) return;
+    if (isHomePage) return;
+    footerEl.style.visibility = 'hidden';
+  }, [isHomePage]);
+
+  useEffect(() => {
+    if (!isClient || !isHomePage) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const POOLS = [
@@ -302,37 +312,54 @@ export default function Footer() {
       });
     }
 
-    // Animate footer center content on scroll reveal
-    const footerTitle = document.querySelector('.footer-title');
-    const footerSub = document.querySelector('.footer-subtitle');
-    const footerCta = document.querySelector('.footer-cta');
+    // Muted (light grey) → vivid (colourful) on deeper footer scroll
+    const footerRoot = footerRef.current;
+    const footerCenter = document.querySelector('.footer-center');
+    const createdTriggers: ScrollTrigger[] = [];
 
-    if (footerTitle && footerSub && footerCta) {
-      gsap.fromTo(
-        [footerTitle, footerSub, footerCta],
-        { y: 35, opacity: 0 },
+    if (footerRoot) {
+      createdTriggers.push(
+        ScrollTrigger.create({
+          trigger: '#footer-transition',
+          start: 'top bottom',
+          end: 'bottom bottom',
+          onUpdate: (self) => {
+            footerRoot.classList.toggle('footer-vivid', self.progress > 0.52);
+          },
+          onLeaveBack: () => {
+            footerRoot.classList.remove('footer-vivid');
+          },
+        })
+      );
+    }
+
+    if (footerCenter) {
+      const centerTween = gsap.fromTo(
+        footerCenter,
+        { y: 28, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
-          ease: 'power3.out',
+          ease: 'none',
           scrollTrigger: {
             trigger: '#footer-transition',
-            start: 'top bottom-=200',
-            end: 'bottom bottom',
-            scrub: 1,
+            start: 'top bottom-=120',
+            end: 'top center',
+            scrub: true,
           },
         }
       );
+      const centerSt = centerTween.scrollTrigger;
+      if (centerSt) createdTriggers.push(centerSt);
     }
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
+      createdTriggers.forEach((st) => st.kill());
     };
-  }, [isClient]);
+  }, [isClient, isHomePage]);
 
-  if (!isClient) return null;
+  if (!isClient || !isHomePage) return null;
 
   return (
     <>
@@ -340,21 +367,23 @@ export default function Footer() {
 
       <footer className="footer" id="footer" ref={footerRef}>
         <div className="footer-content" id="footer-content">
-          {/* Centered CTA Information Block (between hands) */}
-          <div className="footer-center">
-            <h2 className="footer-title">
-              LET&apos;S CREATE <br />
-              <span className="other-accent text-accent-orange">SOMETHING NEW.</span>
-            </h2>
-            <p className="footer-subtitle">
-              Have an idea, a freelance proposal, or just want to collaborate? My inbox is always open. Let&apos;s build something exceptional together.
-            </p>
-            <div className="footer-cta">
-              <ChrHover
-                text="GET IN TOUCH 🡺"
-                href="mailto:chirag.work@gmail.com"
-                className="footer-cta-btn"
-              />
+          {/* Center CTA — wrapper holds layout; inner is scroll-animated */}
+          <div className="footer-center-wrap">
+            <div className="footer-center">
+              <h2 className="footer-title">
+                LET&apos;S CREATE <br />
+                <span className="other-accent text-accent-orange">SOMETHING NEW.</span>
+              </h2>
+              <p className="footer-subtitle">
+                Have an idea, a freelance proposal, or just want to collaborate? My inbox is always open. Let&apos;s build something exceptional together.
+              </p>
+              <div className="footer-cta">
+                <ChrHover
+                  text="GET IN TOUCH 🡺"
+                  href="mailto:chirag.work@gmail.com"
+                  className="footer-cta-btn"
+                />
+              </div>
             </div>
           </div>
 

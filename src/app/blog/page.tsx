@@ -1,4 +1,3 @@
-import Navigation from '@/components/ui/Navigation';
 import Footer from '@/components/ui/Footer';
 import AnimatedBackground from '@/components/ui/AnimatedBackground';
 import BlogSection from '@/components/sections/BlogSection';
@@ -13,10 +12,9 @@ export const metadata = {
 export default function BlogPage() {
   return (
     <div className="relative min-h-screen">
-      <Navigation />
       <AnimatedBackground />
 
-      <main className="relative z-10 pt-20">
+      <main className="relative z-10">
         <div className="container-custom py-12">
           <SectionHeading
             as="h1"

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -15,9 +15,15 @@ import ProjectsSection from '@/components/sections/ProjectsSection';
 import ProductsSection from '@/components/sections/ProductsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/ui/Footer';
+import {
+  consumeSkipIntro,
+  hasPendingHomeScroll,
+  runPendingHomeScroll,
+} from '@/lib/homeNavigation';
 
 export default function HomePage({ children }: { children?: React.ReactNode }) {
   const [introFinished, setIntroFinished] = useState(false);
+  const [introGateReady, setIntroGateReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
@@ -28,11 +34,19 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
     setIntroFinished(true);
   }, []);
 
-  useEffect(() => {
-    // If intro is active, freeze initial scroll
+  useLayoutEffect(() => {
+    if (consumeSkipIntro()) {
+      setIntroFinished(true);
+    }
+    setIntroGateReady(true);
+  }, []);
+
+  useLayoutEffect(() => {
     if (!introFinished) {
       document.documentElement.style.overflow = 'hidden';
-      window.scrollTo(0, 0);
+      if (!hasPendingHomeScroll()) {
+        window.scrollTo(0, 0);
+      }
     } else {
       document.documentElement.style.overflow = '';
     }
@@ -52,6 +66,10 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
+
+    const cancelPendingScroll = runPendingHomeScroll(lenis, () => {
+      ScrollTrigger.refresh();
+    });
 
     // Fade out and translate up the preloader name signature as you scroll away from the Hero
     gsap.to('#name-layer', {
@@ -227,6 +245,7 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
     }
 
     return () => {
+      cancelPendingScroll?.();
       lenis.destroy();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
@@ -234,7 +253,9 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
 
   return (
     <div className="relative min-h-screen" ref={containerRef}>
-      <CinematicIntro onComplete={handleIntroComplete} />
+      {introGateReady && !introFinished && (
+        <CinematicIntro onComplete={handleIntroComplete} />
+      )}
 
       <main className={`relative z-10 ${!introFinished ? 'pointer-events-none' : ''}`}>
         <HeroSection />

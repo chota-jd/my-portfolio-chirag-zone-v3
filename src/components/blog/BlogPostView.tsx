@@ -7,7 +7,6 @@ import { Copy, Facebook, Linkedin, Check, MessageCircle } from 'lucide-react';
 import type { PortableTextBlock } from '@portabletext/types';
 
 import PortableTextContent from '@/components/blog/PortableTextContent';
-import Navigation from '@/components/ui/Navigation';
 import Footer from '@/components/ui/Footer';
 import type { BlogPost } from '@/sanity/types';
 
@@ -98,8 +97,6 @@ export default function BlogPostView({
 
   return (
     <div className="relative min-h-screen bg-black">
-      <Navigation />
-
       <main className="relative z-10">
         {/* Hero: full-bleed cover — bottom scrim only (no top/side dark bands) */}
         <section className="relative min-h-[min(85vh,720px)] w-full overflow-hidden">

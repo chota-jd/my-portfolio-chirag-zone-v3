@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projects } from '@/data/projects';
-import { products } from '@/data/products';
 import { ChrHover } from '@/components/ui/ChrHover';
 
 // Render projects exclusively inside the projects list
@@ -23,7 +23,13 @@ const mergedItems = [
   })),
 ];
 
-export default function ProjectsSection() {
+type ProjectsSectionProps = {
+  /** Hide built-in serif header (use page-level SectionHeading instead) */
+  hideHeader?: boolean;
+};
+
+export default function ProjectsSection({ hideHeader = false }: ProjectsSectionProps) {
+  const router = useRouter();
   const sectionRef = useRef<HTMLDivElement>(null);
   const fluidLineRef = useRef<SVGPathElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -44,9 +50,13 @@ export default function ProjectsSection() {
   const detailThumbsInnerRef = useRef<HTMLDivElement>(null);
   const detailSelectedRef = useRef<HTMLDivElement>(null);
 
+  const [activeIndex, setActiveIndex] = useState(0);
   const [activeItem, setActiveItem] = useState<any>(null);
   const [activeThumbIdx, setActiveThumbIdx] = useState<number>(0);
-  const [detailOpen, setDetailOpen] = useState(false);
+
+  const goToProject = (slug: string) => {
+    router.push(`/projects/${slug}`);
+  };
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -101,8 +111,8 @@ export default function ProjectsSection() {
     });
 
     // Animate projects header title and description
-    const headerTitle = document.querySelector('.projects-title');
-    const headerDesc = document.querySelector('.projects-description');
+    const headerTitle = hideHeader ? null : sectionRef.current?.querySelector('.projects-title');
+    const headerDesc = hideHeader ? null : sectionRef.current?.querySelector('.projects-description');
 
     if (headerTitle && headerDesc) {
       gsap.fromTo(
@@ -150,6 +160,7 @@ export default function ProjectsSection() {
       });
 
       if (closestIdx >= 0 && closestDist < window.innerHeight * 0.45) {
+        setActiveIndex(closestIdx);
         items.forEach((item, i) => {
           if (i === closestIdx) {
             item.classList.add('active');
@@ -210,12 +221,11 @@ export default function ProjectsSection() {
       document.removeEventListener('mousemove', handleMouseMove);
       gsap.ticker.remove(ticker);
     };
-  }, []);
+  }, [hideHeader]);
 
   const openProject = (item: any, clickedEl: HTMLElement) => {
     setActiveItem(item);
     setActiveThumbIdx(0);
-    setDetailOpen(true);
 
     const rect = clickedEl.getBoundingClientRect();
     const cs = getComputedStyle(clickedEl);
@@ -347,7 +357,6 @@ export default function ProjectsSection() {
           clickedEl.style.visibility = '';
         }
         setActiveItem(null);
-        setDetailOpen(false);
       });
     }
   };
@@ -380,16 +389,21 @@ export default function ProjectsSection() {
 
         <div className="projects-inner">
           <div className="projects-list" id="projects-list">
-            <div className="projects-header">
-              <h2 className="projects-title">
-                Selected <span className="other-accent">Projects.</span>
-              </h2>
-              <p className="projects-description">
-                A curated showcase of high-performance web systems, creative software engineering, and digital solutions I&apos;ve designed and developed.
-              </p>
-            </div>
+            {!hideHeader && (
+              <div className="projects-header">
+                <h2 className="projects-title">
+                  Selected <span className="other-accent">Projects.</span>
+                </h2>
+                <p className="projects-description">
+                  A curated showcase of high-performance web systems, creative software engineering, and digital solutions I&apos;ve designed and developed.
+                </p>
+              </div>
+            )}
 
-            <div className="proj-items-wrap" style={{ marginTop: '3.5rem', width: '100%' }}>
+            <div
+              className="proj-items-wrap"
+              style={{ marginTop: hideHeader ? '0' : '3.5rem', width: '100%' }}
+            >
               {mergedItems.map((item, idx) => (
                 <div
                   key={item.id}
@@ -397,13 +411,13 @@ export default function ProjectsSection() {
                   data-id={item.id}
                   data-img={item.image}
                   data-date={item.date}
-                  onClick={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    if (el.classList.contains('active')) {
-                      openProject(item, el);
-                    } else {
-                      document.querySelectorAll('.proj-item').forEach((it) => it.classList.remove('active'));
-                      el.classList.add('active');
+                  role="link"
+                  tabIndex={0}
+                  onClick={() => goToProject(item.slug)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      goToProject(item.slug);
                     }
                   }}
                 >
@@ -415,7 +429,24 @@ export default function ProjectsSection() {
         </div>
 
         <div className="proj-preview" id="proj-preview" ref={previewRef}>
-          <div className="proj-card" id="proj-card" ref={cardRef}>
+          <div
+            className="proj-card"
+            id="proj-card"
+            ref={cardRef}
+            role="link"
+            tabIndex={0}
+            onClick={() => {
+              const item = mergedItems[activeIndex];
+              if (item?.slug) goToProject(item.slug);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const item = mergedItems[activeIndex];
+                if (item?.slug) goToProject(item.slug);
+              }
+            }}
+          >
             <div className="proj-meta">
               <span className="proj-date" id="proj-date" ref={dateRef}>
                 02 2026
@@ -427,7 +458,7 @@ export default function ProjectsSection() {
         </div>
 
         <div className="proj-cursor" id="proj-cursor" ref={cursorRef}>
-          See project
+          Open case study
         </div>
       </section>
 
@@ -465,16 +496,19 @@ export default function ProjectsSection() {
             ))}
           </div>
 
-          {activeItem?.liveUrl && activeItem.liveUrl !== '#' && (
-            <div className="mt-8" style={{ zIndex: 10 }}>
+          <div className="mt-8 flex flex-wrap gap-6" style={{ zIndex: 10 }}>
+            {activeItem?.slug && (
+              <ChrHover text="READ CASE STUDY 🡺" href={`/projects/${activeItem.slug}`} />
+            )}
+            {activeItem?.liveUrl && activeItem.liveUrl !== '#' && (
               <ChrHover
                 text="LAUNCH PLATFORM 🡺"
                 href={activeItem.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               />
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         <div className="detail-gallery-wrap" id="detail-gallery-wrap" ref={detailGalleryWrapRef} style={{ opacity: 0 }}>
