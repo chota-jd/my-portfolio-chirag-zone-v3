@@ -2727,10 +2727,9 @@ a.chr-hover {
   align-items: center;
   justify-content: center;
   padding: 3rem 1.5rem;
-  background: #0d0d0d;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: transparent;
   border-radius: 8px;
-  transition: border-color 0.4s ease, transform 0.4s ease;
+  transition: transform 0.4s ease;
   height: 100%;
   position: relative;
   text-align: center;
@@ -2739,7 +2738,6 @@ a.chr-hover {
 }
 
 .industry-card:hover {
-  border-color: rgba(255, 255, 255, 0.12);
   transform: translateY(-4px);
 }
 
@@ -2750,7 +2748,7 @@ a.chr-hover {
   width: 5rem;
   height: 5rem;
   margin-bottom: 2rem;
-  color: rgba(240, 240, 240, 0.6);
+  color: #f0f0f0;
   transition: color 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

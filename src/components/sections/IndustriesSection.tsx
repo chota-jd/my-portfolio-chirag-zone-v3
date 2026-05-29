@@ -65,6 +65,8 @@ export default function IndustriesSection() {
 
         cards.forEach((card, index) => {
           const fromX = index % 2 === 0 ? -60 : 60;
+          const iconWrap = card.querySelector('.industry-icon-wrap');
+          
           gsap.fromTo(
             card,
             { x: fromX, y: 24, opacity: 0 },
@@ -81,6 +83,23 @@ export default function IndustriesSection() {
               },
             }
           );
+
+          if (iconWrap) {
+            gsap.fromTo(
+              iconWrap,
+              { color: '#ff1e00' },
+              {
+                color: '#f0f0f0',
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 90%',
+                  end: 'top 68%',
+                  scrub: true,
+                },
+              }
+            );
+          }
         });
         return;
       }
@@ -105,6 +124,7 @@ export default function IndustriesSection() {
         const fromX = index % 2 === 0 ? -180 : 180;
         const fromY = index % 2 === 0 ? 52 : -52;
         const fromRotate = index % 2 === 0 ? -10 : 10;
+        const iconWrap = card.querySelector('.industry-icon-wrap');
 
         master.fromTo(
           card,
@@ -128,6 +148,19 @@ export default function IndustriesSection() {
           },
           0.03 + index * 0.11
         );
+
+        if (iconWrap) {
+          master.fromTo(
+            iconWrap,
+            { color: '#ff1e00' },
+            {
+              color: '#f0f0f0',
+              duration: 0.34,
+              ease: 'power3.out',
+            },
+            0.03 + index * 0.11
+          );
+        }
       });
     }, sectionRef);
 
