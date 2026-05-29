@@ -79,8 +79,8 @@ export default function ProjectsSection() {
 
     // Trigger visibility of preview card based on view
     ScrollTrigger.create({
-      trigger: '.projects-inner',
-      start: 'top 80%',
+      trigger: '.proj-items-wrap',
+      start: 'top 55%',
       end: 'bottom 20%',
       onEnter: () => {
         if (previewRef.current) previewRef.current.classList.add('visible');
@@ -378,37 +378,39 @@ export default function ProjectsSection() {
           />
         </svg>
 
-        <div className="projects-header">
-          <h2 className="projects-title">
-            Selected <span className="other-accent">Projects.</span>
-          </h2>
-          <p className="projects-description">
-            A curated showcase of high-performance web systems, creative software engineering, and digital solutions I&apos;ve designed and developed.
-          </p>
-        </div>
-
         <div className="projects-inner">
           <div className="projects-list" id="projects-list">
-            {mergedItems.map((item, idx) => (
-              <div
-                key={item.id}
-                className="proj-item"
-                data-id={item.id}
-                data-img={item.image}
-                data-date={item.date}
-                onClick={(e) => {
-                  const el = e.currentTarget as HTMLElement;
-                  if (el.classList.contains('active')) {
-                    openProject(item, el);
-                  } else {
-                    document.querySelectorAll('.proj-item').forEach((it) => it.classList.remove('active'));
-                    el.classList.add('active');
-                  }
-                }}
-              >
-                {item.title}
-              </div>
-            ))}
+            <div className="projects-header">
+              <h2 className="projects-title">
+                Selected <span className="other-accent">Projects.</span>
+              </h2>
+              <p className="projects-description">
+                A curated showcase of high-performance web systems, creative software engineering, and digital solutions I&apos;ve designed and developed.
+              </p>
+            </div>
+
+            <div className="proj-items-wrap" style={{ marginTop: '3.5rem', width: '100%' }}>
+              {mergedItems.map((item, idx) => (
+                <div
+                  key={item.id}
+                  className="proj-item"
+                  data-id={item.id}
+                  data-img={item.image}
+                  data-date={item.date}
+                  onClick={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    if (el.classList.contains('active')) {
+                      openProject(item, el);
+                    } else {
+                      document.querySelectorAll('.proj-item').forEach((it) => it.classList.remove('active'));
+                      el.classList.add('active');
+                    }
+                  }}
+                >
+                  {item.title}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
