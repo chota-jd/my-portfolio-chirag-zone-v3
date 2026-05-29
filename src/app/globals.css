@@ -3417,13 +3417,14 @@ a.chr-hover {
 /* Redesigned Hero Content Information Left Column */
 .hero-content-left {
   position: absolute;
-  top: 45%;
-  left: 6vw;
-  transform: translateY(-50%);
-  width: 58%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(90%, 80rem);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   gap: 1.5rem;
   z-index: 10;
   pointer-events: auto;
@@ -3464,7 +3465,8 @@ a.chr-hover {
   display: flex;
   gap: 4.5rem;
   margin-top: 0.5rem;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
 }
 
 .details-group {
@@ -3560,8 +3562,8 @@ a.chr-hover {
   right: auto;
   bottom: auto;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   mix-blend-mode: difference;
   clip-path: inset(0 0 100% 0);
   opacity: 0;
@@ -3574,6 +3576,7 @@ a.chr-hover {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 1.5rem 2rem;
   margin: 0;
   padding: 0;
@@ -3606,7 +3609,7 @@ a.chr-hover {
 
 @media (max-width: 1200px) {
   .hero-content-left {
-    width: 68%;
+    width: 80%;
   }
   .hero-details-row {
     gap: 3rem;

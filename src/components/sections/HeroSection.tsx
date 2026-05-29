@@ -52,15 +52,6 @@ export default function HeroSection() {
         {/* WebGL background canvas container */}
         <div className="hero-canvas" id="hero-canvas"></div>
 
-        {/* Sleek Developer Silhouette Background Overlay */}
-        <div className="hero-silhouette-container">
-          <img
-            src="/hero_developer_silhouette.png"
-            alt="Chirag Prajapati - Developer Silhouette"
-            className="hero-silhouette-image"
-          />
-        </div>
-
         <div className="hero-content">
           {/* Redesigned Clean Single Column Editorial Layout */}
           <div className="hero-content-left">
@@ -68,7 +59,7 @@ export default function HeroSection() {
               SOFTWARE <span className="other-accent text-accent-orange">ENGINEER.</span>
             </h1>
             <p className="hero-bio">
-              Hi, I&apos;m Chirag. Architecting the fluidity between high-performance code, robust web systems, and creative digital experiences.
+              Hi, I&apos;m Chirag. Crafting high-performance web systems, interactive user experiences, and scalable cloud solutions.
             </p>
             <p className="hero-collaborate">
               Collaborating globally with brands and engineering teams to build fast, robust, and scalable products.
