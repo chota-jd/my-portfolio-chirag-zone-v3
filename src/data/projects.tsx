@@ -1,4 +1,4 @@
-import { Globe, Sparkles, Smartphone } from 'lucide-react';
+import { Globe, Mountain, Smartphone, Sparkles } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export interface Project {
@@ -214,5 +214,68 @@ export const projects: Project[] = [
     impact:
       '1.39M+ registered learners, 1M national target achieved in under six months, and 90% public awareness outreach—proving mass AI literacy can move at startup speed.',
     services: ['Full Stack Web Apps', 'Enterprise LMS', 'Multilingual UX', 'Analytics Integration'],
+  },
+  {
+    id: 4,
+    slug: 'trekon-adventure',
+    title: 'TREKON Adventure',
+    description:
+      'Premium trekking and adventure marketing platform for curated expeditions across India—from Himalayas to heritage trails.',
+    fullDescription:
+      'TREKON Adventure is a conversion-focused travel experience platform built for explorers booking premium treks, camps, and nature retreats. The site showcases seasonal expeditions (winter, summer, monsoon, heritage), transparent pricing, safety positioning, and social proof—helping travelers discover trips, compare difficulty and duration, and move confidently toward booking.',
+    image: '/projects/trekon.png',
+    technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vercel', 'Responsive UI'],
+    githubUrl: 'https://github.com/chota-jd',
+    liveUrl: 'https://trekon-adventure-2-0.vercel.app/',
+    category: 'Travel & Adventure',
+    icon: <Mountain className="w-5 h-5" />,
+    color: 'from-emerald-600 to-teal-500',
+    stats: '15k+ Travelers',
+    detailedStats: [
+      { label: 'Happy Travelers', value: '15k+' },
+      { label: 'Avg. Satisfaction', value: '4.9/5' },
+      { label: 'Safety Record', value: '100%' },
+    ],
+    pillars: [
+      { title: 'Safety First', desc: 'Expert-led expeditions with ISO-certified equipment and clear safety protocols.' },
+      { title: 'Small Groups', desc: 'Limited slots for intimate experiences and better guide attention.' },
+      { title: 'Curated Routes', desc: 'Hand-picked trails from Kedarkantha to Chadar and heritage forts.' },
+      { title: 'Fair Pricing', desc: 'Transparent per-traveler pricing with no hidden booking surprises.' },
+    ],
+    process: [
+      { step: '01', title: 'Discover', desc: 'Browse camps by season, difficulty, region, and duration.' },
+      { step: '02', title: 'Compare', desc: 'Review ratings, itineraries, and starting prices side by side.' },
+      { step: '03', title: 'Book', desc: 'Reserve a spot with clear expedition details and expectations.' },
+      { step: '04', title: 'Explore', desc: 'Join expert-led groups with downloads, checklists, and support.' },
+    ],
+    platformInsights: [
+      { label: 'Product Type', value: 'Premium trekking & adventure collective (India-wide)' },
+      { label: 'Core Sections', value: 'Camps, Gallery, Downloads, Contact, Newsletter' },
+      { label: 'Featured Treks', value: 'Kedarkantha, Chadar, Brahmatal & seasonal collections' },
+      { label: 'Deployment', value: 'Production on Vercel with mobile-first layouts' },
+    ],
+    narrative: {
+      overview:
+        'TREKON is designed as a brand-forward adventure site where storytelling and booking intent work together. Rotating hero visuals, expedition cards with difficulty and season tags, and trust metrics (travelers served, satisfaction, safety) give first-time visitors confidence before they dive into camp detail pages. Supporting pages for downloads, gallery, and contact round out the pre-trip journey.',
+      impact:
+        'The platform turns expedition inventory into a polished digital storefront—making it easy for travelers to understand what each trek offers, filter by season, and take the next step toward booking. For the business, it centralizes camps, legal policies, safety resources, and lead capture in one cohesive experience.',
+    },
+    year: '2024',
+    role: 'Full Stack · Travel UX',
+    challenge:
+      'Present diverse trek offerings—from moderate winter trails to extreme frozen-river expeditions—in a single brand experience that builds trust and drives bookings.',
+    solution:
+      'Built a seasonal camp catalog with rich cards, social proof, gallery storytelling, downloadable checklists, and clear CTAs—optimized for mobile discovery and fast Vercel delivery.',
+    features: [
+      'Seasonal camp browsing (Winter, Summer, Monsoon, Heritage)',
+      'Expedition cards with difficulty, rating, region, and pricing',
+      'Hero storytelling with stats and dual CTAs (Explore / Watch)',
+      'Testimonials and gallery for social proof',
+      'Newsletter signup and contact flows',
+      'Downloads, safety, and legal policy pages',
+    ],
+    impact:
+      '15k+ travelers positioned in brand messaging, 4.9/5 satisfaction highlight, and a production-ready adventure storefront on Vercel.',
+    services: ['Full Stack Web Apps', 'UI/UX Design', 'Performance Engineering', 'Deployment'],
   },
 ];
