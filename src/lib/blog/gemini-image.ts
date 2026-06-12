@@ -1,6 +1,3 @@
-const GEMINI_IMAGE_MODEL =
-  process.env.GEMINI_IMAGE_MODEL ?? 'gemini-2.0-flash-preview-image-generation';
-
 export type GeneratedCoverImage = {
   base64: string;
   mimeType: string;
@@ -10,13 +7,18 @@ export async function generateCoverImageWithGemini(
   prompt: string
 ): Promise<GeneratedCoverImage> {
   const apiKey = process.env.GEMINI_API_KEY;
+  const model = process.env.GEMINI_MODEL_IMAGE;
 
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not configured in .env');
   }
 
+  if (!model) {
+    throw new Error('GEMINI_MODEL_IMAGE is not configured in .env');
+  }
+
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_IMAGE_MODEL}:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -56,6 +58,6 @@ export async function generateCoverImageWithGemini(
   }
 
   throw new Error(
-    'Gemini did not return an image. Try GEMINI_IMAGE_MODEL=gemini-2.0-flash-preview-image-generation or check API access.'
+    'Gemini did not return an image. Check GEMINI_MODEL_IMAGE in .env and API access.'
   );
 }

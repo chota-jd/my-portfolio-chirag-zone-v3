@@ -33,9 +33,10 @@ Add these for Gemini → Sanity publishing:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL_TEXT=gemini-3-flash-preview
+GEMINI_MODEL_IMAGE=gemini-2.5-flash-image
 SANITY_API_WRITE_TOKEN=your_sanity_write_token
 # Optional
-GEMINI_MODEL=gemini-2.0-flash
 ADMIN_API_SECRET=choose_a_long_random_string
 ```
 

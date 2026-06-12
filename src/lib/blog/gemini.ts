@@ -1,21 +1,24 @@
 import { buildBlogGenerationPrompt, type BlogGenerationInput } from '@/lib/blog/prompts/blog-generation';
 import type { GeneratedBlogContent } from '@/lib/blog/types';
 
-const GEMINI_MODEL = process.env.GEMINI_MODEL ?? 'gemini-2.0-flash';
-
 export async function generateBlogWithGemini(
   input: BlogGenerationInput
 ): Promise<GeneratedBlogContent> {
   const apiKey = process.env.GEMINI_API_KEY;
+  const model = process.env.GEMINI_MODEL_TEXT;
 
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not configured in .env');
   }
 
+  if (!model) {
+    throw new Error('GEMINI_MODEL_TEXT is not configured in .env');
+  }
+
   const prompt = buildBlogGenerationPrompt(input);
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
