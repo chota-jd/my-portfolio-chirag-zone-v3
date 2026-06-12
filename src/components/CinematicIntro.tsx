@@ -239,9 +239,9 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
         
         // Find hero and trigger fade reveals
         const hero = document.getElementById('hero');
-        if (hero) {
-          hero.style.opacity = '1';
-        }
+          if (hero) {
+            hero.classList.add('is-ready');
+          }
 
         // Run standard script reveals for hero content grid
         const introColItems = document.querySelectorAll('.hero-intro-col > *');

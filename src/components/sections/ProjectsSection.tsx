@@ -65,8 +65,8 @@ export default function ProjectsSection({ hideHeader = false }: ProjectsSectionP
     const items = document.querySelectorAll('.proj-item');
     const fluidLine = fluidLineRef.current;
 
-    // Draw fluid line path as you scroll the section
-    if (fluidLine) {
+    // Draw fluid line path as you scroll the section (desktop only)
+    if (fluidLine && !isMobile) {
       const lineLen = fluidLine.getTotalLength();
       gsap.set(fluidLine, { strokeDasharray: lineLen, strokeDashoffset: lineLen });
       gsap.to(fluidLine, {

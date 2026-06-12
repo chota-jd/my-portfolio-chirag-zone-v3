@@ -31,15 +31,21 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
   const pctRef = useRef<HTMLDivElement>(null);
 
   const handleIntroComplete = useCallback(() => {
+    const hero = document.getElementById('hero');
+    if (hero) hero.classList.add('is-ready');
+    const heroBar = document.getElementById('hero-bar');
+    if (heroBar) {
+      gsap.set(heroBar, { opacity: 1, clipPath: 'inset(0 0 0% 0)' });
+    }
     setIntroFinished(true);
   }, []);
 
   useLayoutEffect(() => {
     if (consumeSkipIntro()) {
-      setIntroFinished(true);
+      handleIntroComplete();
     }
     setIntroGateReady(true);
-  }, []);
+  }, [handleIntroComplete]);
 
   useLayoutEffect(() => {
     if (!introFinished) {
@@ -61,8 +67,18 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Initialize smooth scroll using Lenis
-    const lenis = new Lenis({ lerp: 0.06 });
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const lenis = new Lenis(
+      isMobile
+        ? {
+            lerp: 0.1,
+            syncTouch: true,
+            syncTouchLerp: 0.1,
+            touchMultiplier: 1.5,
+            smoothWheel: false,
+          }
+        : { lerp: 0.06 }
+    );
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -83,8 +99,6 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
         scrub: true,
       },
     });
-
-    const isMobile = window.innerWidth <= 768;
 
     // Dynamic Scroll Timeline Indicators layout
     const sections = [

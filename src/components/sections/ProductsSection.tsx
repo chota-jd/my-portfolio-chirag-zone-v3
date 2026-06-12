@@ -11,11 +11,13 @@ import { ChrHover } from '@/components/ui/ChrHover';
 
 export default function ProductsSection() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isNarrow, setIsNarrow] = useState(false);
+  const [disablePin, setDisablePin] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1024);
+      setIsNarrow(window.innerWidth <= 768);
+      setDisablePin(window.innerWidth <= 1024);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -23,7 +25,7 @@ export default function ProductsSection() {
   }, []);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (disablePin) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -53,10 +55,10 @@ export default function ProductsSection() {
     return () => {
       pinTrigger.kill();
     };
-  }, [isMobile]);
+  }, [disablePin]);
 
   const handleItemClick = (index: number) => {
-    if (isMobile) {
+    if (disablePin) {
       setActiveIdx(index);
       return;
     }
@@ -127,11 +129,8 @@ export default function ProductsSection() {
                     ? 0.12 
                     : 0;
 
-              const transformStyle = isMobile
-                ? {
-                    opacity: isActive ? 1 : 0.35,
-                    color: isActive ? '#ff1e00' : '#f0f0f0',
-                  }
+              const transformStyle = isNarrow
+                ? undefined
                 : {
                     transform: `translateY(calc(-50% + ${translateY}px)) rotate(${rotate}deg) translateX(${translateX}px)`,
                     opacity: itemOpacity,
@@ -148,7 +147,7 @@ export default function ProductsSection() {
                   className={`products-wheel-item ${isActive ? 'active' : ''}`}
                   style={transformStyle}
                   onClick={() => {
-                    if (isActive || distance <= 2) {
+                    if (isNarrow || isActive || distance <= 2) {
                       handleItemClick(i);
                     }
                   }}

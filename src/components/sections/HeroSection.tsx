@@ -48,7 +48,7 @@ export default function HeroSection() {
 
   return (
     <>
-      <section className="hero" id="hero" style={{ opacity: 0 }}>
+      <section className="hero" id="hero">
         {/* WebGL background canvas container */}
         <div className="hero-canvas" id="hero-canvas"></div>
 

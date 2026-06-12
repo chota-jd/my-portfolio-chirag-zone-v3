@@ -91,6 +91,21 @@ export default function ContactSection() {
 
   useEffect(() => {
     if (!isClient) return;
+
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      if (blobWrapRef.current) blobWrapRef.current.style.display = 'none';
+      const bg = document.getElementById('contact-bg');
+      if (bg) bg.style.display = 'none';
+      gsap.set([blobRef.current, titleRef.current, leftTextRef.current, formContainerRef.current], {
+        clearProps: 'all',
+      });
+      if (leftTextRef.current) gsap.set(leftTextRef.current, { opacity: 1, y: 0 });
+      if (formContainerRef.current) gsap.set(formContainerRef.current, { opacity: 1, y: 0 });
+      return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
