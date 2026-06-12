@@ -721,6 +721,13 @@ body {
   opacity: 1;
 }
 
+.hero.is-offscreen .hero-canvas,
+.hero.is-offscreen #hero-canvas,
+.hero.is-offscreen #hero-canvas canvas {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
 .hero-canvas {
   position: absolute;
   inset: 0;
@@ -2685,11 +2692,29 @@ a.chr-hover {
 /* Premium Creative Industries Section */
 .industries-section {
   position: relative;
-  padding: 10vh 8rem 10vh 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 10vh 8rem;
   background: #0a0a0a;
   z-index: 30010;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  overflow: clip;
+  overflow: hidden;
+  isolation: isolate;
+  box-sizing: border-box;
+}
+
+.industries-section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6rem;
+  background: linear-gradient(to bottom, transparent, #0a0a0a 85%);
+  pointer-events: none;
+  z-index: 15;
 }
 
 @media (max-width: 1200px) {

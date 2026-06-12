@@ -100,6 +100,16 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
       },
     });
 
+    const heroEl = document.getElementById('hero');
+    if (heroEl) {
+      ScrollTrigger.create({
+        trigger: heroEl,
+        start: 'bottom top',
+        onEnter: () => heroEl.classList.add('is-offscreen'),
+        onLeaveBack: () => heroEl.classList.remove('is-offscreen'),
+      });
+    }
+
     // Dynamic Scroll Timeline Indicators layout
     const sections = [
       { id: 'about', name: 'About' },
