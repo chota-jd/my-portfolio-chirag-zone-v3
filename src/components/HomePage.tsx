@@ -143,7 +143,6 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
         sections.forEach((sec) => {
           const el = document.getElementById(sec.id);
           if (el) {
-            const elTop = el.getBoundingClientRect().top + scrollY0;
             const ratio = el.offsetHeight / zoneH;
 
             const seg = document.createElement('div');

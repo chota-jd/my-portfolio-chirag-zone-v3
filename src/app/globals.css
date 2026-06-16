@@ -723,9 +723,11 @@ body {
 
 .hero.is-offscreen .hero-canvas,
 .hero.is-offscreen #hero-canvas,
-.hero.is-offscreen #hero-canvas canvas {
+.hero.is-offscreen #hero-canvas canvas,
+.hero.is-offscreen .hero-content {
   visibility: hidden !important;
   opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .hero-canvas {
@@ -2458,12 +2460,27 @@ a.chr-hover {
 }
 
 .blog-section-header {
+  position: relative;
+  z-index: 20;
   margin-bottom: 2vh;
   /* Balanced spacing to optimize vertical card area */
   text-align: left;
   max-width: 60rem;
   padding-left: 8rem;
   padding-right: 8rem;
+  padding-bottom: 1.5rem;
+  background: #0a0a0a;
+}
+
+.blog-section-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1.5rem;
+  height: 1.5rem;
+  background: linear-gradient(to bottom, #0a0a0a, transparent);
+  pointer-events: none;
 }
 
 @media (max-width: 1200px) {
@@ -2500,6 +2517,8 @@ a.chr-hover {
 }
 
 .blog-grid-custom {
+  position: relative;
+  z-index: 1;
   width: 100%;
   overflow-x: auto;
   scrollbar-width: none;

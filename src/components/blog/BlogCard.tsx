@@ -13,7 +13,7 @@ function formatDate(date: string) {
 
 export default function BlogCard({ post, index }: { post: BlogPostListItem; index: number }) {
   const imageUrl = getImageUrl(post.mainImage, { width: 800, height: 1060 }); // 3:4 aspect ratio optimized
-  const categoryTitle = post.categories?.[0]?.title ?? 'DEVELOPMENT';
+  // const categoryTitle = post.categories?.[0]?.title ?? 'DEVELOPMENT';
 
   // Staggered angles and displacements to recreate the casual magazine cover deck of fromanother.love
   const isEven = index % 2 === 0;
@@ -45,7 +45,7 @@ export default function BlogCard({ post, index }: { post: BlogPostListItem; inde
       <div className="blog-card-info">
         <div className="blog-card-meta">
           <span>{formatDate(post.publishedAt)}</span>
-          <span className="blog-card-tag">{categoryTitle}</span>
+          {/* <span className="blog-card-tag">{categoryTitle}</span> */}
         </div>
 
         <h3 className="blog-card-title">
