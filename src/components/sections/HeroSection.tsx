@@ -1,15 +1,21 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import gsap from 'gsap';
 import { ChrHover } from '@/components/ui/ChrHover';
+
+type HeroWindow = Window & {
+  _heroProjectData?: unknown;
+  CoreRenderer?: {
+    init: () => Promise<void>;
+  };
+};
 
 export default function HeroSection() {
   useEffect(() => {
     let checkInterval: NodeJS.Timeout;
+    const w = window as HeroWindow;
 
     const initShader = () => {
-      const w = window as any;
       const projectData = w._heroProjectData;
       if (!projectData) return;
 
@@ -23,13 +29,11 @@ export default function HeroSection() {
           .then(() => {
             URL.revokeObjectURL(blobUrl);
           })
-          .catch((err: any) => {
+          .catch((err: unknown) => {
             console.error('CoreRenderer init failed:', err);
           });
       }
     };
-
-    const w = window as any;
     if (w.CoreRenderer && w._heroProjectData) {
       initShader();
     } else {

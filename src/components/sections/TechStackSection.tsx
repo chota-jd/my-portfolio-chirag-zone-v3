@@ -107,7 +107,7 @@ export default function TechStackSection() {
     if (initialBody) {
       initialBody.style.height = `${initialBody.scrollHeight}px`;
     }
-  }, []);
+  }, [openCategory]);
 
   return (
     <section className="skills" id="skills" ref={containerRef}>

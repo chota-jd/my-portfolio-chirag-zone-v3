@@ -48,7 +48,7 @@ export default function BlogScroller({ posts }: { posts: BlogPostListItem[] }) {
     gsap.registerPlugin(ScrollTrigger);
     
     const isMobile = window.innerWidth <= 1024;
-    let scrollTween: any = null;
+    let scrollTween: gsap.core.Tween | null = null;
 
     if (!isMobile && posts.length > 0) {
       container.style.overflowX = 'hidden';

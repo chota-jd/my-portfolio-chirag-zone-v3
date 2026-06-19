@@ -1,4 +1,4 @@
-import { Globe, Sparkles, Smartphone, Code2, Layers, Cpu, Package, Zap, Shield, Heart, BarChart, Rocket, FileText, Users, Lock, Bot, BookOpen, Bookmark } from 'lucide-react';
+import { FileText, Users, Lock, Bot, BookOpen, Bookmark } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export interface Product {

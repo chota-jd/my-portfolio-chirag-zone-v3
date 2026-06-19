@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Form, Input, message } from 'antd';
 import { MessageCircle, Loader } from 'lucide-react';
-import { saveContactMessage } from '@/firebaseConfig';
+import { saveContactMessage, type ContactFormData } from '@/firebaseConfig';
 
 const { TextArea } = Input;
 
@@ -24,7 +24,7 @@ export default function ContactSection() {
 
   const [isClient, setIsClient] = useState(false);
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: ContactFormData) => {
     setIsSubmitting(true);
     try {
       // Save to Firebase
@@ -80,8 +80,7 @@ export default function ContactSection() {
     }
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  const onFinishFailed = () => {
     messageApi.error('Please fill in all required fields correctly.');
   };
 
@@ -217,7 +216,7 @@ export default function ContactSection() {
 
           <div className="contact-left-text" id="contact-left-text" ref={leftTextRef}>
             <p>
-              If you have any query or want to collaborate, please fill out this form and reach out to us. Let's build something exceptional together.
+              If you have any query or want to collaborate, please fill out this form and reach out to us. Let&apos;s build something exceptional together.
             </p>
           </div>
 
@@ -232,7 +231,7 @@ export default function ContactSection() {
                   </svg>
                 </div>
                 <h3>Message Sent!</h3>
-                <p>Thank you for reaching out. I'll get back to you soon!</p>
+                <p>Thank you for reaching out. I&apos;ll get back to you soon!</p>
               </div>
             ) : (
               <Form

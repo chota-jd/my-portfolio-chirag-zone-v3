@@ -23,6 +23,8 @@ const mergedItems = [
   })),
 ];
 
+type MergedItem = (typeof mergedItems)[number];
+
 type ProjectsSectionProps = {
   /** Hide built-in serif header (use page-level SectionHeading instead) */
   hideHeader?: boolean;
@@ -51,7 +53,7 @@ export default function ProjectsSection({ hideHeader = false }: ProjectsSectionP
   const detailSelectedRef = useRef<HTMLDivElement>(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [activeItem, setActiveItem] = useState<any>(null);
+  const [activeItem, setActiveItem] = useState<MergedItem | null>(null);
   const [activeThumbIdx, setActiveThumbIdx] = useState<number>(0);
 
   const goToProject = (slug: string) => {
@@ -223,78 +225,6 @@ export default function ProjectsSection({ hideHeader = false }: ProjectsSectionP
     };
   }, [hideHeader]);
 
-  const openProject = (item: any, clickedEl: HTMLElement) => {
-    setActiveItem(item);
-    setActiveThumbIdx(0);
-
-    const rect = clickedEl.getBoundingClientRect();
-    const cs = getComputedStyle(clickedEl);
-    const flyingTitle = document.getElementById('flying-title');
-
-    if (flyingTitle) {
-      flyingTitle.textContent = clickedEl.textContent;
-      flyingTitle.style.fontSize = cs.fontSize;
-      flyingTitle.style.lineHeight = cs.lineHeight;
-      flyingTitle.style.letterSpacing = cs.letterSpacing;
-      
-      gsap.set(flyingTitle, {
-        left: rect.left,
-        top: rect.top,
-        opacity: 1,
-        scale: 1,
-        x: 0,
-        y: 0,
-        transformOrigin: 'left top',
-      });
-
-      clickedEl.style.visibility = 'hidden';
-
-      const remPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
-      const targetTop = window.innerHeight * 0.22;
-      const targetLeft = remPx * 4;
-      const targetFontSize = Math.min(Math.max(window.innerWidth * 0.05, remPx * 3), remPx * 5);
-
-      const tl = gsap.timeline();
-
-      // Premium transitions matches reference
-      tl.to('#page-fade', { opacity: 1, duration: 0.8, ease: 'power2.inOut' }, 0);
-      tl.to(
-        flyingTitle,
-        {
-          top: targetTop,
-          left: targetLeft,
-          fontSize: targetFontSize,
-          duration: 1,
-          ease: 'power3.inOut',
-        },
-        0.3
-      );
-      tl.to(
-        detailRef.current,
-        {
-          opacity: 1,
-          duration: 0.4,
-          ease: 'power2.out',
-          onStart: () => {
-            detailRef.current?.classList.add('active');
-          },
-        },
-        1.0
-      );
-      tl.set(flyingTitle, { opacity: 0 }, 1.1);
-      tl.set(detailTitleWrapRef.current, { opacity: 1 }, 1.1);
-      tl.to(detailDescRef.current, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.2);
-      tl.to(detailTagsRef.current, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.3);
-      tl.to(detailBackRef.current, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.3);
-      tl.fromTo(
-        detailGalleryWrapRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.8, ease: 'power3.out' },
-        1.2
-      );
-    }
-  };
-
   const closeProject = () => {
     if (!activeItem) return;
     
@@ -404,7 +334,7 @@ export default function ProjectsSection({ hideHeader = false }: ProjectsSectionP
               className="proj-items-wrap"
               style={{ marginTop: hideHeader ? '0' : '3.5rem', width: '100%' }}
             >
-              {mergedItems.map((item, idx) => (
+              {mergedItems.map((item) => (
                 <div
                   key={item.id}
                   className="proj-item"
