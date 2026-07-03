@@ -2561,6 +2561,49 @@ a.chr-hover {
   }
 }
 
+.blog-section--grid {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+  padding: 8rem 0 6rem;
+}
+
+.blog-section--grid .blog-section-inner {
+  height: auto;
+  min-height: auto;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.blog-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 8rem 2rem;
+}
+
+@media (max-width: 1200px) {
+  .blog-list-grid {
+    padding: 0 4rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-list-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1.5rem 2rem;
+    gap: 2rem;
+  }
+}
+
+.blog-list-grid .blog-card-custom {
+  flex: unset;
+  width: 100%;
+}
+
 .blog-card-custom {
   flex: 0 0 clamp(19rem, 23vw, 23rem);
   /* Strict horizontal dimensions */

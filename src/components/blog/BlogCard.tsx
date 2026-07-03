@@ -11,7 +11,15 @@ function formatDate(date: string) {
   });
 }
 
-export default function BlogCard({ post, index }: { post: BlogPostListItem; index: number }) {
+export default function BlogCard({
+  post,
+  index,
+  flat = false,
+}: {
+  post: BlogPostListItem;
+  index: number;
+  flat?: boolean;
+}) {
   const imageUrl = getImageUrl(post.mainImage, { width: 800, height: 1060 }); // 3:4 aspect ratio optimized
   // const categoryTitle = post.categories?.[0]?.title ?? 'DEVELOPMENT';
 
@@ -20,9 +28,11 @@ export default function BlogCard({ post, index }: { post: BlogPostListItem; inde
   const rotation = isEven ? -1.8 - (index % 3) * 0.4 : 1.5 + (index % 4) * 0.3;
   const translateVal = isEven ? -8 - (index % 2) * 4 : 6 + (index % 3) * 3;
 
-  const cardStyle = {
-    transform: `rotate(${rotation}deg) translateY(${translateVal}px)`,
-  } as React.CSSProperties;
+  const cardStyle = flat
+    ? undefined
+    : ({
+        transform: `rotate(${rotation}deg) translateY(${translateVal}px)`,
+      } as React.CSSProperties);
 
   return (
     <article className="blog-card-custom" style={cardStyle}>

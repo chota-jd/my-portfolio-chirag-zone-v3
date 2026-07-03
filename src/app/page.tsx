@@ -1,10 +1,10 @@
 import HomePage from '@/components/HomePage';
-import BlogSection from '@/components/sections/BlogSection';
+import BlogSection, { HOMEPAGE_BLOG_LIMIT } from '@/components/sections/BlogSection';
 
 export default function Home() {
   return (
     <HomePage>
-      <BlogSection hideViewMore={true} />
+      <BlogSection limit={HOMEPAGE_BLOG_LIMIT} />
     </HomePage>
   );
 }
