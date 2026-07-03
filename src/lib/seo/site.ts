@@ -2,12 +2,15 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ?? 'https://chirag-prajapati.vercel.app';
 
 export const SITE_NAME = 'Chirag Prajapati';
+export const SITE_TAGLINE = 'Digital architect';
+export const SITE_TITLE = `${SITE_NAME} | ${SITE_TAGLINE}`;
 
 export const SITE_DESCRIPTION =
   'Full stack developer crafting high-performance web systems, interactive experiences, and scalable cloud solutions.';
 
 export const SITE_KEYWORDS = [
   'Chirag Prajapati',
+  'Digital architect',
   'Full Stack Developer',
   'Next.js',
   'React',

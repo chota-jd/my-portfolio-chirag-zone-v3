@@ -5,6 +5,7 @@ import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
   SITE_NAME,
+  SITE_TITLE,
   SITE_URL,
   absoluteUrl,
 } from './site';
@@ -83,12 +84,12 @@ export function buildPageMetadata({
 }
 
 export function buildRootMetadata(): Metadata {
-  const images = buildOgImages(DEFAULT_OG_IMAGE, SITE_NAME);
+  const images = buildOgImages(DEFAULT_OG_IMAGE, SITE_TITLE);
 
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: SITE_NAME,
+      default: SITE_TITLE,
       template: `%s | ${SITE_NAME}`,
     },
     description: SITE_DESCRIPTION,
@@ -100,14 +101,14 @@ export function buildRootMetadata(): Metadata {
       type: 'website',
       locale: 'en_US',
       url: SITE_URL,
-      title: SITE_NAME,
+      title: SITE_TITLE,
       description: SITE_DESCRIPTION,
       siteName: SITE_NAME,
       images,
     },
     twitter: {
       card: 'summary_large_image',
-      title: SITE_NAME,
+      title: SITE_TITLE,
       description: SITE_DESCRIPTION,
       images: images.map((img) => img.url),
     },
