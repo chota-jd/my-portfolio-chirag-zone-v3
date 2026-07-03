@@ -1,4 +1,4 @@
-import { Globe, Sparkles, Smartphone, Code2, Layers, Cpu } from 'lucide-react';
+import { Globe, Mountain, Smartphone, Sparkles } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export interface Project {
@@ -25,6 +25,13 @@ export interface Project {
     overview: string;
     impact: string;
   };
+  year?: string;
+  role?: string;
+  challenge?: string;
+  solution?: string;
+  features?: string[];
+  impact?: string;
+  services?: string[];
 }
 
 export const projects: Project[] = [
@@ -69,7 +76,24 @@ export const projects: Project[] = [
     narrative: {
       overview: 'AI Impact Pledge is designed as a public-first civic platform where participation feels simple and trusted. The portal uses an OTP-based entry, a short responsible AI quiz, and an on-screen guided pledge so users can understand the intent before they commit. The flow is intentionally lightweight, making it easy for citizens, students, and professionals to complete the journey quickly from any device.',
       impact: 'What makes this initiative meaningful is how policy goals are translated into repeatable digital behavior. Instead of only spreading awareness through campaigns, the platform converts awareness into measurable participation through pledges and badges. This creates a visible social layer around responsible AI adoption and helps build long-term momentum for ethical technology practices at national scale.'
-    }
+    },
+    year: '2026',
+    role: 'Full Stack · Civic Tech',
+    challenge:
+      'Scale a national pledge campaign where millions of citizens needed a frictionless, trustworthy flow—without compromising security, accessibility, or clarity around responsible AI.',
+    solution:
+      'Designed a guided journey from OTP registration through a short ethics quiz to a digital pledge and downloadable badge, with progress states and mobile-first layouts that work on low-bandwidth devices.',
+    features: [
+      'OTP-based registration with secure session handling',
+      'Responsible AI quiz with clear pass/fail feedback',
+      'On-screen pledge ceremony with shareable completion state',
+      'Government-recognized digital badge generation',
+      'High-concurrency readiness for peak campaign traffic',
+      'Analytics-friendly event tracking for participation milestones',
+    ],
+    impact:
+      '2.8M+ registered users, 2.5M+ badges issued, and a Guinness World Record attempt window—proving civic platforms can combine policy intent with product-grade UX at national scale.',
+    services: ['Full Stack Web Apps', 'System Architecture', 'UI/UX Design', 'Performance Engineering'],
   },
   {
     id: 2,
@@ -112,7 +136,24 @@ export const projects: Project[] = [
     narrative: {
       overview: 'TechEquity operates as a discovery and growth ecosystem rather than a single-course website. Learners can browse curated pathways, compare course options, and move across categories like digital literacy, financial literacy, and technology skills. The platform experience is built to reduce friction for first-time learners while still giving advanced users enough depth to continue upskilling.',
       impact: 'The strongest outcome of TechEquity is accessibility at scale: high-quality learning opportunities are aggregated in one place and made free to access. By combining global partners, multilingual access patterns, and career-focused course tracks, the project supports women in building practical digital confidence that can translate into better employability and stronger economic participation.'
-    }
+    },
+    year: '2023',
+    role: 'Full Stack · EdTech',
+    challenge:
+      'Bridge the gender digital divide with a global learning hub that must feel personal, multilingual, and engaging—not like a static course catalog.',
+    solution:
+      'Built a discovery-first LMS experience with AI-guided pathways, gamified progress cues, and partner course aggregation so learners always know what to take next.',
+    features: [
+      'Personalized course recommendations by goals and skill level',
+      'Multilingual content discovery across 100+ languages',
+      'Gamified learning hub with progress and milestones',
+      'Events, webinars, and partner integrations in one flow',
+      'Scalable cloud LMS architecture for global traffic',
+      'Admin-ready structure for content and partner onboarding',
+    ],
+    impact:
+      '1M+ women targeted, 95+ expert courses, and learners across 80+ countries—turning G20 Empower policy into a living digital skills ecosystem.',
+    services: ['Full Stack Web Apps', 'Cloud LMS Integration', 'UI/UX Design', 'API Architecture'],
   },
   {
     id: 3,
@@ -155,35 +196,88 @@ export const projects: Project[] = [
     narrative: {
       overview: 'AI Untuk Rakyat is structured as a mass-adoption learning experience that introduces AI in a non-technical and approachable format. The two-module progression helps users first understand what AI is, and then move into practical understanding of ethics, use cases, and responsibility. This makes the platform relevant for broad demographics, not only for technical professionals.',
       impact: 'The program demonstrates how national digital literacy initiatives can move fast when content is localized and the journey is clear. Multilingual support, badge-based recognition, and self-paced delivery create a model where citizens can participate on their own schedule while still feeling part of a coordinated national transformation effort.'
-    }
+    },
+    year: '2024',
+    role: 'Full Stack · National Program',
+    challenge:
+      'Demystify AI for all Malaysians—from students to seniors—via a self-paced national program that had to ship in four languages and hit 1M completions quickly.',
+    solution:
+      'Delivered a two-module LMS (AI Aware → AI Appreciate) with OTP onboarding, interactive activities, quizzes, and digital badges—optimized for mobile-first, low-friction completion.',
+    features: [
+      'Enterprise LMS with modular lesson and quiz flows',
+      'Four-language support (BM, English, Mandarin, Tamil)',
+      'OTP mobile verification for trusted enrollment',
+      'Badge issuance and completion tracking at scale',
+      'National analytics dashboard readiness',
+      'Accessible UI for non-technical audiences',
+    ],
+    impact:
+      '1.39M+ registered learners, 1M national target achieved in under six months, and 90% public awareness outreach—proving mass AI literacy can move at startup speed.',
+    services: ['Full Stack Web Apps', 'Enterprise LMS', 'Multilingual UX', 'Analytics Integration'],
   },
   {
     id: 4,
-    slug: 'future-frontier',
-    title: 'Future Frontier',
-    description: 'Exploring the intersection of human intuition and artificial intelligence.',
-    fullDescription: 'A visionary collection of upcoming digital frontiers, exploring the intersection of human intuition and artificial intelligence. This lab is dedicated to prototyping next-generation technologies that redefine how we interact with the digital world.',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1600',
-    technologies: ['AI', 'Web3', 'Metaverse', 'Edge Computing', 'Neural Interface'],
+    slug: 'trekon-adventure',
+    title: 'TREKON Adventure',
+    description:
+      'Explore Real Adventures — a premium trekking and camping platform curating unforgettable nature experiences across India’s majestic terrains.',
+    fullDescription:
+      'TREKON Adventure is a conversion-focused travel booking platform for explorers seeking premium treks, camps, and nature retreats. Built around the “Explore Real Adventures” brand, the site combines rotating hero storytelling, a camps/events catalog, trust metrics, testimonials, and direct booking CTAs—helping travelers discover trips, build confidence, and book with heart.',
+    image: '/projects/trekon.png',
+    technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vercel', 'Responsive UI'],
     githubUrl: 'https://github.com/chota-jd',
-    liveUrl: '#stats',
-    category: 'Visionary',
-    icon: <Sparkles className="w-5 h-5" />,
-    color: 'from-teal-500 to-cyan-500',
-    isSpecial: true,
+    liveUrl: 'https://trekon.in/',
+    category: 'Travel & Adventure',
+    icon: <Mountain className="w-5 h-5" />,
+    color: 'from-emerald-600 to-teal-500',
+    stats: '42k+ Travelers',
     detailedStats: [
-      { label: 'Prototypes', value: '12' },
-      { label: 'Research Papers', value: '5' }
+      { label: 'Happy Travelers', value: '42k+' },
+      { label: 'Avg. Satisfaction', value: '4.8/5' },
+      { label: 'Trips Completed', value: '1300+' },
+    ],
+    pillars: [
+      { title: 'Safety First', desc: 'Expert-led expeditions with ISO-certified equipment and safety protocols.' },
+      { title: 'Small Groups', desc: 'Intimate experiences with limited slots for better attention and learning.' },
+      { title: 'Curated Routes', desc: 'Hidden trails and remote landscapes beyond commercial maps.' },
+      { title: 'Fair Pricing', desc: 'No hidden costs—100% transparency from booking to departure.' },
+      { title: '24/7 Support', desc: 'Real-time tracking and expert support for every traveler, always.' },
+    ],
+    process: [
+      { step: '01', title: 'Discover', desc: 'Browse camps and events via the homepage slider or full expeditions catalog.' },
+      { step: '02', title: 'Compare', desc: 'Review itineraries, ratings, and expedition details before choosing a trek.' },
+      { step: '03', title: 'Book', desc: 'Reserve a spot with clear pricing and expectations—limited seats highlighted.' },
+      { step: '04', title: 'Explore', desc: 'Join expert-led groups with 24/7 support, WhatsApp updates, and on-trip care.' },
     ],
     platformInsights: [
-      { label: 'Portfolio Link', value: 'Concept showcase placeholder (internal section link)' },
-      { label: 'Focus Areas', value: 'AI, Web3, Metaverse, Edge, Neural Interface' },
-      { label: 'Current State', value: 'R&D lab direction, not a public production portal' },
-      { label: 'Intended Outcome', value: 'Prototype and validate frontier interaction models' }
+      { label: 'Product Type', value: 'Premium trekking & adventure collective (India-wide)' },
+      { label: 'Core Sections', value: 'Camps/Events, About, Contact, Careers, Testimonials' },
+      { label: 'Featured Treks', value: 'Kedarkantha, Manali & curated Himalayan expeditions' },
+      { label: 'Deployment', value: 'Production on trekon.in with mobile-first layouts' },
     ],
     narrative: {
-      overview: 'Future Frontier is presented as an innovation sandbox where speculative ideas are translated into tangible experiments. Instead of optimizing for immediate launch, the project focuses on hypothesis-driven prototyping across emerging domains such as ambient intelligence, spatial interaction, and decentralized systems.',
-      impact: 'The value of this lab is strategic: it creates optionality for future products by validating concepts early and identifying what is technically viable, human-centered, and scalable. This approach helps reduce future build risk and ensures the portfolio remains aligned with where digital interaction is heading next.'
-    }
-  }
+      overview:
+        'TREKON is built as a brand-forward adventure site where “Explore Real Adventures” storytelling meets booking intent. Rotating hero visuals, a camps slider, The Trekon Edge value pillars, explorer gallery, and testimonials give first-time visitors confidence before they head to camp detail pages. Login/register, WhatsApp community signup, and floating call/chat actions keep leads warm across the pre-trip journey.',
+      impact:
+        'The platform turns expedition inventory into a polished digital storefront on trekon.in—making it easy for travelers to discover treks from Himalayan snow trails to heritage forts, see social proof (42k+ travelers, 4.8/5 satisfaction), and book their next adventure. For the business, it centralizes camps, legal policies, careers, and community lead capture in one cohesive experience.',
+    },
+    year: '2026',
+    role: 'Full Stack · Travel UX',
+    challenge:
+      'Present diverse trek offerings—from Himalayan snow treks to monsoon escapes and heritage forts—in a single brand experience that builds trust and drives bookings.',
+    solution:
+      'Built a camps/events catalog with rotating hero storytelling, The Trekon Edge pillars, explorer gallery, testimonials, login/register flows, and WhatsApp-led lead capture—optimized for mobile discovery on trekon.in.',
+    features: [
+      'Rotating hero with “Explore Real Adventures” branding and dual CTAs',
+      'Camps/events catalog with side-slider showcase and full expeditions page',
+      'Trust metrics: 42k+ travelers, 4.8/5 satisfaction, 1300+ trips completed',
+      'The Trekon Edge pillars (Safety, Small Groups, Curated Routes, Fair Pricing, 24/7 Support)',
+      'Testimonials, explorer gallery, and “Relive the Adventure” visual storytelling',
+      'Login/register, WhatsApp community signup, and floating call/chat actions',
+      'Legal pages (Terms, Privacy, Refund) and careers/testimonials sections',
+    ],
+    impact:
+      '42k+ happy travelers, 4.8/5 average satisfaction, 1300+ trips completed, and a production-ready adventure storefront live at trekon.in.',
+    services: ['Full Stack Web Apps', 'UI/UX Design', 'Performance Engineering', 'Deployment'],
+  },
 ];

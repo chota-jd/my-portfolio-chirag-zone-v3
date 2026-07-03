@@ -17,6 +17,7 @@ module.exports = {
     extend: {
       colors: {
         'accent': '#4fc1c6',
+        'accent-orange': '#ff1e00',
         'text-muted': '#a1a1aa',
         'border': '#27272a',
       },

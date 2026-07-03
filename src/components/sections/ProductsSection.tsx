@@ -1,92 +1,198 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { products } from '@/data/products';
+import { ChrHover } from '@/components/ui/ChrHover';
 
-export default function ProductsSection({
-  showAllDefault = false,
-  hideViewMore = false,
-  hideHeader = false,
-}: {
-  showAllDefault?: boolean;
-  hideViewMore?: boolean;
-  hideHeader?: boolean;
-}) {
-  const [showAll] = useState(showAllDefault);
+function indexForProgress(progress: number, count: number) {
+  if (count <= 1) return 0;
+  return Math.min(count - 1, Math.round(progress * (count - 1)));
+}
 
-  const displayedProducts = showAll ? products : products.slice(0, 3);
+function progressForIndex(index: number, count: number) {
+  if (count <= 1) return 0;
+  return index / (count - 1);
+}
+
+export default function ProductsSection() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isNarrow, setIsNarrow] = useState(false);
+  const [disablePin, setDisablePin] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsNarrow(window.innerWidth <= 768);
+      setDisablePin(window.innerWidth <= 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (disablePin) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const pinTrigger = ScrollTrigger.create({
+      id: 'products-pin',
+      trigger: '#products',
+      start: 'top top',
+      end: `+=${Math.max(260, (products.length - 1) * 50)}%`,
+      pin: true,
+      scrub: 0.5,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        setActiveIdx(indexForProgress(self.progress, products.length));
+      },
+    });
+
+    const refreshTimeout = setTimeout(() => ScrollTrigger.refresh(), 150);
+
+    return () => {
+      clearTimeout(refreshTimeout);
+      pinTrigger.kill();
+    };
+  }, [disablePin, products.length]);
+
+  const handleItemClick = (index: number) => {
+    if (disablePin) {
+      setActiveIdx(index);
+      return;
+    }
+
+    const scrollTriggerInstance = ScrollTrigger.getById('products-pin');
+    if (scrollTriggerInstance) {
+      const start = scrollTriggerInstance.start;
+      const end = scrollTriggerInstance.end;
+      const totalDist = end - start;
+      const targetProgress = progressForIndex(index, products.length);
+      const targetScroll = start + targetProgress * totalDist;
+
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      });
+    } else {
+      setActiveIdx(index);
+    }
+  };
+
+  const activeProduct = products[activeIdx] || products[0];
 
   return (
-    <section id="products" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden bg-black/20">
-      <div className="absolute top-1/2 -left-20 w-96 h-96 bg-[#4fc1c6]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/2 -right-20 w-96 h-96 bg-[#4fc1c6]/5 rounded-full blur-[120px] pointer-events-none" />
+    <section id="products" className="products-split">
+      {/* Left Column: Curved Title Selector Wheel */}
+      <div className="products-split-left">
+        <h2 className="products-title">
+          Product <span className="other-accent">Contributions.</span>
+        </h2>
+        <p className="products-subtitle">
+          Contributing to enterprise-grade solutions and high-impact digital products. Explore the professional
+          projects where I&apos;ve contributed as a core team member.
+        </p>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {!hideHeader && (
-          <div className="text-center mb-20">
-            <h2 className="text-4xl sm:text-6xl font-bold mb-6 tracking-tight">
-              I am <span className="gradient-text">contributing</span> to
-            </h2>
+        <div className="products-wheel-container">
+          <div className="products-wheel-list">
+            {products.map((product, i) => {
+              const diff = i - activeIdx;
+              const isActive = i === activeIdx;
 
-            <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#4fc1c6] to-transparent mx-auto mb-8" />
+              // Calculate precise circular wheel offsets based on fromanother.love
+              const R = 500; // Radius of the circle
+              const angleStep = 13.0; // Degree step between items
+              const angleRad = (diff * angleStep) * Math.PI / 180;
+              const translateY = R * Math.sin(angleRad);
+              const translateX = R * (Math.cos(angleRad) - 1);
+              const rotate = diff * angleStep; // CSS rotation angle
 
-            <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
-              I collaborate on high-impact digital products that serve millions of users across various industries.
-            </p>
-          </div>
-        )}
+              // Dynamic distance-based opacity drop-off (active = 1.0, 1 step = 0.35, 2 steps = 0.12, 3+ steps = hidden)
+              // This strictly prevents titles from gathering and mixing at the top/bottom edges of the page.
+              const distance = Math.abs(diff);
+              const itemOpacity = isActive 
+                ? 1 
+                : distance === 1 
+                  ? 0.35 
+                  : distance === 2 
+                    ? 0.12 
+                    : 0;
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayedProducts.map((product) => (
-            <div key={product.id} className="group relative">
-              <div className="relative h-full rounded-3xl overflow-hidden border border-white/10 bg-zinc-900/50 backdrop-blur-sm transition-all duration-500 group-hover:border-[#4fc1c6]/50 group-hover:shadow-[0_0_40px_rgba(79,193,198,0.15)]">
-                <Link href={`/products/${product.slug}`} className="absolute inset-0 z-10" />
-                <div className="aspect-video overflow-hidden relative">
-                  <img
-                    src={product.thumbnailImage}
-                    alt={product.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80" />
-                </div>
+              const transformStyle = isNarrow
+                ? undefined
+                : {
+                    transform: `translateY(calc(-50% + ${translateY}px)) rotate(${rotate}deg) translateX(${translateX}px)`,
+                    opacity: itemOpacity,
+                    zIndex: isActive ? 10 : 5 - distance,
+                    color: isActive ? '#ff1e00' : '#f0f0f0',
+                    pointerEvents: isActive || distance <= 2 ? ('auto' as const) : ('none' as const),
+                    position: 'absolute' as const,
+                    top: '50%',
+                  };
 
-                <div className="p-6 flex flex-col justify-between h-1/2">
-                  <div>
-                    <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-[#4fc1c6] transition-colors">
-                      {product.title}
-                    </h3>
-                    <p className="text-zinc-400 text-sm line-clamp-3 leading-relaxed mb-4">{product.description}</p>
-                  </div>
-
-                  <div className="flex items-center justify-center pt-4 border-t border-white/5 relative z-20">
-                    <Link
-                      href={`/products/${product.slug}`}
-                      className="flex items-center gap-1 text-xs font-bold tracking-widest text-[#4fc1c6] uppercase hover:underline"
-                    >
-                      Details
-                    </Link>
-                  </div>
-                </div>
-
+              return (
                 <div
-                  className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500 bg-gradient-to-br ${product.color}`}
-                />
-              </div>
-            </div>
-          ))}
+                  key={product.id}
+                  className={`products-wheel-item ${isActive ? 'active' : ''}`}
+                  style={transformStyle}
+                  onClick={() => {
+                    if (isNarrow || isActive || distance <= 2) {
+                      handleItemClick(i);
+                    }
+                  }}
+                >
+                  {isActive && <span className="product-active-circle" />}
+                  {product.title}
+                </div>
+              );
+            })}
+          </div>
         </div>
+      </div>
 
-        {!hideViewMore && !showAll && products.length > 3 && (
-          <div className="mt-16 text-center">
-            <Link
-              href="/products"
-              className="group relative inline-block overflow-hidden px-8 py-3 rounded-full bg-white/5 border border-white/10 text-white font-bold tracking-widest text-xs uppercase hover:bg-[#4fc1c6] hover:text-black hover:border-[#4fc1c6] transition-all duration-500 shadow-xl"
-            >
-              <span className="relative z-10 flex items-center gap-2">View All Products</span>
-            </Link>
+      {/* Right Column: Detailed Product View Panel */}
+      <div className="products-split-right">
+        {activeProduct && (
+          <div key={activeIdx} className="product-detail-view animate-products-fade">
+            <div className="product-detail-image-wrap">
+              {activeProduct.thumbnailImage ? (
+                <img
+                  src={activeProduct.thumbnailImage}
+                  alt={activeProduct.title}
+                  className="product-detail-image"
+                  width={1200}
+                  height={630}
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-zinc-950">
+                  <span className="text-xl font-light text-zinc-800 tracking-widest font-breton">SAAS PRODUCT</span>
+                </div>
+              )}
+            </div>
+
+            <div className="product-detail-info-block">
+              <span className="product-detail-role">
+                {activeProduct.role || 'LEAD DEVELOPER'}
+              </span>
+              
+              <p className="product-detail-desc">
+                {activeProduct.fullDescription || activeProduct.description}
+              </p>
+
+              {activeProduct.productLink && activeProduct.productLink !== '#' && (
+                <div style={{ display: 'inline-flex', marginTop: '1rem' }}>
+                  <ChrHover
+                    text="LAUNCH PLATFORM 🡺"
+                    href={activeProduct.productLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

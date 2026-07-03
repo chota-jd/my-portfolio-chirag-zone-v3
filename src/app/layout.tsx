@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Jost, Geist_Mono, Playfair_Display } from "next/font/google";
-import "@ant-design/v5-patch-for-react-19";
 import "./globals.css";
 // import AnimatedBackground from '@/components/ui/AnimatedBackground';
 
@@ -77,6 +76,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script defer src="/js/core-renderer.js"></script>
+        <script defer src="/js/hero-project.js"></script>
+      </head>
       <body
         className={`${jost.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
         suppressHydrationWarning

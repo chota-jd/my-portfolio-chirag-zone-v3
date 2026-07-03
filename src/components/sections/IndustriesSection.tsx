@@ -1,31 +1,186 @@
 'use client';
 
-import { Stethoscope, GraduationCap, Gavel, ShoppingBag, Trophy, TentTree } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {
+  Stethoscope,
+  GraduationCap,
+  Gavel,
+  ShoppingBag,
+  Trophy,
+  TentTree,
+  CalendarDays,
+  Heart,
+  UtensilsCrossed,
+  Store,
+} from 'lucide-react';
 
 const industries = [
-  { name: 'Healthcare', color: '#4fc1c6', icon: Stethoscope },
-  { name: 'Sports', color: '#f59e42', icon: Trophy },
-  { name: 'Travel', color: '#a259f7', icon: TentTree },
-  { name: 'Education', color: '#f5426c', icon: GraduationCap },
-  { name: 'Legal', color: '#42f5b9', icon: Gavel },
-  { name: 'Retail', color: '#f5e642', icon: ShoppingBag },
+  { name: 'Healthcare', icon: Stethoscope },
+  { name: 'Sports', icon: Trophy },
+  { name: 'Travel', icon: TentTree },
+  { name: 'Education', icon: GraduationCap },
+  { name: 'Legal', icon: Gavel },
+  { name: 'Retail', icon: ShoppingBag },
+  { name: 'Event', icon: CalendarDays },
+  { name: 'Wedding', icon: Heart },
+  { name: 'Restaurant and Cafe', icon: UtensilsCrossed },
+  { name: 'E-commerce', icon: Store },
 ];
 
 export default function IndustriesSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray<HTMLElement>('.industry-card');
+      const title = document.querySelector('.industries-title');
+      const grid = document.querySelector('.industries-grid');
+      const isMobile = window.innerWidth <= 768;
+
+      if (!cards.length) return;
+
+      if (isMobile) {
+        if (title) {
+          gsap.fromTo(
+            title,
+            { y: 24, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: 'power2.out',
+              duration: 0.7,
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 78%',
+                end: 'top 62%',
+                scrub: true,
+              },
+            }
+          );
+        }
+
+        cards.forEach((card, index) => {
+          const fromX = index % 2 === 0 ? -60 : 60;
+          const iconWrap = card.querySelector('.industry-icon-wrap');
+          
+          gsap.fromTo(
+            card,
+            { x: fromX, y: 24, opacity: 0 },
+            {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 90%',
+                end: 'top 68%',
+                scrub: true,
+              },
+            }
+          );
+
+          if (iconWrap) {
+            gsap.fromTo(
+              iconWrap,
+              { color: '#ff1e00' },
+              {
+                color: '#f0f0f0',
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 90%',
+                  end: 'top 68%',
+                  scrub: true,
+                },
+              }
+            );
+          }
+        });
+        return;
+      }
+
+      gsap.set(cards, { opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.92 });
+
+      const master = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: '+=125%',
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      if (title) gsap.set(title, { opacity: 1, y: 0, filter: 'none' });
+      if (grid) gsap.set(grid, { opacity: 1, y: 0 });
+
+      cards.forEach((card, index) => {
+        const fromX = index % 2 === 0 ? -180 : 180;
+        const fromY = index % 2 === 0 ? 52 : -52;
+        const fromRotate = index % 2 === 0 ? -10 : 10;
+        const iconWrap = card.querySelector('.industry-icon-wrap');
+
+        master.fromTo(
+          card,
+          {
+            x: fromX,
+            y: fromY,
+            rotate: fromRotate,
+            opacity: 0,
+            scale: 0.92,
+            filter: 'blur(8px)',
+          },
+          {
+            x: 0,
+            y: 0,
+            rotate: 0,
+            opacity: 1,
+            scale: 1,
+            filter: 'blur(0px)',
+            duration: 0.34,
+            ease: 'power3.out',
+          },
+          0.03 + index * 0.11
+        );
+
+        if (iconWrap) {
+          master.fromTo(
+            iconWrap,
+            { color: '#ff1e00' },
+            {
+              color: '#f0f0f0',
+              duration: 0.34,
+              ease: 'power3.out',
+            },
+            0.03 + index * 0.11
+          );
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="industries" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold gradient-text mb-4">Industries I Worked In</h2>
-          <div className="w-24 h-1 bg-[#4fc1c6] mx-auto rounded-full" />
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 gap-12 justify-items-center">
+    <section id="industries" className="industries-section" ref={sectionRef}>
+      <div className="relative z-10">
+        <h2 className="industries-title">
+          Industries I <span className="other-accent">Worked In.</span>
+        </h2>
+        
+        <div className="industries-grid">
           {industries.map((industry) => (
-            <div key={industry.name} className="flex flex-col items-center group">
-              <div className="w-32 h-32 sm:w-40 sm:h-40 mb-3 flex items-center justify-center transition-transform duration-700 ease-out group-hover:rotate-[360deg]">
-                <industry.icon size={90} color={industry.color} strokeWidth={2.5} />
+            <div key={industry.name} className="industry-card">
+              <div className="industry-icon-wrap">
+                <industry.icon size={60} strokeWidth={1.25} />
               </div>
-              <div className="mt-1 text-base sm:text-lg font-semibold text-white text-center">{industry.name}</div>
+              <div className="industry-name">{industry.name}</div>
             </div>
           ))}
         </div>

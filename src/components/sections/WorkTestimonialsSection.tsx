@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import SectionHeading from '@/components/ui/SectionHeading';
+
 const testimonials = [
   {
     quote: "Working with you was a fantastic experience. Your attention to detail and commitment to quality are unmatched!",
@@ -32,12 +34,7 @@ export default function WorkTestimonialsSection() {
   return (
     <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold gradient-text mb-4">
-            Work Testimonials
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#4fc1c6] via-cyan-400 to-[#a259f7] mx-auto rounded-full" />
-        </div>
+        <SectionHeading titleClassName="gradient-text">Work Testimonials</SectionHeading>
         <div className="relative flex flex-col items-center">
           <div className="absolute left-0 right-0 top-1/2 h-1 bg-gradient-to-r from-[#4fc1c6] via-cyan-400 to-[#a259f7] opacity-30 z-0" style={{transform: 'translateY(-50%)'}} />
           <div className="flex flex-row flex-wrap justify-center gap-12 w-full z-10">

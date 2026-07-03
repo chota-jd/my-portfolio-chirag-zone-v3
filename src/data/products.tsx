@@ -1,4 +1,4 @@
-import { Globe, Sparkles, Smartphone, Code2, Layers, Cpu, Package, Zap, Shield, Heart, BarChart, Rocket, FileText, Users, Lock, Bot, BookOpen, Bookmark } from 'lucide-react';
+import { FileText, Users, Lock, Bot, BookOpen, Bookmark, StickyNote } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export interface Product {
@@ -247,5 +247,46 @@ export const products: Product[] = [
       overview: 'Memry addresses a common gap in bookmarking tools: saved links lose meaning when context is missing. The product solves this by pairing each saved resource with user intent, notes, and lightweight structure. This turns random browser saves into an evolving knowledge system that remains useful months later.',
       impact: 'As collections grow, Memry improves long-term recall and reduces rediscovery effort. Users spend less time searching the web again for something they already found and more time applying accumulated insights to real work.'
     }
-  }
+  },
+  {
+    id: 7,
+    slug: 'browser-notes',
+    title: 'Browser Notes',
+    description:
+      'Every note belongs in your browser — saved locally. Text notes, sticky notes, and mind maps in one private app.',
+    fullDescription:
+      'Browser Notes is a privacy-first notes workspace that lives entirely in the browser. Capture text notes, sticky notes, and mind maps in one unified app—with data saved locally on your device, so your thoughts stay private and always within reach.',
+    image: 'https://browsernotes.xyz/opengraph-image.png',
+    productLink: 'https://browsernotes.xyz/',
+    thumbnailImage: 'https://browsernotes.xyz/opengraph-image.png',
+    technologies: ['Next.js', 'React', 'Local Storage', 'TypeScript', 'PWA'],
+    category: 'Productivity',
+    icon: <StickyNote className="w-5 h-5" />,
+    color: 'from-violet-600 to-fuchsia-500',
+    role: 'Full Stack Developer',
+    pillars: [
+      { title: 'Text Notes', desc: 'Write and organize rich text notes without leaving the browser.' },
+      { title: 'Sticky Notes', desc: 'Quick visual reminders you can place and rearrange on your canvas.' },
+      { title: 'Mind Maps', desc: 'Connect ideas spatially with flexible, node-based thinking layouts.' },
+      { title: 'Local & Private', desc: 'Notes are saved on your device—no uploads, accounts, or cloud dependency required.' },
+    ],
+    process: [
+      { step: '01', title: 'Capture', desc: 'Open the app and start a text note, sticky, or mind map in seconds.' },
+      { step: '02', title: 'Organize', desc: 'Arrange ideas visually with stickies and connected mind-map nodes.' },
+      { step: '03', title: 'Persist Locally', desc: 'Everything saves in-browser so notes stay available across sessions.' },
+      { step: '04', title: 'Revisit', desc: 'Return to your private workspace anytime—your notes are always there.' },
+    ],
+    platformInsights: [
+      { label: 'Product Position', value: 'All-in-one browser-native notes app for private thinking' },
+      { label: 'Note Formats', value: 'Text notes, sticky notes, and mind maps in one workspace' },
+      { label: 'Privacy Model', value: 'Local-first storage with no mandatory sign-up' },
+      { label: 'Outcome', value: 'Faster capture and clearer thinking without leaving the browser' },
+    ],
+    narrative: {
+      overview:
+        'Browser Notes is built for people who think in different formats—quick stickies, long-form text, and visual mind maps—and want all of it in one place. By keeping notes in the browser and saving locally, the product removes friction from everyday capture while respecting privacy. Dark mode and a focused UI make it comfortable for extended writing and planning sessions.',
+      impact:
+        'The app turns the browser into a personal thinking surface instead of a tab graveyard. Users can capture fleeting ideas, structure complex topics, and return to their notes without cloud lock-in—making it especially useful for builders, students, and anyone who values speed and privacy in daily note-taking.',
+    },
+  },
 ];

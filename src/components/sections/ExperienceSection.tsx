@@ -1,6 +1,4 @@
-'use client';
-
-import { Calendar, MapPin, ExternalLink } from 'lucide-react';
+import { ChrHover } from '@/components/ui/ChrHover';
 
 const experiences = [
   {
@@ -17,89 +15,66 @@ const experiences = [
       'Mentored junior developers, enhancing team productivity and code quality.',
       'Contributed to end-to-end product development from concept to launch.',
     ],
-    logo: '🚀',
-    color: '#f59e0b',
   },
 ];
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold gradient-text-reverse mb-4">Work Experience</h2>
-          <div className="w-24 h-1 bg-[#4fc1c6] mx-auto rounded-full" />
-          <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
-            My professional journey through various roles and companies, building expertise and delivering impactful
-            solutions.
-          </p>
-        </div>
+    <section id="experience" className="experience-section">
+      <div className="experience-section-inner relative z-10">
+        <h2 className="experience-title text-white">
+          Work <span className="other-accent">Experience.</span>
+        </h2>
 
-        <div className="relative">
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-700">
-            <div className="w-full h-full bg-[#4fc1c6]" />
-          </div>
+        <div className="experience-list">
+          {experiences.map((exp) => (
+            <article key={exp.id} className="experience-row">
+              <div className="experience-entry">
+                <div className="experience-rail" aria-hidden="true">
+                  <span className="experience-rail-marker" />
+                  <span className="experience-rail-line" />
+                </div>
 
-          <div className="space-y-12">
-            {experiences.map((exp) => (
-              <div key={exp.id} className="relative flex items-start">
-                <div className="absolute left-6 w-4 h-4 rounded-full border-4 border-[#4fc1c6] bg-black z-10 scale-100" />
-
-                <div className="ml-20 w-full">
-                  <div className="glass p-6 rounded-lg border border-gray-700 hover:border-[#4fc1c6] hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,193,198,0.2)] transition-all duration-300">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center text-2xl">{exp.logo}</div>
-                        <div>
-                          <h3 className="text-xl font-bold text-white">{exp.company}</h3>
-                          <h4 className="text-lg text-[#4fc1c6] font-semibold">{exp.role}</h4>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-gray-400">
-                      <div className="flex items-center space-x-2">
-                        <Calendar size={16} />
-                        <span>{exp.period}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <MapPin size={16} />
-                        <span>{exp.location}</span>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-300 mb-4 leading-relaxed">{exp.description}</p>
-
+                <div className="experience-entry-body">
+                  <div className="experience-company-wrap experience-headline-wrap">
                     <div>
-                      <h5 className="text-sm font-semibold text-[#4fc1c6] mb-3">Key Achievements:</h5>
-                      <ul className="space-y-2">
-                        {exp.achievements.map((achievement, achIndex) => (
-                          <li key={achIndex} className="flex items-start space-x-3 text-gray-300 text-sm">
-                            <span className="w-1.5 h-1.5 bg-[#4fc1c6] rounded-full mt-2 flex-shrink-0" />
-                            <span>{achievement}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <h3 className="experience-company text-white">{exp.company}</h3>
+                      <span className="experience-role text-accent-orange">{exp.role}</span>
                     </div>
+                  </div>
+
+                  <div className="experience-meta-row text-text-muted">
+                    <span>{exp.period}</span>
+                    <span aria-hidden="true">•</span>
+                    <span>{exp.location}</span>
+                  </div>
+
+                  <div className="experience-detail-wrap">
+                    <p className="experience-desc text-white/80">{exp.description}</p>
+
+                    <h4 className="experience-achievements-title text-accent-orange">Key Achievements</h4>
+                    <ul className="experience-achievements-list">
+                      {exp.achievements.map((achievement, idx) => (
+                        <li key={idx} className="experience-achievement-item text-white/90">
+                          <span
+                            className="experience-achievement-bullet bg-accent-orange shadow-[0_0_10px_rgba(255,30,0,0.55)]"
+                            aria-hidden="true"
+                          />
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </article>
+          ))}
         </div>
 
-        <div className="text-center mt-16">
-          <button
-            type="button"
-            className="inline-flex items-center space-x-2 text-[#4fc1c6] font-medium cursor-pointer hover:text-white transition-colors hover:scale-105 active:scale-95"
-            onClick={() => {
-              const element = document.getElementById('contact');
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            <span>Want to know more about my experience?</span>
-            <ExternalLink size={16} />
-          </button>
+        <div className="mt-16 text-center">
+          <a href="#contact" className="inline-flex cursor-pointer">
+            <ChrHover text="Want to know more? Contact me 🡺" />
+          </a>
         </div>
       </div>
     </section>

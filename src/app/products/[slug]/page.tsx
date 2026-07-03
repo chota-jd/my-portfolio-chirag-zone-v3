@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, ExternalLink, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
-import Navigation from '@/components/ui/Navigation';
 import Footer from '@/components/ui/Footer';
 
 export default function ProductDetail() {
@@ -28,8 +27,6 @@ export default function ProductDetail() {
 
   return (
     <main className="min-h-screen bg-black text-white relative overflow-hidden">
-      <Navigation />
-
       {/* Background Glows */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#4fc1c6]/10 rounded-full blur-[120px]" />
@@ -156,20 +153,21 @@ export default function ProductDetail() {
             <div className="space-y-8">
               {/* Image Card */}
               <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-zinc-900 group">
-                <div className="aspect-video relative overflow-hidden">
-                  <a 
-                    href={product.productLink} 
-                    target="_blank" 
+                <div className="product-detail-image-wrap product-detail-image-wrap--fluid !mb-0 rounded-none border-0">
+                  <a
+                    href={product.productLink}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute inset-0 z-10"
+                    className="contents"
                   >
-                    <img 
-                      src={product.image} 
+                    <img
+                      src={product.image}
                       alt={product.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="product-detail-image"
+                      width={1200}
+                      height={630}
                     />
                   </a>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
                 <div className="p-8">
                   <h3 className="text-xl font-bold mb-4">Product Overview</h3>
