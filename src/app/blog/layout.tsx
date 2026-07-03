@@ -1,4 +1,6 @@
 import { buildPageMetadata } from '@/lib/seo/metadata';
+import JsonLd from '@/components/seo/JsonLd';
+import { buildBlogListingJsonLd } from '@/lib/seo/json-ld';
 
 export const metadata = buildPageMetadata({
   title: 'Blog',
@@ -9,5 +11,10 @@ export const metadata = buildPageMetadata({
 });
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <JsonLd data={buildBlogListingJsonLd()} />
+      {children}
+    </>
+  );
 }

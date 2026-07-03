@@ -181,7 +181,7 @@ export default function ProductDetail() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full py-4 rounded-full bg-[#4fc1c6] text-black font-bold tracking-widest text-[10px] uppercase hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(79,193,198,0.15)]"
                   >
-                    View Live Product <ExternalLink size={14} />
+                    Product Link <ExternalLink size={14} />
                   </a>
                 </div>
               </div>

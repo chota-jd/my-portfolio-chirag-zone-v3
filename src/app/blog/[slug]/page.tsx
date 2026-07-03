@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation';
 
 import BlogPostView from '@/components/blog/BlogPostView';
+import JsonLd from '@/components/seo/JsonLd';
 import { buildBlogPostMetadata } from '@/lib/blog/seo-metadata';
+import { buildBlogPostJsonLd, buildBreadcrumbJsonLd } from '@/lib/seo/json-ld';
 import { getPostBySlug, getPostSlugs } from '@/sanity/queries';
 import { getImageUrl } from '@/sanity/image';
 
@@ -34,6 +36,32 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   const coverUrl = getImageUrl(post.mainImage, { width: 1400, height: 700 });
+  const description =
+    post.seo?.metaDescription?.trim() ||
+    post.excerpt?.trim() ||
+    `Read ${post.title} on Chirag Prajapati's blog.`;
+  const ogImageUrl = getImageUrl(post.mainImage, { width: 1200, height: 630 });
 
-  return <BlogPostView post={post} coverUrl={coverUrl} />;
+  return (
+    <>
+      <JsonLd
+        data={[
+          buildBlogPostJsonLd({
+            title: post.title,
+            description,
+            slug,
+            publishedAt: post.publishedAt,
+            author: post.author,
+            imageUrl: ogImageUrl,
+          }),
+          buildBreadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+            { name: post.title, path: `/blog/${slug}` },
+          ]),
+        ]}
+      />
+      <BlogPostView post={post} coverUrl={coverUrl} />
+    </>
+  );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import {
   DEFAULT_OG_IMAGE,
+  GOOGLE_SITE_VERIFICATION,
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
   SITE_NAME,
@@ -123,6 +124,9 @@ export function buildRootMetadata(): Metadata {
         'max-snippet': -1,
       },
     },
+    ...(GOOGLE_SITE_VERIFICATION
+      ? { verification: { google: GOOGLE_SITE_VERIFICATION } }
+      : {}),
   };
 }
 

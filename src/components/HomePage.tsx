@@ -287,7 +287,7 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
         <TechStackSection />
         <ExperienceSection />
         <ProjectsSection />
-        <ProductsSection />
+        <ProductsSection showPageLink />
         {children}
         <ContactSection />
       </main>

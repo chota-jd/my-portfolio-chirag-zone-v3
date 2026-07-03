@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -18,7 +19,12 @@ function progressForIndex(index: number, count: number) {
   return index / (count - 1);
 }
 
-export default function ProductsSection() {
+export default function ProductsSection({
+  showPageLink = false,
+}: {
+  /** Homepage: link to the full /products page */
+  showPageLink?: boolean;
+}) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isNarrow, setIsNarrow] = useState(false);
   const [disablePin, setDisablePin] = useState(false);
@@ -182,20 +188,28 @@ export default function ProductsSection() {
                 {activeProduct.fullDescription || activeProduct.description}
               </p>
 
-              {activeProduct.productLink && activeProduct.productLink !== '#' && (
-                <div style={{ display: 'inline-flex', marginTop: '1rem' }}>
+              <div className="product-detail-actions">
+                {activeProduct.productLink && activeProduct.productLink !== '#' && (
                   <ChrHover
-                    text="LAUNCH PLATFORM 🡺"
+                    text="PRODUCT LINK 🡺"
                     href={activeProduct.productLink}
                     target="_blank"
                     rel="noopener noreferrer"
                   />
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         )}
       </div>
+
+      {showPageLink && (
+        <div className="products-view-more">
+          <Link href="/products" style={{ display: 'inline-flex' }}>
+            <ChrHover text="VIEW MORE 🡺" />
+          </Link>
+        </div>
+      )}
     </section>
   );
 }
