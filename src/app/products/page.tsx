@@ -1,4 +1,3 @@
-import Footer from '@/components/ui/Footer';
 import ProductsGrid from '@/components/products/ProductsGrid';
 
 export default function ProductsPage() {
@@ -21,8 +20,6 @@ export default function ProductsPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -5,8 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, ExternalLink, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
-import Footer from '@/components/ui/Footer';
-
 export default function ProductDetail() {
   const { slug } = useParams();
   const router = useRouter();

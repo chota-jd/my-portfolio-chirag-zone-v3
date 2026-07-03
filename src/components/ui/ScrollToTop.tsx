@@ -1,27 +1,59 @@
 'use client';
 
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
-function resetScroll() {
-  window.scrollTo(0, 0);
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-}
+import { hasPendingHomeScroll } from '@/lib/homeNavigation';
+import { clearScrollAnimationState, resetPageScroll } from '@/lib/scroll';
 
 /** Resets window scroll on route change (e.g. homepage → /blog). */
 export default function ScrollToTop() {
   const pathname = usePathname();
+  const prevPathname = useRef(pathname);
+
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
 
   useLayoutEffect(() => {
-    resetScroll();
+    const isHome = pathname === '/';
+    const leftHome = prevPathname.current === '/' && !isHome;
+    const restoreHomeSection = isHome && hasPendingHomeScroll();
+
+    if (leftHome || !isHome) {
+      clearScrollAnimationState();
+    }
+
+    if (!restoreHomeSection) {
+      resetPageScroll();
+    }
+
+    prevPathname.current = pathname;
   }, [pathname]);
 
-  // Fallback: Next.js can restore scroll position after layout paint.
+  // Shared layouts keep scroll position; Next.js can also restore after paint.
   useEffect(() => {
-    resetScroll();
-    const raf = requestAnimationFrame(resetScroll);
-    return () => cancelAnimationFrame(raf);
+    if (pathname === '/' && hasPendingHomeScroll()) {
+      return;
+    }
+
+    resetPageScroll();
+
+    const raf = requestAnimationFrame(() => {
+      resetPageScroll();
+      requestAnimationFrame(resetPageScroll);
+    });
+
+    const timeouts = [0, 50, 150, 300].map((delay) =>
+      window.setTimeout(resetPageScroll, delay)
+    );
+
+    return () => {
+      cancelAnimationFrame(raf);
+      timeouts.forEach((timeout) => window.clearTimeout(timeout));
+    };
   }, [pathname]);
 
   return null;

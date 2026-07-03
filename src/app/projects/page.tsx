@@ -1,6 +1,5 @@
 'use client';
 
-import Footer from '@/components/ui/Footer';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 
 export default function ProjectsPage() {
@@ -11,8 +10,6 @@ export default function ProjectsPage() {
           <ProjectsSection hideHeader />
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

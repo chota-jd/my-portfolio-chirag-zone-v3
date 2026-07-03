@@ -2,11 +2,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { products } from '@/data/products';
+import { HomeSectionViewMoreLink } from '@/components/ui/HomeSectionViewMoreLink';
 import { ChrHover } from '@/components/ui/ChrHover';
 
 function indexForProgress(progress: number, count: number) {
@@ -205,9 +205,7 @@ export default function ProductsSection({
 
       {showPageLink && (
         <div className="products-view-more">
-          <Link href="/products" style={{ display: 'inline-flex' }}>
-            <ChrHover text="VIEW MORE 🡺" />
-          </Link>
+          <HomeSectionViewMoreLink href="/products" sectionId="products" />
         </div>
       )}
     </section>

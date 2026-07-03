@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { Jost, Geist_Mono, Playfair_Display } from 'next/font/google';
 
 import { buildRootMetadata } from '@/lib/seo/metadata';
+import SiteChrome from '@/components/layout/SiteChrome';
+import ScrollToTop from '@/components/ui/ScrollToTop';
 
 import './globals.css';
 
@@ -45,9 +47,12 @@ export default function RootLayout({
         className={`${jost.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
         suppressHydrationWarning
       >
-        <div className="relative min-h-screen">
-          <div className="relative z-10">{children}</div>
-        </div>
+        <ScrollToTop />
+        <SiteChrome>
+          <div className="relative min-h-screen">
+            <div className="relative z-10">{children}</div>
+          </div>
+        </SiteChrome>
       </body>
     </html>
   );

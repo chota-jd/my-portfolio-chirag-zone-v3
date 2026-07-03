@@ -1,13 +1,13 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Link from 'next/link';
 import { Copy, Facebook, Linkedin, Check, MessageCircle } from 'lucide-react';
 import type { PortableTextBlock } from '@portabletext/types';
 
 import PortableTextContent from '@/components/blog/PortableTextContent';
-import Footer from '@/components/ui/Footer';
+import { resetPageScroll } from '@/lib/scroll';
 import type { BlogPost } from '@/sanity/types';
 
 function formatDate(date: string) {
@@ -68,6 +68,10 @@ export default function BlogPostView({
   const [pageUrl, setPageUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const readMinutes = estimateReadTime(post.body);
+
+  useLayoutEffect(() => {
+    resetPageScroll();
+  }, []);
 
   useEffect(() => {
     setPageUrl(window.location.href);
@@ -199,8 +203,6 @@ export default function BlogPostView({
           )}
         </article>
       </main>
-
-      <Footer />
     </div>
   );
 }

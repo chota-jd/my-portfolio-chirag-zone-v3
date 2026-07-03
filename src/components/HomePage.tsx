@@ -20,6 +20,7 @@ import {
   hasPendingHomeScroll,
   runPendingHomeScroll,
 } from '@/lib/homeNavigation';
+import { clearScrollAnimationState, resetPageScroll } from '@/lib/scroll';
 
 export default function HomePage({ children }: { children?: React.ReactNode }) {
   const [introFinished, setIntroFinished] = useState(false);
@@ -269,8 +270,10 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
 
     return () => {
       cancelPendingScroll?.();
+      clearScrollAnimationState();
+      lenis.scrollTo(0, { immediate: true });
       lenis.destroy();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      resetPageScroll();
     };
   }, [introFinished]);
 

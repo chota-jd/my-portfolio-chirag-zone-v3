@@ -53,9 +53,6 @@ export default function ProjectCaseStudyLayout({ project }: ProjectCaseStudyLayo
   };
 
   useEffect(() => {
-    const footer = document.getElementById('footer');
-    if (footer) footer.style.visibility = 'hidden';
-
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;

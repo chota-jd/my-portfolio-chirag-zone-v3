@@ -1,10 +1,8 @@
-import Link from 'next/link';
-
 import BlogGrid from '@/components/blog/BlogGrid';
 import BlogScroller from '@/components/blog/BlogScroller';
+import { HomeSectionViewMoreLink } from '@/components/ui/HomeSectionViewMoreLink';
 import { getPosts } from '@/sanity/queries';
 import { isSanityConfigured } from '@/sanity/env';
-import { ChrHover } from '@/components/ui/ChrHover';
 
 export const HOMEPAGE_BLOG_LIMIT = 6;
 
@@ -87,9 +85,7 @@ export default async function BlogSection({
 
         {!hideViewMore && hasMore && variant === 'scroller' && (
           <div className="mt-16 text-center">
-            <Link href="/blog" style={{ display: 'inline-flex' }}>
-              <ChrHover text="VIEW MORE 🡺" />
-            </Link>
+            <HomeSectionViewMoreLink href="/blog" sectionId="blog" />
           </div>
         )}
       </div>

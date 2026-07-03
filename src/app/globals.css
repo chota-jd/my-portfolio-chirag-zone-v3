@@ -2023,6 +2023,25 @@ a.chr-hover {
   background: #000000;
 }
 
+.footer.footer--static {
+  position: relative;
+  inset: auto;
+  height: auto;
+  min-height: 100vh;
+  visibility: visible;
+  z-index: 1;
+  margin-top: 4rem;
+}
+
+.footer.footer--static .footer-center {
+  opacity: 1;
+  transform: none;
+}
+
+.footer.footer--static .footer-content {
+  min-height: 100vh;
+}
+
 .footer-content {
   position: relative;
   width: 100%;
@@ -2125,6 +2144,12 @@ a.chr-hover {
 .footer-top-col .chr-hover:hover .ch-bot {
   color: #ff3b14 !important;
   text-shadow: 0 0 10px rgba(255, 59, 20, 0.4);
+}
+
+.footer-top-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
 }
 
 
@@ -3746,6 +3771,13 @@ a.chr-hover {
   .footer-top-col {
     align-items: center;
     text-align: center;
+    width: 100%;
+  }
+
+  .footer-top-right {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
     width: 100%;
   }
 }
