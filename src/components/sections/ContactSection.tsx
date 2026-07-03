@@ -30,7 +30,7 @@ export default function ContactSection() {
       // Save to Firebase
       const result = await saveContactMessage(values);
       try {
-        const res = await fetch('https://formsubmit.co/ajax/12chiragprajapati12@gmail.com', {
+        const res = await fetch('https://formsubmit.co/ajax/chirag.wok@gmail.com', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

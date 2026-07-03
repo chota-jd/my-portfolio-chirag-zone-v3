@@ -380,7 +380,7 @@ export default function Footer() {
               <div className="footer-cta">
                 <ChrHover
                   text="GET IN TOUCH 🡺"
-                  href="mailto:chirag.work@gmail.com"
+                  href="mailto:chirag.wok@gmail.com"
                   className="footer-cta-btn"
                 />
               </div>
@@ -390,7 +390,7 @@ export default function Footer() {
           <div className="footer-top">
             <div className="footer-top-col">
               <span className="footer-col-label">INQUIRIES</span>
-              <ChrHover text="chirag.work@gmail.com" href="mailto:chirag.work@gmail.com" className="footer-mail" />
+              <ChrHover text="chirag.wok@gmail.com" href="mailto:chirag.wok@gmail.com" className="footer-mail" />
               <span className="footer-date-text">© 2026 Chirag Prajapati</span>
             </div>
 
@@ -403,7 +403,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               />
-              <ChrHover text="Email" href="mailto:chirag.work@gmail.com" />
+              <ChrHover text="Email" href="mailto:chirag.wok@gmail.com" />
             </nav>
 
             <nav className="footer-top-col" aria-label="Navigation pied de page">

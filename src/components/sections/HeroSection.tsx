@@ -89,7 +89,7 @@ export default function HeroSection() {
                 <span className="sep" aria-hidden="true">
                   /
                 </span>
-                <ChrHover text="Email" href="mailto:chirag.work@gmail.com" />
+                <ChrHover text="Email" href="mailto:chirag.wok@gmail.com" />
                 <ChrHover text="Work" href="#projects" />
                 <ChrHover text="Info" href="#about" />
                 <ChrHover text="Contact" href="#contact" />
