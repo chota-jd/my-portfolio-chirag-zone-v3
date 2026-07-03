@@ -8,6 +8,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { products } from '@/data/products';
 import { ChrHover } from '@/components/ui/ChrHover';
 
+function indexForProgress(progress: number, count: number) {
+  if (count <= 1) return 0;
+  return Math.min(count - 1, Math.round(progress * (count - 1)));
+}
+
+function progressForIndex(index: number, count: number) {
+  if (count <= 1) return 0;
+  return index / (count - 1);
+}
+
 export default function ProductsSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isNarrow, setIsNarrow] = useState(false);
@@ -32,29 +42,22 @@ export default function ProductsSection() {
       id: 'products-pin',
       trigger: '#products',
       start: 'top top',
-      end: '+=260%', // Expanded scroll space for comfortable viewing pacing
+      end: `+=${Math.max(260, (products.length - 1) * 50)}%`,
       pin: true,
       scrub: 0.5,
+      invalidateOnRefresh: true,
       onUpdate: (self) => {
-        const progress = self.progress;
-        const activeRangeEnd = 0.85; // Allow the last product to stay pinned and active from 0.85 to 1.00
-        
-        let idx = 0;
-        if (progress >= activeRangeEnd) {
-          idx = products.length - 1;
-        } else {
-          const normProgress = progress / activeRangeEnd;
-          idx = Math.floor(normProgress * (products.length - 1));
-        }
-        
-        setActiveIdx(Math.min(products.length - 1, Math.max(0, idx)));
+        setActiveIdx(indexForProgress(self.progress, products.length));
       },
     });
 
+    const refreshTimeout = setTimeout(() => ScrollTrigger.refresh(), 150);
+
     return () => {
+      clearTimeout(refreshTimeout);
       pinTrigger.kill();
     };
-  }, [disablePin]);
+  }, [disablePin, products.length]);
 
   const handleItemClick = (index: number) => {
     if (disablePin) {
@@ -67,19 +70,9 @@ export default function ProductsSection() {
       const start = scrollTriggerInstance.start;
       const end = scrollTriggerInstance.end;
       const totalDist = end - start;
-      
-      // Calculate the exact midpoint of the item's active scroll range
-      const activeRangeEnd = 0.85;
-      let targetProgress = 0;
-      if (index === products.length - 1) {
-        targetProgress = activeRangeEnd + 0.075; // Middle of [0.85, 1.00] range
-      } else {
-        const step = activeRangeEnd / (products.length - 1);
-        targetProgress = (index + 0.5) * step; // Middle of item's specific sub-range
-      }
-      
+      const targetProgress = progressForIndex(index, products.length);
       const targetScroll = start + targetProgress * totalDist;
-      
+
       window.scrollTo({
         top: targetScroll,
         behavior: 'smooth',
@@ -170,6 +163,8 @@ export default function ProductsSection() {
                   src={activeProduct.thumbnailImage}
                   alt={activeProduct.title}
                   className="product-detail-image"
+                  width={1200}
+                  height={630}
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center bg-zinc-950">

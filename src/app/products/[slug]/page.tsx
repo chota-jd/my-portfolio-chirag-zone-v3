@@ -153,20 +153,21 @@ export default function ProductDetail() {
             <div className="space-y-8">
               {/* Image Card */}
               <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-zinc-900 group">
-                <div className="aspect-video relative overflow-hidden">
-                  <a 
-                    href={product.productLink} 
-                    target="_blank" 
+                <div className="product-detail-image-wrap product-detail-image-wrap--fluid !mb-0 rounded-none border-0">
+                  <a
+                    href={product.productLink}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute inset-0 z-10"
+                    className="contents"
                   >
-                    <img 
-                      src={product.image} 
+                    <img
+                      src={product.image}
                       alt={product.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="product-detail-image"
+                      width={1200}
+                      height={630}
                     />
                   </a>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
                 <div className="p-8">
                   <h3 className="text-xl font-bold mb-4">Product Overview</h3>

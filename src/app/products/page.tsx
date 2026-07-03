@@ -24,7 +24,7 @@ export default function ProductsPage() {
           <ProductsSection />
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
