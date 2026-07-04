@@ -2281,6 +2281,11 @@ a.chr-hover {
     white-space: normal;
     font-size: clamp(1.35rem, 5.5vw, 2rem);
     padding: 0.75em 0;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .proj-item:active {
+    color: #ff1e00;
   }
 
   .proj-preview {
@@ -2583,6 +2588,33 @@ a.chr-hover {
   .blog-track-custom {
     padding: 2vh 1.5rem;
     gap: 2.2rem;
+  }
+}
+
+@media (max-width: 1024px), (hover: none) and (pointer: coarse) {
+  .blog-section {
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+    padding: 8vh 0 6vh;
+  }
+
+  .blog-section-inner {
+    height: auto;
+    min-height: auto;
+    padding: 0;
+  }
+
+  .blog-grid-custom {
+    scroll-snap-type: x mandatory;
+    touch-action: pan-x pinch-zoom;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .blog-card-custom {
+    transform: none !important;
+    flex: 0 0 clamp(16rem, 78vw, 20rem);
   }
 }
 
