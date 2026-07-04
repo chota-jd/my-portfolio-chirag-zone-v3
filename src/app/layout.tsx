@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Jost, Geist_Mono, Playfair_Display } from 'next/font/google';
 
+import { GoogleAnalytics } from '@next/third-parties/google';
+
 import { buildRootMetadata } from '@/lib/seo/metadata';
 import SiteChrome from '@/components/layout/SiteChrome';
 import ScrollToTop from '@/components/ui/ScrollToTop';
@@ -53,6 +55,7 @@ export default function RootLayout({
             <div className="relative z-10">{children}</div>
           </div>
         </SiteChrome>
+        <GoogleAnalytics gaId="G-DLNVPSPP9T" />
       </body>
     </html>
   );

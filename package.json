@@ -16,6 +16,7 @@
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@next/third-parties": "^15.5.18",
     "@portabletext/react": "^6.2.0",
     "@portabletext/types": "^4.0.2",
     "@react-three/drei": "^10.6.1",
