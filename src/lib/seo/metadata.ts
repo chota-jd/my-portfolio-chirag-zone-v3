@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 
 import {
   DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_HEIGHT,
+  DEFAULT_OG_IMAGE_WIDTH,
   GOOGLE_SITE_VERIFICATION,
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
@@ -27,8 +29,16 @@ export type PageMetadataInput = {
 };
 
 function buildOgImages(image: string, alt: string) {
-  const url = absoluteUrl(image);
-  return [{ url, width: 1200, height: 630, alt }];
+  const isDefaultImage = image === DEFAULT_OG_IMAGE;
+  const url = image.startsWith('http') ? image : image;
+  return [
+    {
+      url,
+      width: isDefaultImage ? DEFAULT_OG_IMAGE_WIDTH : 1200,
+      height: isDefaultImage ? DEFAULT_OG_IMAGE_HEIGHT : 630,
+      alt,
+    },
+  ];
 }
 
 export function buildPageMetadata({

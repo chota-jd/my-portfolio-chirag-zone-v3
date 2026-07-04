@@ -9,8 +9,17 @@ export const SITE_SOCIAL_PROFILES = [SITE_GITHUB, SITE_LINKEDIN] as const;
 export const GOOGLE_SITE_VERIFICATION =
   process.env.GOOGLE_SITE_VERIFICATION?.trim() || undefined;
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ?? 'https://chirag-prajapati.vercel.app';
+function resolveSiteUrl(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (fromEnv) return fromEnv.replace(/\/$/, '');
+
+  const vercelUrl = process.env.VERCEL_URL?.trim();
+  if (vercelUrl) return `https://${vercelUrl.replace(/^https?:\/\//, '')}`;
+
+  return 'https://my-portfolio-chirag-zone-v3.vercel.app';
+}
+
+export const SITE_URL = resolveSiteUrl();
 
 export const SITE_NAME = 'Chirag Prajapati';
 export const SITE_TAGLINE = 'Digital architect';
@@ -30,8 +39,10 @@ export const SITE_KEYWORDS = [
   'TypeScript',
 ];
 
-/** Default social preview image (1200×630 recommended). */
+/** Default social preview image (1200×630 recommended; current asset is 1024×534). */
 export const DEFAULT_OG_IMAGE = '/og-image.jpg';
+export const DEFAULT_OG_IMAGE_WIDTH = 1024;
+export const DEFAULT_OG_IMAGE_HEIGHT = 534;
 
 export function absoluteUrl(path: string): string {
   if (path.startsWith('http://') || path.startsWith('https://')) return path;
