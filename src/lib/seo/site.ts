@@ -13,10 +13,11 @@ function resolveSiteUrl(): string {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, '');
 
-  const vercelUrl = process.env.VERCEL_URL?.trim();
-  if (vercelUrl) return `https://${vercelUrl.replace(/^https?:\/\//, '')}`;
+  if (process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_URL?.trim()) {
+    return `https://${process.env.VERCEL_URL.replace(/^https?:\/\//, '')}`;
+  }
 
-  return 'https://my-portfolio-chirag-zone-v3.vercel.app';
+  return 'https://chotajd.in';
 }
 
 export const SITE_URL = resolveSiteUrl();

@@ -30,7 +30,7 @@ export type PageMetadataInput = {
 
 function buildOgImages(image: string, alt: string) {
   const isDefaultImage = image === DEFAULT_OG_IMAGE;
-  const url = image.startsWith('http') ? image : image;
+  const url = image.startsWith('http') ? image : absoluteUrl(image);
   return [
     {
       url,
