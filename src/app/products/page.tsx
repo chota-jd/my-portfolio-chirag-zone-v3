@@ -2,7 +2,7 @@ import ProductsGrid from '@/components/products/ProductsGrid';
 
 export default function ProductsPage() {
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a]">
+    <div className="relative min-h-screen bg-paper">
       <main className="relative z-10">
         <section id="products" className="blog-section blog-section--grid">
           <div className="blog-section-inner relative z-10">

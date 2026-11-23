@@ -5,7 +5,7 @@ export default function BlogGrid({ posts }: { posts: BlogPostListItem[] }) {
   return (
     <div className="blog-list-grid">
       {posts.map((post, idx) => (
-        <BlogCard key={post._id} post={post} index={idx} flat />
+        <BlogCard key={post._id} post={post} index={idx} />
       ))}
     </div>
   );

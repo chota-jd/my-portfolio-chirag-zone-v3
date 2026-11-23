@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -13,134 +13,145 @@ function isTouchLayout() {
   return window.matchMedia(TOUCH_LAYOUT_QUERY).matches;
 }
 
-function resetCardTransforms(track: HTMLElement) {
-  track.querySelectorAll('.blog-card-custom').forEach((card) => {
-    (card as HTMLElement).style.transform = '';
+function resetImageParallax(track: HTMLElement) {
+  track.querySelectorAll<HTMLElement>('.blog-card-img').forEach((img) => {
+    img.style.transform = '';
   });
 }
 
+/**
+ * Homepage journal strip: the section pins and the row of flat cards slides
+ * sideways as you scroll. Each cover drifts inside its frame (parallax) and a
+ * progress rail + counter show how far through the strip you are.
+ * Touch layouts fall back to a native swipe row with snap.
+ */
 export default function BlogScroller({ posts }: { posts: BlogPostListItem[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [flatCards, setFlatCards] = useState(false);
+  const fillRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
 
-  // Core translation & rotation math to establish the dramatic outward-tilting circular arch
-  const updateCardTransforms = () => {
+  const total = posts.length;
+  const pad = (n: number) => String(n).padStart(2, '0');
+
+  // Image drift: covers shift opposite to their distance from the viewport centre.
+  const updateParallax = () => {
     const track = trackRef.current;
     if (!track) return;
-
     if (isTouchLayout()) {
-      resetCardTransforms(track);
+      resetImageParallax(track);
       return;
     }
-
-    const cards = track.querySelectorAll('.blog-card-custom') as NodeListOf<HTMLElement>;
-    const viewportCenterX = window.innerWidth / 2;
-
-    cards.forEach((card) => {
-      const cardRect = card.getBoundingClientRect();
-      const cardCenterX = cardRect.left + cardRect.width / 2;
-      const distX = cardCenterX - viewportCenterX;
-
-      const maxDist = window.innerWidth || 800;
-      const t = Math.max(-1, Math.min(1, distX / (maxDist * 0.75)));
-
-      const translateY = t * t * 100;
-      const rotate = t * 14.5;
-
-      card.style.transform = `translateY(${translateY}px) rotate(${rotate}deg)`;
+    const centre = window.innerWidth / 2;
+    track.querySelectorAll<HTMLElement>('.blog-card-custom').forEach((card) => {
+      const img = card.querySelector<HTMLElement>('.blog-card-img');
+      if (!img) return;
+      const rect = card.getBoundingClientRect();
+      const t = Math.max(-1, Math.min(1, (rect.left + rect.width / 2 - centre) / window.innerWidth));
+      img.style.transform = `translate3d(${(-t * 9).toFixed(2)}%, 0, 0) scale(1.18)`;
     });
   };
 
-  useEffect(() => {
-    const touchMq = window.matchMedia(TOUCH_LAYOUT_QUERY);
-    const syncLayoutMode = () => setFlatCards(touchMq.matches);
-    syncLayoutMode();
-    touchMq.addEventListener('change', syncLayoutMode);
-    return () => touchMq.removeEventListener('change', syncLayoutMode);
-  }, []);
+  const updateProgress = (progress: number) => {
+    if (fillRef.current) fillRef.current.style.transform = `scaleX(${Math.max(0.02, progress)})`;
+    if (counterRef.current && total > 0) {
+      const current = Math.min(total, Math.max(1, Math.round(progress * (total - 1)) + 1));
+      counterRef.current.textContent = pad(current);
+    }
+  };
 
   useEffect(() => {
     const container = containerRef.current;
     const track = trackRef.current;
     if (!container || !track) return;
 
-    updateCardTransforms();
-
     gsap.registerPlugin(ScrollTrigger);
+    updateParallax();
+    updateProgress(0);
 
-    const touchLayout = isTouchLayout();
-    let scrollTween: gsap.core.Tween | null = null;
-
-    if (!touchLayout && posts.length > 0) {
-      container.style.overflowX = 'hidden';
-
-      // We translate the inner 'trackRef' (track) while the outer 'containerRef' (container)
-      // serves as the pinned mask boundary!
-      scrollTween = gsap.to(track, {
-        x: () => {
-          const scrollAmount = track.scrollWidth - window.innerWidth;
-          return -Math.max(100, scrollAmount);
-        },
-        ease: 'none',
-        scrollTrigger: {
-          id: 'blog-pin',
-          trigger: '#blog',
-          start: 'top top',
-          end: () => {
-            const scrollAmount = track.scrollWidth - window.innerWidth;
-            return `+=${Math.max(350, scrollAmount) + 250}`;
-          },
-          pin: true,
-          scrub: 0.6,
-          invalidateOnRefresh: true,
-          onUpdate: () => {
-            updateCardTransforms();
-          },
-        },
-      });
-
-      // Explicitly trigger a refresh after a small delay to ensure all pin spacers are calculated accurately
-      const refreshTimeout = setTimeout(() => {
-        ScrollTrigger.refresh();
-        updateCardTransforms();
-      }, 150);
-
-      return () => {
-        clearTimeout(refreshTimeout);
-        if (scrollTween) {
-          scrollTween.kill();
-          if (scrollTween.scrollTrigger) {
-            scrollTween.scrollTrigger.kill();
-          }
-        }
-      };
-    } else {
-      resetCardTransforms(track);
+    if (isTouchLayout() || posts.length === 0) {
+      resetImageParallax(track);
       container.style.overflowX = 'auto';
+      const onScroll = () => {
+        const max = container.scrollWidth - container.clientWidth;
+        updateProgress(max > 0 ? container.scrollLeft / max : 0);
+      };
+      container.addEventListener('scroll', onScroll, { passive: true });
+      return () => container.removeEventListener('scroll', onScroll);
     }
+
+    container.style.overflowX = 'hidden';
+
+    const scrollTween = gsap.to(track, {
+      x: () => -Math.max(100, track.scrollWidth - window.innerWidth),
+      ease: 'none',
+      scrollTrigger: {
+        id: 'blog-pin',
+        trigger: '#blog',
+        start: 'top top',
+        end: () => `+=${Math.max(350, track.scrollWidth - window.innerWidth) + 250}`,
+        pin: true,
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          updateParallax();
+          updateProgress(self.progress);
+        },
+      },
+    });
+
+    // This pin adds scroll distance, so every trigger below it (e.g. the contact
+    // blob) must be measured after it. It can be created after the contact
+    // section's triggers, so re-order all triggers by page position, then
+    // recalculate once images/fonts have settled.
+    ScrollTrigger.sort();
+    const refreshTimeout = setTimeout(() => {
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+      updateParallax();
+    }, 150);
+
+    return () => {
+      clearTimeout(refreshTimeout);
+      scrollTween.scrollTrigger?.kill();
+      scrollTween.kill();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [posts]);
 
   useEffect(() => {
-    const handleLayoutChange = () => {
-      updateCardTransforms();
-    };
-
-    window.addEventListener('resize', handleLayoutChange, { passive: true });
-    window.addEventListener('orientationchange', handleLayoutChange);
+    const onResize = () => updateParallax();
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('orientationchange', onResize);
     return () => {
-      window.removeEventListener('resize', handleLayoutChange);
-      window.removeEventListener('orientationchange', handleLayoutChange);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onResize);
     };
+     
   }, []);
 
   return (
-    <div className="blog-grid-custom" ref={containerRef} data-lenis-prevent-horizontal>
-      <div className="blog-track-custom" ref={trackRef}>
-        {posts.map((post, idx) => (
-          <BlogCard key={post._id} post={post} index={idx} flat={flatCards} />
-        ))}
+    <>
+      <div className="blog-grid-custom" ref={containerRef} data-lenis-prevent-horizontal>
+        <div className="blog-track-custom" ref={trackRef}>
+          {posts.map((post, idx) => (
+            <BlogCard key={post._id} post={post} index={idx} />
+          ))}
+        </div>
       </div>
-    </div>
+
+      {total > 1 && (
+        <div className="blog-progress" aria-hidden="true">
+          <span className="blog-progress-count">
+            <span ref={counterRef}>01</span>
+            <span className="blog-progress-total"> / {pad(total)}</span>
+          </span>
+          <div className="blog-progress-rail">
+            <div className="blog-progress-fill" ref={fillRef} />
+          </div>
+          <span className="blog-progress-hint">Scroll</span>
+        </div>
+      )}
+    </>
   );
 }

@@ -22,7 +22,7 @@ export default function ExperienceSection() {
   return (
     <section id="experience" className="experience-section">
       <div className="experience-section-inner relative z-10">
-        <h2 className="experience-title text-white">
+        <h2 className="experience-title">
           Work <span className="other-accent">Experience.</span>
         </h2>
 
@@ -38,7 +38,7 @@ export default function ExperienceSection() {
                 <div className="experience-entry-body">
                   <div className="experience-company-wrap experience-headline-wrap">
                     <div>
-                      <h3 className="experience-company text-white">{exp.company}</h3>
+                      <h3 className="experience-company">{exp.company}</h3>
                       <span className="experience-role text-accent-orange">{exp.role}</span>
                     </div>
                   </div>
@@ -50,14 +50,14 @@ export default function ExperienceSection() {
                   </div>
 
                   <div className="experience-detail-wrap">
-                    <p className="experience-desc text-white/80">{exp.description}</p>
+                    <p className="experience-desc">{exp.description}</p>
 
                     <h4 className="experience-achievements-title text-accent-orange">Key Achievements</h4>
                     <ul className="experience-achievements-list">
                       {exp.achievements.map((achievement, idx) => (
-                        <li key={idx} className="experience-achievement-item text-white/90">
+                        <li key={idx} className="experience-achievement-item">
                           <span
-                            className="experience-achievement-bullet bg-accent-orange shadow-[0_0_10px_rgba(255,30,0,0.55)]"
+                            className="experience-achievement-bullet bg-accent"
                             aria-hidden="true"
                           />
                           <span>{achievement}</span>

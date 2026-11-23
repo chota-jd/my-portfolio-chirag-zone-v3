@@ -1,18 +1,27 @@
 import type { Metadata, Viewport } from 'next';
-import { Jost, Geist_Mono, Playfair_Display } from 'next/font/google';
+import { Inter, Geist_Mono, Instrument_Serif } from 'next/font/google';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 import { buildRootMetadata } from '@/lib/seo/metadata';
 import SiteChrome from '@/components/layout/SiteChrome';
 import ScrollToTop from '@/components/ui/ScrollToTop';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 import './globals.css';
 
-const jost = Jost({
-  variable: '--font-jost',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: '--font-instrument-serif',
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  display: 'swap',
 });
 
 const geistMono = Geist_Mono({
@@ -20,11 +29,8 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-const playfairDisplay = Playfair_Display({
-  variable: '--font-playfair-display',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
-});
+/** Runs before paint so a saved dark preference never flashes light. */
+const themeInitScript = `try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t)}}catch(e){}`;
 
 export const metadata: Metadata = buildRootMetadata();
 
@@ -40,16 +46,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script defer src="/js/core-renderer.js"></script>
         <script defer src="/js/hero-project.js"></script>
       </head>
       <body
-        className={`${jost.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
+        className="antialiased"
         suppressHydrationWarning
       >
         <ScrollToTop />
+        <ThemeToggle />
         <SiteChrome>
           <div className="relative min-h-screen">
             <div className="relative z-10">{children}</div>

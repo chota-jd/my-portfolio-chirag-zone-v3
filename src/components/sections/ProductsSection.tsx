@@ -133,7 +133,7 @@ export default function ProductsSection({
                     transform: `translateY(calc(-50% + ${translateY}px)) rotate(${rotate}deg) translateX(${translateX}px)`,
                     opacity: itemOpacity,
                     zIndex: isActive ? 10 : 5 - distance,
-                    color: isActive ? '#ff1e00' : '#f0f0f0',
+                    color: isActive ? 'var(--accent)' : 'var(--ink)',
                     pointerEvents: isActive || distance <= 2 ? ('auto' as const) : ('none' as const),
                     position: 'absolute' as const,
                     top: '50%',
@@ -173,8 +173,8 @@ export default function ProductsSection({
                   height={630}
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-zinc-950">
-                  <span className="text-xl font-light text-zinc-800 tracking-widest font-breton">SAAS PRODUCT</span>
+                <div className="absolute inset-0 flex items-center justify-center bg-paper-2">
+                  <span className="text-xl font-light text-ink/30 tracking-widest">SAAS PRODUCT</span>
                 </div>
               )}
             </div>

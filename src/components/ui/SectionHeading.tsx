@@ -29,7 +29,7 @@ export default function SectionHeading({
       <Tag className={`mb-6 text-4xl font-bold tracking-tight sm:text-5xl ${titleClassName}`}>{children}</Tag>
       <div className="section-heading-accent mx-auto mb-6" aria-hidden />
       {subtitle ? (
-        <p className="mx-auto max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">{subtitle}</p>
+        <p className="mx-auto max-w-2xl text-base leading-relaxed text-ink/60 sm:text-lg">{subtitle}</p>
       ) : null}
     </div>
   );

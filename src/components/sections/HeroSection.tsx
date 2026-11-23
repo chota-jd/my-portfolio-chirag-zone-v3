@@ -60,7 +60,11 @@ export default function HeroSection() {
           {/* Redesigned Clean Single Column Editorial Layout */}
           <div className="hero-content-left">
             <h1 className="hero-heading">
-              SOFTWARE <span className="other-accent text-accent-orange">ENGINEER.</span>
+              <span className="hero-heading-first">
+                <span className="hero-heading-lead">I&apos;m</span>
+                Software
+              </span>{' '}
+              <span className="other-accent">engineer.</span>
             </h1>
             <p className="hero-bio">
               Hi, I&apos;m Chirag. Crafting high-performance web systems, interactive user experiences, and scalable cloud solutions.
