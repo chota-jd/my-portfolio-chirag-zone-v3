@@ -11,7 +11,7 @@
   --paper-2-rgb: 236 231 220;
   --paper-3-rgb: 225 218 204;
   --ink-rgb: 24 22 18;
-  --accent-rgb: 200 50 24;
+  --accent-rgb: 143 100 20; /* old gold #8f6414 — 4.6:1 on paper */
   --shadow-rgb: 40 30 20;
   color-scheme: light;
 }
@@ -5541,7 +5541,7 @@ body::before {
 
 .blog-card-custom:hover .blog-card-title,
 .blog-card-custom:hover .blog-card-link {
-  color: #ff8a6b;
+  color: var(--accent);
 }
 
 /* ——— Contact: the blob floods the page with ink, form sits on a paper card ——— */
@@ -6903,4 +6903,137 @@ body::before {
 .blog-list-grid .blog-card-img-wrap {
   height: auto;
   aspect-ratio: 3 / 2;
+}
+
+/* =====================================================================
+   24-karat gold theme (both themes)
+   Light: "old gold" accent on cream paper, deep foil on the hero words.
+   Dark:  bright 24k gold accent on ink, bright foil on the hero words.
+   ===================================================================== */
+:root,
+[data-theme='light'],
+[data-theme='dark'] {
+  /* bright foil — for gold on dark surfaces in either theme */
+  --gold-foil-bright: linear-gradient(
+    105deg,
+    #9c6f1d 0%,
+    #d4a43e 14%,
+    #f5d987 28%,
+    #fff3c4 38%,
+    #ecc566 50%,
+    #b98a2b 63%,
+    #f2d37d 80%,
+    #a37620 100%
+  );
+}
+
+:root,
+[data-theme='light'] {
+  /* deep foil — stays legible on cream paper, like gold-foil print */
+  --gold-foil: linear-gradient(
+    105deg,
+    #6c470b 0%,
+    #976a14 16%,
+    #c39431 30%,
+    #dcb458 40%,
+    #bf902f 52%,
+    #8f6414 66%,
+    #b68a2f 82%,
+    #6f4a0c 100%
+  );
+  --gold-glow: drop-shadow(0 1px 0 rgba(90, 60, 8, 0.22)) drop-shadow(0 8px 22px rgba(170, 120, 30, 0.14));
+}
+
+[data-theme='dark'] {
+  --accent-rgb: 230 188 90;
+  --accent: rgb(var(--accent-rgb));
+  --gold-deep: #8f6516; /* gold that stays legible on light (inverted) surfaces */
+  --gold-foil: var(--gold-foil-bright);
+  --gold-glow: drop-shadow(0 0 22px rgba(230, 180, 80, 0.22));
+}
+
+/* Metallic foil on the hero accent words */
+.hero-heading .other-accent,
+.hero-heading-lead {
+  background-image: var(--gold-foil);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: var(--gold-glow);
+  animation: gold-sheen 9s ease-in-out infinite alternate;
+}
+
+/* Italic overhangs and descenders reach past the inline box; pad the painted
+   area so the foil covers every glyph, and cancel the padding with margins. */
+.hero-heading .other-accent {
+  padding: 0.04em 0.2em 0.18em 0.12em;
+  margin: 0 -0.2em 0 -0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.hero-heading-lead {
+  padding: 0.1em 0.25em 0.2em 0.15em;
+  margin: -0.1em -0.25em -0.2em -0.15em;
+}
+
+/* Light theme: the contact section floods with ink, so its accent word gets
+   the bright foil (dark theme overrides this with deep gold below). */
+:root:not([data-theme='dark']) .contact-title .other-accent {
+  background-image: var(--gold-foil-bright);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  padding: 0.04em 0.2em 0.18em 0.12em;
+  margin: 0 -0.2em 0 -0.12em;
+  animation: gold-sheen 9s ease-in-out infinite alternate;
+}
+
+/* Light theme ribbon: pale gold so dark titles stay readable across it
+   (dark theme sets antique gold below). */
+.fluid-line {
+  stroke: #dcb866;
+}
+
+@keyframes gold-sheen {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+/* Gold on the light, inverted contact flood needs a deeper tone */
+[data-theme='dark'] .contact-title .other-accent {
+  color: var(--gold-deep);
+}
+
+/* Text on gold fills: dark ink instead of white */
+[data-theme='dark'] .form-submit-btn:hover,
+[data-theme='dark'] .ed-button:hover,
+[data-theme='dark'] .pcs-btn-primary:hover {
+  color: #15110a;
+}
+
+/* The projects ribbon runs behind cream titles: use antique gold for contrast */
+[data-theme='dark'] .fluid-line {
+  stroke: #9a6b18;
+}
+
+/* Dark hero: re-tone the WebGL shader to black-and-molten-gold */
+[data-theme='dark'] #hero-canvas {
+  filter: grayscale(1) sepia(1) saturate(2.8) hue-rotate(-8deg) brightness(0.9) contrast(1.15);
+  mix-blend-mode: normal;
+}
+
+/* Light hero: re-tone the (inverted) shader to soft gold leaf on cream */
+:root:not([data-theme='dark']) #hero-canvas {
+  filter: invert(1) hue-rotate(180deg) sepia(0.85) saturate(1.5) hue-rotate(-18deg) brightness(1) contrast(1.25);
+  mix-blend-mode: multiply;
 }
