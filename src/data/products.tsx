@@ -1,4 +1,4 @@
-import { FileText, Users, Lock, Bot, BookOpen, Bookmark, StickyNote } from 'lucide-react';
+import { FileText, Users, Lock, Bot, BookOpen, Bookmark, StickyNote, Trophy } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export interface Product {
@@ -26,6 +26,47 @@ export interface Product {
 }
 
 export const products: Product[] = [
+  {
+    id: 8,
+    slug: 'mysportsx',
+    title: 'MySportsX',
+    description:
+      'Book all sports in one place. Discover and book box cricket turfs, football grounds, badminton and pickleball courts across Ahmedabad.',
+    fullDescription:
+      'MySportsX is a sports venue booking platform that helps players find, compare, and book turfs and courts in seconds. Players browse venues by sport, area, or price, pick a slot with transparent pricing, and manage every booking in one place — while venue owners list their courts to fill open slots.',
+    image: 'https://mysportsx.in/og-image.png',
+    productLink: 'https://mysportsx.in/',
+    thumbnailImage: 'https://mysportsx.in/og-image.png',
+    technologies: ['Next.js', 'React', 'TypeScript', 'Booking Engine'],
+    category: 'Sports Booking',
+    icon: <Trophy className="w-5 h-5" />,
+    color: 'from-green-600 to-lime-500',
+    role: 'Full Stack Developer',
+    pillars: [
+      { title: 'Multi-sport Discovery', desc: 'Box cricket, football, badminton, pickleball, tennis, and indoor basketball in one app.' },
+      { title: 'Slot-based Booking', desc: 'Pick a date and time slot with pricing shown upfront before confirming.' },
+      { title: 'My Bookings', desc: 'Every confirmed booking is saved and easy to review after login.' },
+      { title: 'Venue Partner Program', desc: 'Court owners can list their venues and reach more players to fill open slots.' },
+    ],
+    process: [
+      { step: '01', title: 'Find a Venue', desc: 'Browse turfs and courts by sport, area, or price across the city.' },
+      { step: '02', title: 'Pick a Slot', desc: 'Choose a date and time with transparent per-hour pricing.' },
+      { step: '03', title: 'Confirm & Pay', desc: 'Lock the booking instantly, with first-booking offers applied.' },
+      { step: '04', title: 'Play', desc: 'Show up and play — bookings stay available under My Bookings.' },
+    ],
+    platformInsights: [
+      { label: 'Product Position', value: 'All-in-one sports venue booking for players and groups' },
+      { label: 'Coverage', value: '50+ venues across 6 sports, launching in Ahmedabad' },
+      { label: 'Two-sided Marketplace', value: 'Players book slots; venue owners list courts and fill capacity' },
+      { label: 'Outcome', value: 'Fewer calls and back-and-forth — find, book, and play in minutes' },
+    ],
+    narrative: {
+      overview:
+        'MySportsX replaces the usual phone calls and WhatsApp threads needed to book a turf with a single, searchable booking flow. Players can compare venues, prices, slots, and amenities side by side, then confirm in a few taps. The experience is built around regular groups — weekend football, Friday box cricket, evening badminton — who need reliable slots without the hassle.',
+      impact:
+        'For players, MySportsX makes it faster to get a game going; for venue owners, it turns idle hours into bookings through a shared marketplace. Starting with Ahmedabad, the platform brings local sports booking online with clear pricing and a consistent experience across sports.',
+    },
+  },
   {
     id: 1,
     slug: 'docxpert',

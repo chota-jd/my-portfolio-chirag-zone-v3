@@ -135,7 +135,7 @@ export default function BlogScroller({ posts }: { posts: BlogPostListItem[] }) {
   }, []);
 
   return (
-    <div className="blog-grid-custom" ref={containerRef} data-lenis-prevent>
+    <div className="blog-grid-custom" ref={containerRef} data-lenis-prevent-horizontal>
       <div className="blog-track-custom" ref={trackRef}>
         {posts.map((post, idx) => (
           <BlogCard key={post._id} post={post} index={idx} flat={flatCards} />
