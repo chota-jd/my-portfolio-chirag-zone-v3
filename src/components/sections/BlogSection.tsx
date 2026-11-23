@@ -1,6 +1,5 @@
 import BlogGrid from '@/components/blog/BlogGrid';
 import BlogScroller from '@/components/blog/BlogScroller';
-import { HomeSectionViewMoreLink } from '@/components/ui/HomeSectionViewMoreLink';
 import { getPosts } from '@/sanity/queries';
 import { isSanityConfigured } from '@/sanity/env';
 
@@ -80,14 +79,9 @@ export default async function BlogSection({
         {variant === 'grid' ? (
           <BlogGrid posts={posts} />
         ) : (
-          <BlogScroller posts={posts} />
+          <BlogScroller posts={posts} showViewMore={!hideViewMore && hasMore} />
         )}
 
-        {!hideViewMore && hasMore && variant === 'scroller' && (
-          <div className="mt-16 text-center">
-            <HomeSectionViewMoreLink href="/blog" sectionId="blog" />
-          </div>
-        )}
       </div>
     </section>
   );

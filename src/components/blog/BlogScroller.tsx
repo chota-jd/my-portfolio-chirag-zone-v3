@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import BlogCard from '@/components/blog/BlogCard';
+import { HomeSectionViewMoreLink } from '@/components/ui/HomeSectionViewMoreLink';
 import type { BlogPostListItem } from '@/sanity/types';
 
 const TOUCH_LAYOUT_QUERY = '(max-width: 1024px), (hover: none) and (pointer: coarse)';
@@ -25,7 +26,14 @@ function resetImageParallax(track: HTMLElement) {
  * progress rail + counter show how far through the strip you are.
  * Touch layouts fall back to a native swipe row with snap.
  */
-export default function BlogScroller({ posts }: { posts: BlogPostListItem[] }) {
+export default function BlogScroller({
+  posts,
+  showViewMore = false,
+}: {
+  posts: BlogPostListItem[];
+  /** Render the "View more" link at the end of the progress row (saves a row of height). */
+  showViewMore?: boolean;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
@@ -80,7 +88,8 @@ export default function BlogScroller({ posts }: { posts: BlogPostListItem[] }) {
       return () => container.removeEventListener('scroll', onScroll);
     }
 
-    container.style.overflowX = 'hidden';
+    // clip (not hidden) so vertical overflow such as hover lift is not cut off
+    container.style.overflowX = 'clip';
 
     const scrollTween = gsap.to(track, {
       x: () => -Math.max(100, track.scrollWidth - window.innerWidth),
@@ -140,16 +149,26 @@ export default function BlogScroller({ posts }: { posts: BlogPostListItem[] }) {
         </div>
       </div>
 
-      {total > 1 && (
-        <div className="blog-progress" aria-hidden="true">
-          <span className="blog-progress-count">
-            <span ref={counterRef}>01</span>
-            <span className="blog-progress-total"> / {pad(total)}</span>
-          </span>
-          <div className="blog-progress-rail">
-            <div className="blog-progress-fill" ref={fillRef} />
-          </div>
-          <span className="blog-progress-hint">Scroll</span>
+      {(total > 1 || showViewMore) && (
+        <div className="blog-progress">
+          {total > 1 && (
+            <>
+              <span className="blog-progress-count" aria-hidden="true">
+                <span ref={counterRef}>01</span>
+                <span className="blog-progress-total"> / {pad(total)}</span>
+              </span>
+              <div className="blog-progress-rail" aria-hidden="true">
+                <div className="blog-progress-fill" ref={fillRef} />
+              </div>
+            </>
+          )}
+          {showViewMore ? (
+            <span className="blog-progress-more">
+              <HomeSectionViewMoreLink href="/blog" sectionId="blog" text="ALL ARTICLES 🡺" />
+            </span>
+          ) : (
+            <span className="blog-progress-hint" aria-hidden="true">Scroll</span>
+          )}
         </div>
       )}
     </>

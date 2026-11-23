@@ -6855,3 +6855,52 @@ body::before {
     width: min(48vw, 720px);
   }
 }
+
+/* Journal strip: fit header + cards + progress inside one pinned screen */
+.blog-grid-custom {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.blog-card-img-wrap {
+  aspect-ratio: auto;
+  height: clamp(8.5rem, 25vh, 16.5rem);
+}
+
+.blog-card-title {
+  -webkit-line-clamp: 2;
+}
+
+.blog-progress {
+  flex-shrink: 0;
+  margin-bottom: 0.5rem;
+}
+
+.blog-progress-more {
+  flex-shrink: 0;
+}
+
+@media (max-height: 860px) and (min-width: 1025px) {
+  .blog-section .blog-section-title {
+    font-size: clamp(2.6rem, 8vh, 5rem);
+  }
+
+  .home-main .blog-section-title::before {
+    margin-bottom: 1rem;
+  }
+
+  .blog-section .blog-section-subtitle {
+    font-size: 0.98rem;
+  }
+
+  .blog-card-excerpt {
+    -webkit-line-clamp: 1;
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* The grid variant (/blog) keeps the proportional image */
+.blog-list-grid .blog-card-img-wrap {
+  height: auto;
+  aspect-ratio: 3 / 2;
+}
