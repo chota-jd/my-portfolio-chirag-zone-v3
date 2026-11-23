@@ -87,9 +87,9 @@ export default function IndustriesSection() {
           if (iconWrap) {
             gsap.fromTo(
               iconWrap,
-              { color: '#ff1e00' },
+              { '--icon-settle': 0 },
               {
-                color: '#f0f0f0',
+                '--icon-settle': 1,
                 ease: 'power2.out',
                 scrollTrigger: {
                   trigger: card,
@@ -152,9 +152,9 @@ export default function IndustriesSection() {
         if (iconWrap) {
           master.fromTo(
             iconWrap,
-            { color: '#ff1e00' },
+            { '--icon-settle': 0 },
             {
-              color: '#f0f0f0',
+              '--icon-settle': 1,
               duration: 0.34,
               ease: 'power3.out',
             },

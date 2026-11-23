@@ -211,7 +211,7 @@ export default function ContactSection() {
       <section className="contact" id="contact">
         <div className="contact-pin" id="contact-pin">
           <div className="contact-title" id="contact-title" ref={titleRef}>
-            Contact
+            Let&apos;s <span className="other-accent">talk.</span>
           </div>
 
           <div className="contact-left-text" id="contact-left-text" ref={leftTextRef}>
@@ -241,7 +241,7 @@ export default function ContactSection() {
                 onFinishFailed={onFinishFailed}
                 requiredMark={(label, { required }) => (
                   <span className="flex items-center gap-1">
-                    {required && <span className="text-[#ff1e00]">*</span>}
+                    {required && <span className="text-accent">*</span>}
                     {label}
                   </span>
                 )}

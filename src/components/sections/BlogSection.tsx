@@ -1,6 +1,5 @@
 import BlogGrid from '@/components/blog/BlogGrid';
 import BlogScroller from '@/components/blog/BlogScroller';
-import { HomeSectionViewMoreLink } from '@/components/ui/HomeSectionViewMoreLink';
 import { getPosts } from '@/sanity/queries';
 import { isSanityConfigured } from '@/sanity/env';
 
@@ -34,9 +33,9 @@ export default async function BlogSection({
     return (
       <section id="blog" className="blog-section">
         <div className="text-center">
-          <p className="text-zinc-400 text-lg">
+          <p className="text-ink/60 text-lg">
             Blog is almost ready. Add your Sanity project ID in{' '}
-            <code className="text-[#ff1e00]">.env.local</code> to load posts.
+            <code className="text-accent">.env.local</code> to load posts.
           </p>
         </div>
       </section>
@@ -54,7 +53,7 @@ export default async function BlogSection({
               </h2>
             </div>
           )}
-          <p className="text-zinc-400 text-lg">No articles available yet</p>
+          <p className="text-ink/60 text-lg">No articles available yet</p>
         </div>
       </section>
     );
@@ -80,14 +79,9 @@ export default async function BlogSection({
         {variant === 'grid' ? (
           <BlogGrid posts={posts} />
         ) : (
-          <BlogScroller posts={posts} />
+          <BlogScroller posts={posts} showViewMore={!hideViewMore && hasMore} />
         )}
 
-        {!hideViewMore && hasMore && variant === 'scroller' && (
-          <div className="mt-16 text-center">
-            <HomeSectionViewMoreLink href="/blog" sectionId="blog" />
-          </div>
-        )}
       </div>
     </section>
   );

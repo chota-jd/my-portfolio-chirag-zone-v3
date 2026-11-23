@@ -283,7 +283,7 @@ export default function HomePage({ children }: { children?: React.ReactNode }) {
         <CinematicIntro onComplete={handleIntroComplete} />
       )}
 
-      <main className={`relative z-10 ${!introFinished ? 'pointer-events-none' : ''}`}>
+      <main className={`home-main relative z-10 ${!introFinished ? 'pointer-events-none' : ''}`}>
         <HeroSection />
         <AboutSection />
         <IndustriesSection />

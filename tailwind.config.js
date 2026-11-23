@@ -16,13 +16,21 @@ module.exports = {
     },
     extend: {
       colors: {
-        'accent': '#4fc1c6',
-        'accent-orange': '#ff1e00',
-        'text-muted': '#a1a1aa',
-        'border': '#27272a',
+        paper: {
+          DEFAULT: 'rgb(var(--paper-rgb) / <alpha-value>)',
+          2: 'rgb(var(--paper-2-rgb) / <alpha-value>)',
+          3: 'rgb(var(--paper-3-rgb) / <alpha-value>)',
+        },
+        ink: 'rgb(var(--ink-rgb) / <alpha-value>)',
+        accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
+        'accent-orange': 'rgb(var(--accent-rgb) / <alpha-value>)',
+        'text-muted': 'rgb(var(--ink-rgb) / 0.55)',
+        border: 'rgb(var(--ink-rgb) / 0.12)',
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        serif: ['var(--font-instrument-serif)', 'Times New Roman', 'serif'],
+        display: ['var(--font-instrument-serif)', 'Times New Roman', 'serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       animation: {

@@ -124,7 +124,7 @@ function setupAsciiHover(preEl: HTMLPreElement, poolGrid: number[][]) {
           const idx = POOLS.length - 1 - pi;
           const pool = POOLS[idx];
           const ch = pool[Math.floor(Math.random() * pool.length)];
-          html += `<span style="color:#0a0a0a;background:#ff3b14">${esc(ch)}</span>`;
+          html += `<span style="color:var(--paper);background:var(--accent)">${esc(ch)}</span>`;
         } else if (origGrid?.[y]) {
           html += esc(origGrid[y][x]);
         } else {
@@ -381,8 +381,8 @@ export default function Footer() {
           <div className="footer-center-wrap">
             <div className="footer-center">
               <h2 className="footer-title">
-                LET&apos;S CREATE <br />
-                <span className="other-accent text-accent-orange">SOMETHING NEW.</span>
+                Let&apos;s create <br />
+                <span className="other-accent text-accent-orange">something new.</span>
               </h2>
               <p className="footer-subtitle">
                 Have an idea, a freelance proposal, or just want to collaborate? My inbox is always

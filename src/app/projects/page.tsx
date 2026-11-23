@@ -4,7 +4,7 @@ import ProjectsSection from '@/components/sections/ProjectsSection';
 
 export default function ProjectsPage() {
   return (
-    <div className="relative min-h-screen bg-black">
+    <div className="relative min-h-screen bg-paper">
       <main className="relative z-10">
         <div className="container-custom py-12">
           <ProjectsSection hideHeader />

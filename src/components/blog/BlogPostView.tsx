@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import Link from 'next/link';
-import { Copy, Facebook, Linkedin, Check, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Copy, Facebook, Linkedin, Check, MessageCircle } from 'lucide-react';
 import type { PortableTextBlock } from '@portabletext/types';
 
 import PortableTextContent from '@/components/blog/PortableTextContent';
@@ -12,10 +12,10 @@ import type { BlogPost } from '@/sanity/types';
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString('en-US', {
-    month: 'short',
+    month: 'long',
     day: 'numeric',
     year: 'numeric',
-  }).toUpperCase();
+  });
 }
 
 function extractTextFromBody(body?: PortableTextBlock[]): string {
@@ -99,110 +99,66 @@ export default function BlogPostView({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const shareButtons: { label: string; onClick: () => void; icon: React.ReactNode }[] = [
+    { label: 'Share on X', onClick: () => share('x'), icon: <XIcon className="h-4 w-4" /> },
+    { label: 'Share on Facebook', onClick: () => share('facebook'), icon: <Facebook size={17} strokeWidth={1.6} /> },
+    { label: 'Share on LinkedIn', onClick: () => share('linkedin'), icon: <Linkedin size={17} strokeWidth={1.6} /> },
+    { label: 'Share on WhatsApp', onClick: () => share('whatsapp'), icon: <MessageCircle size={17} strokeWidth={1.6} /> },
+    {
+      label: copied ? 'Link copied' : 'Copy link',
+      onClick: copyLink,
+      icon: copied ? <Check size={17} /> : <Copy size={17} strokeWidth={1.6} />,
+    },
+  ];
+
   return (
-    <div className="relative min-h-screen bg-black">
-      <main className="relative z-10">
-        {/* Hero: full-bleed cover — bottom scrim only (no top/side dark bands) */}
-        <section className="relative min-h-[min(85vh,720px)] w-full overflow-hidden">
-          {coverUrl ? (
-            <img
-              src={coverUrl}
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover object-center"
-              aria-hidden
-            />
-          ) : (
-            <div
-              className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-950"
-              aria-hidden
-            />
-          )}
-
-          <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.45)_38%,transparent_72%)]"
-            aria-hidden
-          />
-
-          <div className="relative z-10 mx-auto flex min-h-[min(85vh,720px)] w-full max-w-7xl flex-col justify-end px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pb-16">
-            <Link
-              href="/blog"
-              className="mb-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] text-zinc-200 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)] transition-colors hover:text-white"
-            >
-              <span className="text-[#4fc1c6]">‹</span>
-              BACK TO BLOG
+    <main className="ed-page">
+      <article>
+        <header className="ed-container ed-article-head">
+          <nav className="ed-topbar" aria-label="Article navigation">
+            <Link href="/blog" className="ed-link inline-flex items-center gap-2">
+              <ArrowLeft size={15} /> All articles
             </Link>
+          </nav>
 
-            <p className="mb-4 font-mono text-[11px] tracking-[0.18em] text-zinc-300 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
-              {formatDate(post.publishedAt)}
-              <span className="mx-2 text-zinc-600">•</span>
-              {readMinutes} MIN READ
-            </p>
+          <p className="ed-kicker">
+            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+            <span aria-hidden="true">·</span>
+            <span>{readMinutes} min read</span>
+          </p>
 
-            <h1 className="max-w-4xl text-4xl font-bold leading-[1.08] tracking-tight text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.85)] sm:text-5xl md:text-6xl lg:text-[3.5rem]">
-              {post.title}
-            </h1>
+          <h1 className="ed-display ed-article-title">{post.title}</h1>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <span className="font-mono text-[10px] tracking-[0.25em] text-zinc-500">SHARE:</span>
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => share('x')}
-                  aria-label="Share on X"
-                  className="text-white/80 transition-colors hover:text-[#4fc1c6]"
-                >
-                  <XIcon className="h-4 w-4" />
+          {post.excerpt && <p className="ed-lede ed-article-lede">{post.excerpt}</p>}
+
+          <div className="ed-share">
+            <span className="ed-kicker">Share</span>
+            <div className="flex items-center gap-1">
+              {shareButtons.map((b) => (
+                <button key={b.label} type="button" onClick={b.onClick} aria-label={b.label} className="ed-icon-btn">
+                  {b.icon}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => share('facebook')}
-                  aria-label="Share on Facebook"
-                  className="text-white/80 transition-colors hover:text-[#4fc1c6]"
-                >
-                  <Facebook size={18} strokeWidth={1.75} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => share('linkedin')}
-                  aria-label="Share on LinkedIn"
-                  className="text-white/80 transition-colors hover:text-[#4fc1c6]"
-                >
-                  <Linkedin size={18} strokeWidth={1.75} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => share('whatsapp')}
-                  aria-label="Share on WhatsApp"
-                  className="text-white/80 transition-colors hover:text-[#4fc1c6]"
-                >
-                  <MessageCircle size={18} strokeWidth={1.75} />
-                </button>
-                <button
-                  type="button"
-                  onClick={copyLink}
-                  aria-label="Copy link"
-                  className="text-white/80 transition-colors hover:text-[#4fc1c6]"
-                >
-                  {copied ? <Check size={18} /> : <Copy size={18} strokeWidth={1.75} />}
-                </button>
-              </div>
+              ))}
             </div>
           </div>
-        </section>
+        </header>
 
-        {/* Article body below hero */}
-        <article className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-          {post.excerpt && (
-            <p className="mb-10 w-full text-lg leading-relaxed text-zinc-400 md:text-xl">
-              {post.excerpt}
-            </p>
-          )}
+        {coverUrl && (
+          <figure className="ed-container ed-figure ed-article-cover">
+            <img src={coverUrl} alt="" aria-hidden />
+          </figure>
+        )}
 
-          {post.body && post.body.length > 0 && (
-            <PortableTextContent value={post.body} />
-          )}
-        </article>
-      </main>
-    </div>
+        <div className="ed-article-body">
+          {post.body && post.body.length > 0 && <PortableTextContent value={post.body} />}
+
+          <footer className="ed-article-foot">
+            <Link href="/blog" className="ed-link inline-flex items-center gap-2">
+              <ArrowLeft size={15} /> Back to all articles
+            </Link>
+          </footer>
+        </div>
+      </article>
+    </main>
   );
 }
